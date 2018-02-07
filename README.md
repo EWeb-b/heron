@@ -21,4 +21,4 @@ To run:
 | Ed Webb       | <sc16eahw@leeds>| @EWebb      |
 | Jack Boreham	| <sc16jeb@leeds> | @Boreham	|
 | Marya Khan    | <ll14m3k@leeds> | @ll14m3k    |
-| Jonah Lloyd   | <sc16jl@leeds>  | @sc1jl      |    
+| Jonah Lloyd   | <sc16jl@leeds>  | @sc16jl      |    
