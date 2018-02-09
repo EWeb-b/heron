@@ -1,2 +1,3 @@
 webapp/flask-venv/
 *__pycache__*
+*/.vscode/
