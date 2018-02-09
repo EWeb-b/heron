@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, request, Flask, url_for, make_response, session
 from app import app, db, models
-from .forms import CreateAccountForm, , ChangePasswordForm
+from .forms import CreateAccountForm, ChangePasswordForm
 from .models import UserInfo, FilmDetails, FilmScreenings
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 import datetime, logging

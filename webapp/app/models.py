@@ -1,3 +1,5 @@
+from app import db
+
 class UserInfo(db.Model):
 
     __tablename__ = 'userinfo'
