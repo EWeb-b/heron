@@ -1,5 +1,6 @@
 from app import db
 
+
 class UserInfo(db.Model):
 
     __tablename__ = 'userinfo'
@@ -14,7 +15,9 @@ class UserInfo(db.Model):
     cvc = db.Column(db.Integer)
     expiry_date = db.Column(db.Integer)
 
-    def __init__(self,email,password,forename,surname,card_number,cvc,expiry_date):
+    def __init__(
+            self, email, password, forename,
+            surname, card_number, cvc, expiry_date):
         self.email = email
         self.password = password
         self.forename = forename
@@ -39,7 +42,6 @@ class UserInfo(db.Model):
         return str(self.email)
 
 
-
 class FilmDetails(db.Model):
 
     __tablename__ = 'film_details'
@@ -51,7 +53,9 @@ class FilmDetails(db.Model):
     director = db.Column(db.String(100))
     lead_actor = db.Column(db.String(100))
 
-    def __init__(self,film_name,blurb,age_certificate,director,lead_actor):
+    def __init__(
+            self, film_name, blurb,
+            age_certificate, director, lead_actor):
         self.film_name = film_name
         self.blurb = blurb
         self.age_certificate = age_certificate
@@ -60,7 +64,6 @@ class FilmDetails(db.Model):
 
     def __repr__(self):
         return '<Film: %r>' % (self.film_name)
-
 
 
 class FilmScreenings(db.Model):
@@ -77,7 +80,9 @@ class FilmScreenings(db.Model):
     oap_ticket = db.Column(db.Float)
     child_ticket = db.Column(db.Float)
 
-    def __init__(self,film_name,date,screening_date,standard_seats,vip_seats,standard_ticket,oap_ticket,child_ticket):
+    def __init__(
+            self, film_name, date, screening_date, standard_seats,
+            vip_seats, standard_ticket, oap_ticket, child_ticket):
         self.film_name = film_name
         self.date = date
         self.screening_time = screening_time
