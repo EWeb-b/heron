@@ -2,4 +2,4 @@ webapp/flask-venv/
 *__pycache__*
 */.vscode/
 *.log
-
+app.db

@@ -6,7 +6,6 @@ from .forms import CreateAccountForm, ChangePasswordForm
 from .models import UserInfo, FilmDetails, FilmScreenings
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
-
 import datetime
 import logging
 
@@ -151,3 +150,9 @@ def change_password():
 @app.route('/api/hello', methods=['GET'])
 def apiHelloWorld():
     return jsonify({"Hello": "World"})
+
+
+@app.route('/api/movies', methods=['GET'])
+def apiGetMovies():
+    movies = FilmDetails.query.all()
+    return jsonify(movies)
