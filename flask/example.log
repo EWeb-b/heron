@@ -1,0 +1,8 @@
+12/02/2018 18:07:11 DEBUG:Loading repository /home/cserv1_a/soc_ug/sc16eahw/softwareEngineeringRepo/webapp/db_repository...
+12/02/2018 18:07:11 DEBUG:Repository /home/cserv1_a/soc_ug/sc16eahw/softwareEngineeringRepo/webapp/db_repository loaded successfully
+12/02/2018 18:07:11 DEBUG:Config: OrderedDict([('db_settings', OrderedDict([('repository_id', 'database repository'), ('version_table', 'migrate_version'), ('required_dbs', '[]'), ('use_timestamp_numbering', 'False')]))])
+12/02/2018 18:07:11 DEBUG:Constructing engine
+12/02/2018 18:07:11 DEBUG:Loading repository /home/cserv1_a/soc_ug/sc16eahw/softwareEngineeringRepo/webapp/db_repository...
+12/02/2018 18:07:11 DEBUG:Repository /home/cserv1_a/soc_ug/sc16eahw/softwareEngineeringRepo/webapp/db_repository loaded successfully
+12/02/2018 18:07:11 DEBUG:Config: OrderedDict([('db_settings', OrderedDict([('repository_id', 'database repository'), ('version_table', 'migrate_version'), ('required_dbs', '[]'), ('use_timestamp_numbering', 'False')]))])
+12/02/2018 18:07:11 DEBUG:Disposing SQLAlchemy engine Engine(sqlite:////home/cserv1_a/soc_ug/sc16eahw/softwareEngineeringRepo/webapp/app.db)
