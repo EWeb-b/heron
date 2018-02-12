@@ -1,7 +1,6 @@
 from flask import (
     render_template, flash, redirect, request, Flask, url_for, make_response,
-    session)
-
+    session, jsonify)
 from app import app, db, models
 from .forms import CreateAccountForm, ChangePasswordForm
 from .models import UserInfo, FilmDetails, FilmScreenings
@@ -147,3 +146,8 @@ def change_password():
                 'Change password error for %s: form validation error',
                 current_user.username)
             return redirect('/change_password')
+
+
+@app.route('/api/hello', methods=['GET'])
+def apiHelloWorld():
+    return jsonify({"Hello": "World"})
