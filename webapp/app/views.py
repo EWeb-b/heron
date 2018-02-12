@@ -155,4 +155,14 @@ def apiHelloWorld():
 @app.route('/api/movies', methods=['GET'])
 def apiGetMovies():
     movies = FilmDetails.query.all()
-    return jsonify(movies)
+    return jsonify(FilmDetails.serializeList(movies))
+
+
+@app.route('/api/movies/add', methods=['POST'])
+def apiNewMovie():
+    if not request.json or 'film_name' not in request.json:
+        abort(404)
+    movie = FilmDetails(**request.json)
+    db.session.add(movie)
+    db.session.commit()
+    return 'test', 201

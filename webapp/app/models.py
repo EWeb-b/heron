@@ -1,4 +1,29 @@
 from app import db
+from sqlalchemy.inspection import inspect
+
+
+class Serializer(object):
+    """
+    A class used to aid conversion of database models into JSON
+    Adapted from StackExchange:
+    https://stackoverflow.com/a/27951648
+    """
+
+    def serialize(self):
+        """
+        Reads the keys from the db table and iterates over them
+        adding the data as the value.
+        """
+        return {c: getattr(self, c) for c in inspect(self).attrs.keys()}
+
+    @staticmethod
+    def serializeList(items):
+        """Takes a db query that contains multiple items and serializes them.
+
+        Arguments:
+            items {A list containing multiple objects from a db query.}
+        """
+        return [item.serialize() for item in items]
 
 
 class UserInfo(db.Model):
@@ -42,7 +67,7 @@ class UserInfo(db.Model):
         return str(self.email)
 
 
-class FilmDetails(db.Model):
+class FilmDetails(db.Model, Serializer):
 
     __tablename__ = 'film_details'
 
@@ -64,6 +89,10 @@ class FilmDetails(db.Model):
 
     def __repr__(self):
         return '<Film: %r>' % (self.film_name)
+
+    def serialize(self):
+        item = Serializer.serialize(self)
+        return item
 
 
 class FilmScreenings(db.Model):
