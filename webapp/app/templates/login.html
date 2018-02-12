@@ -1,0 +1,35 @@
+{% extends "base.html %"}
+{% block content %}
+
+<style>
+  i{font-family:"Arial", Arial, serif;
+}
+</style>
+
+
+<html>
+  <head>
+    <h2 align = "center">Login</h2>
+    <h3 align = "center">Note: Cookies are used on this site</h3>
+  </head>
+
+  <body>
+    <form action="" method="post" action="/login">
+    {{ form.hidden_tag() }}
+    <h5> Username </h5>
+    <p>{{ form.username }}<br>
+       {% for error in form.username.errors %}
+       <span style="color: red;">{{ error }}</span>
+       {% endfor %}
+    </p>
+    <h5>  Password </h5>
+    <p>{{ form.password }}<br>
+       {% for error in form.password.errors %}
+       <span style="color: red;">{{ error }}</span>
+       {% endfor %}
+    </p>
+    <p><input class = "button" type="submit" value="Log In"></p>
+    <a href="/create_account" style="font-family:Times New Roman, Times, serif;" >Create an account </a>
+</form>
+
+{% endblock %}

@@ -34,4 +34,3 @@ class UserInfo(db.Model):
 
     def get_id(self):
         return str(self.email)
-        
