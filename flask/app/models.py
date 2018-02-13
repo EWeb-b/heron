@@ -10,26 +10,26 @@ class UserInfo(db.Model):
     cvc = db.Column(db.Integer(3))
     expiry_date = db.Column(db.Integer(4))
 
-    def __init__(self,email,password,forename,surname,card_number,cvc,expiry_date):
-        self.email = email
-        self.password = password
-        self.forename = forename
-        self.surname = surname
-        self.card_number = card_number
-        self.cvc = cvc
-        self.expiry_date = expiry_date
-
-    def __repr__(self):
-        return '<User %r>' % (self.email)
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return True
-
-    def get_id(self):
-        return str(self.id)
+    # def __init__(self,email,password,forename,surname,card_number,cvc,expiry_date):
+    #     self.email = email
+    #     self.password = password
+    #     self.forename = forename
+    #     self.surname = surname
+    #     self.card_number = card_number
+    #     self.cvc = cvc
+    #     self.expiry_date = expiry_date
+    #
+    # def __repr__(self):
+    #     return '<User %r>' % (self.email)
+    #
+    # def is_authenticated(self):
+    #     return True
+    #
+    # def is_active(self):
+    #     return True
+    #
+    # def is_anonymous(self):
+    #     return True
+    #
+    # def get_id(self):
+    #     return str(self.id)
