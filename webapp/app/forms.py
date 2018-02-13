@@ -8,6 +8,11 @@ from wtforms.fields import (
     TextField, TextAreaField, PasswordField,
     StringField, SubmitField, DateField, IntegerField)
 
+class LogInForm(Form):
+    email = StringField('Email', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Log In')
+
 
 class CreateAccountForm(Form):
     email = EmailField(
