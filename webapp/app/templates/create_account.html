@@ -21,6 +21,48 @@ i{
        <span style="color: red;">{{ error }}</span>
        {% endfor %}
     </p>
+    <h5>  Forename </h5>
+    <p>{{ form.forename }}<br>
+       {% for error in form.forename.errors %}
+       <span style="color: red;">{{ error }}</span>
+       {% endfor %}
+    </p>
+    <h5>  Surname </h5>
+    <p>{{ form.surname }}<br>
+       {% for error in form.surname.errors %}
+       <span style="color: red;">{{ error }}</span>
+       {% endfor %}
+    </p>
+    <h5>  Date of Birth </h5>
+    <p>{{ form.date_of_birth }}<br>
+       {% for error in form.date_of_birth.errors %}
+       <span style="color: red;">{{ error }}</span>
+       {% endfor %}
+    </p>
+    <h5>  Card Number </h5>
+    <p>{{ form.card_number }}<br>
+       {% for error in form.card_number.errors %}
+       <span style="color: red;">{{ error }}</span>
+       {% endfor %}
+    </p>
+    <h5>  CVC </h5>
+    <p>{{ form.cvc }}<br>
+       {% for error in form.cvc.errors %}
+       <span style="color: red;">{{ error }}</span>
+       {% endfor %}
+    </p>
+    <h5>  Expiry Date Month </h5>
+    <p>{{ form.expiry_date_month }}<br>
+       {% for error in form.expiry_date_month.errors %}
+       <span style="color: red;">{{ error }}</span>
+       {% endfor %}
+    </p>
+    <h5>  Expiry Date Year </h5>
+    <p>{{ form.expiry_date_year }}<br>
+       {% for error in form.expiry_date_year.errors %}
+       <span style="color: red;">{{ error }}</span>
+       {% endfor %}
+    </p>
     <p><input class = "button" type="submit" value="Create"></p>
     <a href="/login" style="font-family:Times New Roman, Times, serif;" >Already have an account? </a>
 </form>
