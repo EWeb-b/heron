@@ -1,13 +1,14 @@
 import re
 from flask_wtf import Form
 from wtforms import validators
-from wtforms.validators import (
-    DataRequired, EqualTo, NumberRange, Email, Regexp)
+from wtforms.validators import DataRequired, EqualTo, NumberRange, Email, Regexp
 from wtforms.fields.html5 import EmailField
-from wtforms.fields import (
-    TextField, TextAreaField, PasswordField,
-    StringField, SubmitField, DateField, IntegerField)
+from wtforms.fields import TextField, TextAreaField, PasswordField, StringField, SubmitField, DateField, IntegerField
 
+class LogInForm(Form):
+    email = StringField('Email', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Log In')
 
 class CreateAccountForm(Form):
     email = EmailField(
@@ -37,10 +38,10 @@ class CreateAccountForm(Form):
 
 
 class ChangePasswordForm(Form):
-    prev_password = PasswordField(
+    current_password = PasswordField(
         'Previous Password', validators=[DataRequired()])
     new_password = PasswordField('new_password', validators=[DataRequired()])
-    confirmation = PasswordField(
+    new_password_check = PasswordField(
         'confirmation',
         validators=[
             DataRequired(),

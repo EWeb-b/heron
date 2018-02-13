@@ -1,21 +1,13 @@
-from flask import (
-    render_template, flash, redirect, request, Flask, url_for, make_response,
-    session)
-
+from flask import render_template, flash, redirect, request, Flask, url_for, make_response,session
 from app import app, db, models
-from .forms import CreateAccountForm, ChangePasswordForm
+from .forms import CreateAccountForm, ChangePasswordForm, LogInForm
 from .models import UserInfo, FilmDetails, FilmScreenings
-from flask_login import (
-    LoginManager, login_user, logout_user, login_required, current_user)
-
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 import datetime
 import logging
 
-FORMAT = '%(asctime)s %(levelname)s:%(message)s'
-DATEFMT = '%d/%m/%Y %H:%M:%S'
-logging.basicConfig(
-    filename='example.log', format=FORMAT, datefmt=DATEFMT,
-    filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename='website.log', format= '%(asctime)s%(levelname)s:%(message)s',
+                    datefmt='%d/%m/%Y|%I:%M:%S', filemode='w', level=logging.DEBUG)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -23,36 +15,33 @@ login_manager.login_view = 'login'
 
 
 @login_manager.user_loader
-def load_user(user_id):
-
-    return User.query.filter(User.holder_id == int(user_id)).first()
+def load_user(email):
+    return UserInfo.query.filter(email = email).first()
 
 
 @app.route('/')
 @app.route('/index')
 def index():
-
-    # Redirects the base-level domain to login page
     return redirect('/login')
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 
-    form = CreateAccountForm()
+    form = LogInForm()
     if request.method == 'GET':
         return render_template('login.html', title='Log In', form=form)
 
     elif request.method == 'POST':
         if form.validate_on_submit():
-            # sets user to username in database
-            user = User.query.filter_by(username=form.username.data).first()
+            # sets user to email in database
+            user = UserInfo.query.filter_by(email=form.email.data).first()
             if user:  # if user exists
-                # checks password with database one
+                # checks password with database
                 if user.password == form.password.data:
                     login_user(user)  # logs in
                     flash("Logged in successfully")
-                    logging.info('%s logged in successfully', user.username)
+                    logging.info('%s logged in successfully', user.email)
                     return redirect('/account')
 
                 else:
@@ -79,24 +68,30 @@ def create_account():
 
     elif request.method == 'POST':
         if form.validate_on_submit():
-            storedUser = User.query.filter_by(
-                username=form.username.data).first()
-            if storedUser is not None:
-                flash("That username already exists, try a different one")
+            newuser = User.query.filter_by(email=form.email.data).first()
+            if newuser is not None:
+                flash("That email has already been used, try a different one")
                 return redirect('/create_account')
             else:
-                newuser = User(
-                    form.username.data, form.password.data, accountValue=0.0)
+                newuser = UserInfo(
+                    form.email.data,
+                    form.password.data,
+                    form.forename.data,
+                    form.surname.data,
+                    form.date_of_birth.data,
+                    form.card_number.data,
+                    form.cvc.data,
+                    form.expiry_date_month.data,
+                    form.expiry_date_year.data)
                 db.session.add(newuser)
                 db.session.commit()
                 login_user(newuser)
 
                 flash("Account created successfully")
-                logging.info(
-                    'New account created. Username: %s', newuser.username)
+                logging.info('New account created. Email: %s', newuser.email)
                 return redirect('/account')
         else:  # when there's an error validating
-            flash("Problem creating your account, please try again")
+            flash("Error creating your account, please try again")
             # logging.info()
             return redirect('/create_account')
 
@@ -104,46 +99,34 @@ def create_account():
 @app.route('/logout')
 @login_required
 def logout():
-    name = current_user.username
     logout_user()
+    logging.info('User %s logged out', current_user.email)
     flash("Logged out successfully")
-    logging.info('%s logged out successfully', name)
     return redirect('/login')
 
 
-@app.route('/change_password', methods=['GET', 'POST'])
+@app.route('/password_change', methods=['GET', 'POST'])
 @login_required
-def change_password():
-
+def password_change():
     form = ChangePasswordForm()
     if request.method == 'GET':
-        return render_template(
-            'change_password.html', title='Change Password', form=form)
-
+        return render_template('password_change.html', title='Change Password', form=form)
     elif request.method == 'POST':
-        if form.validate_on_submit():  # if form data entered correctly
-            # if Previous Password is correct
-            if current_user.password == form.prev_password.data:
-
-                current_user.password = form.new_password.data
-                db.session.commit()
-                flash('Password changed successfully')
-                logging.info(
-                    '%s successfully changed their password',
-                    current_user.username)
-                return redirect('/logout')
-
+        if form.validate_on_submit():
+            user=UserInfo.query.filter_by(email=current_user.email).first()
+            if user.password == form.current_password.data:
+                if form.new_password.data == form.new_password_check.data:
+                    user.password = form.new_password.data
+                    logging.info('%s changed their password', user.forename)
+                    db.session.commit()
+                    flash('Password changed successfully')
+                    return redirect('/account')
+                else:
+                    flash("Passwords don't match")
+                    return redirect('/password_change')
             else:
-                flash('Previous Password is incorrect')
-                logging.warning(
-                    'Change password error for %s: previous password ' +
-                    'is incorrect',
-                    current_user.username)
-                return redirect('/change_password')
-
+                flash('Incorrect password')
+                return redirect('/password_change')
         else:
-            flash('Inputs Missing')
-            logging.warning(
-                'Change password error for %s: form validation error',
-                current_user.username)
-            return redirect('/change_password')
+            flash('Inputs missing')
+            return redirect('/account')
