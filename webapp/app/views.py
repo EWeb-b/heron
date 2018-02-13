@@ -15,8 +15,11 @@ login_manager.login_view = 'login'
 
 
 @login_manager.user_loader
-def load_user(email):
-    return UserInfo.query.filter(email = email).first()
+
+def load_user(user_id):
+    
+    return UserInfo.query.filter(UserInfo.id == int(user_id)).first()
+
 
 
 @app.route('/')
@@ -68,8 +71,9 @@ def create_account():
 
     elif request.method == 'POST':
         if form.validate_on_submit():
-            newuser = User.query.filter_by(email=form.email.data).first()
-            if newuser is not None:
+            #storedUser and newuser are not the same - keep them separate
+            storedUser = User.query.filter_by(email=form.email.data).first()
+            if storedUser is not None:
                 flash("That email has already been used, try a different one")
                 return redirect('/create_account')
             else:
@@ -83,6 +87,7 @@ def create_account():
                     form.cvc.data,
                     form.expiry_date_month.data,
                     form.expiry_date_year.data)
+
                 db.session.add(newuser)
                 db.session.commit()
                 login_user(newuser)
@@ -90,6 +95,7 @@ def create_account():
                 flash("Account created successfully")
                 logging.info('New account created. Email: %s', newuser.email)
                 return redirect('/account')
+
         else:  # when there's an error validating
             flash("Error creating your account, please try again")
             # logging.info()
@@ -99,39 +105,48 @@ def create_account():
 @app.route('/logout')
 @login_required
 def logout():
+    #need the name variable otherwise logging does not work
+    name = current_user.email
     logout_user()
-    logging.info('User %s logged out', current_user.email)
+    logging.info('User %s logged out', name)
     flash("Logged out successfully")
+
+    logging.info('%s logged out successfully', email)
     return redirect('/login')
 
 
-@app.route('/password_change', methods=['GET', 'POST'])
+@app.route('/change_password', methods=['GET', 'POST'])
 @login_required
-def password_change():
+def change_password():
     form = ChangePasswordForm()
     if request.method == 'GET':
-        return render_template('password_change.html', title='Change Password', form=form)
+        return render_template('change_password.html', title='Change Password', form=form)
     elif request.method == 'POST':
-        if form.validate_on_submit():
-            user=UserInfo.query.filter_by(email=current_user.email).first()
-            if user.password == form.current_password.data:
-                if form.new_password.data == form.new_password_check.data:
-                    user.password = form.new_password.data
-                    logging.info('%s changed their password', user.forename)
-                    db.session.commit()
-                    flash('Password changed successfully')
-                    return redirect('/account')
-                else:
-                    flash("Passwords don't match")
-                    return redirect('/password_change')
+        if form.validate_on_submit():  # if form data entered correctly
+            #current_user is a variable name from flask_login: don't need to create a new user object
+            if current_user.password == form.prev_password.data:
+                current_user.password = form.new_password.data
+                db.session.commit()
+
+                flash('Password changed successfully')
+                logging.info(
+                    '%s successfully changed their password',
+                    current_user.email)
+                return redirect('/logout')
+
             else:
-                flash('Incorrect password')
-                return redirect('/password_change')
+                flash('Previous Password is incorrect')
+                logging.warning(
+                    'Change password error for %s: previous password ' +
+                    'is incorrect',
+                    current_user.email)
+                return redirect('/change_password')
+
         else:
             flash('Inputs Missing')
             logging.warning(
                 'Change password error for %s: form validation error',
-                current_user.username)
+                current_user.email)
             return redirect('/change_password')
 
 
