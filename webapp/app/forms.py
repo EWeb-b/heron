@@ -21,7 +21,7 @@ class CreateAccountForm(Form):
     password = PasswordField('Password', validators=[DataRequired()])
     forename = StringField('Forename', validators=[DataRequired()])
     surname = StringField('Surname', validators=[DataRequired()])
-    date_of_birth = DateField('Date of Birth', validators=[DataRequired()])
+    date_of_birth = DateField('Date of Birth', format='%d/%m/%Y', validators=[DataRequired()])
     card_number = IntegerField(
         'Card Number',
         [validators.DataRequired(), validators.Regexp(r'[0-9]{16}$')])

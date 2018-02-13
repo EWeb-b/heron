@@ -15,14 +15,11 @@ login_manager.login_view = 'login'
 
 
 @login_manager.user_loader
-<<<<<<< HEAD
-def load_user(email):
-    return UserInfo.query.filter(email = email).first()
-=======
-def load_user(user_id):
 
+def load_user(user_id):
+    
     return UserInfo.query.filter(UserInfo.id == int(user_id)).first()
->>>>>>> changed some of the variable names to match those in forms.py
+
 
 
 @app.route('/')

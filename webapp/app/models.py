@@ -42,11 +42,12 @@ class UserInfo(db.Model):
 
     def __init__(
             self, email, password, forename,
-            surname, card_number, cvc, expiry_date):
+            surname, date_of_birth, card_number, cvc, expiry_date):
         self.email = email
         self.password = password
         self.forename = forename
         self.surname = surname
+        self.date_of_birth = date_of_birth
         self.card_number = card_number
         self.cvc = cvc
         self.expiry_date = expiry_date
