@@ -1,0 +1,28 @@
+
+{% block content %}
+<style>
+i{
+  font-family:"Arial", Arial, serif;
+}
+</style>
+
+<h2 align = "center">Create an Account</h2>
+<form action="/create_account" method="POST">
+    {{ form.hidden_tag() }}
+    <h5> Email </h5>
+    <p>{{ form.email }}<br>
+       {% for error in form.email.errors %}
+       <span style="color: red;">{{ error }}</span>
+       {% endfor %}
+    </p>
+    <h5>  Password </h5>
+    <p>{{ form.password }}<br>
+       {% for error in form.password.errors %}
+       <span style="color: red;">{{ error }}</span>
+       {% endfor %}
+    </p>
+    <p><input class = "button" type="submit" value="Create"></p>
+    <a href="/login" style="font-family:Times New Roman, Times, serif;" >Already have an account? </a>
+</form>
+
+{% endblock %}
