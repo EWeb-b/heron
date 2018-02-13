@@ -3,3 +3,4 @@ webapp/flask-venv/
 */.vscode/
 *.log
 app.db
+migrations/
