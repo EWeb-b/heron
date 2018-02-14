@@ -1,13 +1,17 @@
-from flask import render_template, flash, redirect, request, Flask, url_for, make_response,session
+from flask import (
+    render_template, flash, redirect, request, Flask, url_for,
+    make_response, session)
 from app import app, db, models
 from .forms import CreateAccountForm, ChangePasswordForm, LogInForm
 from .models import UserInfo, FilmDetails, FilmScreenings
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_login import (
+    LoginManager, login_user, logout_user, login_required, current_user)
 import datetime
 import logging
 
-logging.basicConfig(filename='website.log', format= '%(asctime)s%(levelname)s:%(message)s',
-                    datefmt='%d/%m/%Y|%I:%M:%S', filemode='w', level=logging.DEBUG)
+logging.basicConfig(
+    filename='website.log', format='%(asctime)s%(levelname)s:%(message)s',
+    datefmt='%d/%m/%Y|%I:%M:%S', filemode='w', level=logging.DEBUG)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -15,11 +19,8 @@ login_manager.login_view = 'login'
 
 
 @login_manager.user_loader
-
 def load_user(user_id):
-    
     return UserInfo.query.filter(UserInfo.id == int(user_id)).first()
-
 
 
 @app.route('/')
@@ -71,7 +72,7 @@ def create_account():
 
     elif request.method == 'POST':
         if form.validate_on_submit():
-            #storedUser and newuser are not the same - keep them separate
+            # storedUser and newuser are not the same - keep them separate
             storedUser = User.query.filter_by(email=form.email.data).first()
             if storedUser is not None:
                 flash("That email has already been used, try a different one")
@@ -105,7 +106,7 @@ def create_account():
 @app.route('/logout')
 @login_required
 def logout():
-    #need the name variable otherwise logging does not work
+    # need the name variable otherwise logging does not work
     name = current_user.email
     logout_user()
     logging.info('User %s logged out', name)
@@ -120,10 +121,12 @@ def logout():
 def change_password():
     form = ChangePasswordForm()
     if request.method == 'GET':
-        return render_template('change_password.html', title='Change Password', form=form)
+        return render_template(
+            'change_password.html', title='Change Password', form=form)
     elif request.method == 'POST':
         if form.validate_on_submit():  # if form data entered correctly
-            #current_user is a variable name from flask_login: don't need to create a new user object
+            # current_user is a variable name from flask_login:
+            # don't need to create a new user object
             if current_user.password == form.prev_password.data:
                 current_user.password = form.new_password.data
                 db.session.commit()
@@ -148,25 +151,3 @@ def change_password():
                 'Change password error for %s: form validation error',
                 current_user.email)
             return redirect('/change_password')
-
-
-@app.route('/api/movies', methods=['GET'])
-def apiGetMovies():
-    """Returns all films in then database in JSON format
-
-    Returns: A JSON object containing details of all films in the database
-    """
-    movies = FilmDetails.query.all()
-    return jsonify(FilmDetails.serializeList(movies))
-
-
-@app.route('/api/movies/add', methods=['POST'])
-def apiNewMovie():
-    """Adds a new film to the database via a POST request containing JSON data
-    for the new movie"""
-    if not request.json or 'film_name' not in request.json:
-        abort(404)
-    movie = FilmDetails(**request.json)
-    db.session.add(movie)
-    db.session.commit()
-    return 'test', 201
