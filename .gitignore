@@ -4,3 +4,4 @@ webapp/flask-venv/
 *.log
 app.db
 migrations/
+db_repository/
