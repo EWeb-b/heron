@@ -9,9 +9,17 @@ To run the flask app, cd to the webapp directory and activate the virtual enviro
 
     source flask-venv/bin/activate
 
+Make sure you have enabled python 3 if in DEC10:
+	
+	module add python/3.4.3
+
 To run:
 
     flask run
+
+To run server:
+
+	python webapp.py
 
 
 ## Members
