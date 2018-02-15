@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from .models import FilmDetails
 from app import app, db, models
+import json
 
 
 @app.route('/api/movies', methods=['GET'])
@@ -13,7 +14,7 @@ def apiGetMovies():
     return jsonify({"films": FilmDetails.serializeList(movies)})
 
 
-@app.route('/api/movies/add', methods=['POST'])
+@app.route('/api/movies', methods=['POST'])
 def apiNewMovie():
     """Adds a new film to the database via a POST request containing JSON data
     for the new movie"""

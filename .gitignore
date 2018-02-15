@@ -5,3 +5,4 @@ webapp/flask-venv/
 app.db
 migrations/
 db_repository/
+.idea/
