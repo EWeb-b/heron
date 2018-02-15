@@ -1,6 +1,7 @@
 webapp/flask-venv/
 *__pycache__*
-*/.vscode/
+.vscode/
 *.log
 app.db
 migrations/
+db_repository/
