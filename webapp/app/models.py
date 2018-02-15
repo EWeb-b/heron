@@ -40,17 +40,19 @@ class UserInfo(db.Model):
     cvc = db.Column(db.Integer)
     expiry_date = db.Column(db.Integer)
 
-    def __init__(
-            self, email, password, forename,
-            surname, date_of_birth, card_number, cvc, expiry_date):
-        self.email = email
-        self.password = password
-        self.forename = forename
-        self.surname = surname
-        self.date_of_birth = date_of_birth
-        self.card_number = card_number
-        self.cvc = cvc
-        self.expiry_date = expiry_date
+    # __init__ is not needed whden using SQL-Alchemy...
+    # It's all automatic.
+    # def __init__(
+    #         self, email, password, forename,
+    #         surname, date_of_birth, card_number, cvc, expiry_date):
+    #     self.email = email
+    #     self.password = password
+    #     self.forename = forename
+    #     self.surname = surname
+    #     self.date_of_birth = date_of_birth
+    #     self.card_number = card_number
+    #     self.cvc = cvc
+    #     self.expiry_date = expiry_date
 
     def __repr__(self):
         return '<User: %r>' % (self.email)
@@ -79,14 +81,14 @@ class FilmDetails(db.Model, Serializer):
     director = db.Column(db.String(100))
     lead_actor = db.Column(db.String(100))
 
-    def __init__(
-            self, film_name, blurb,
-            age_certificate, director, lead_actor):
-        self.film_name = film_name
-        self.blurb = blurb
-        self.age_certificate = age_certificate
-        self.director = director
-        self.lead_actor = lead_actor
+    # def __init__(
+    #         self, film_name, blurb,
+    #         age_certificate, director, lead_actor):
+    #     self.film_name = film_name
+    #     self.blurb = blurb
+    #     self.age_certificate = age_certificate
+    #     self.director = director
+    #     self.lead_actor = lead_actor
 
     def __repr__(self):
         return '<Film: %r>' % (self.film_name)
@@ -110,17 +112,17 @@ class FilmScreenings(db.Model):
     oap_ticket = db.Column(db.Float)
     child_ticket = db.Column(db.Float)
 
-    def __init__(
-            self, film_name, date, screening_date, standard_seats,
-            vip_seats, standard_ticket, oap_ticket, child_ticket):
-        self.film_name = film_name
-        self.date = date
-        self.screening_time = screening_time
-        self.standard_seats = standard_seats
-        self.vip_seats = vip_seats
-        self.standard_ticket = standard_ticket
-        self.oap_ticket = oap_ticket
-        self.child_ticket = child_ticket
+    # def __init__(
+    #         self, film_name, date, screening_date, standard_seats,
+    #         vip_seats, standard_ticket, oap_ticket, child_ticket):
+    #     self.film_name = film_name
+    #     self.date = date
+    #     self.screening_time = screening_time
+    #     self.standard_seats = standard_seats
+    #     self.vip_seats = vip_seats
+    #     self.standard_ticket = standard_ticket
+    #     self.oap_ticket = oap_ticket
+    #     self.child_ticket = child_ticket
 
     def __repr__(self):
         return '<Film: %r>' % (self.film_name)
