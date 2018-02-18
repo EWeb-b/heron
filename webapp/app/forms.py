@@ -58,3 +58,22 @@ class ChangePasswordForm(Form):
 class Search(Form):
     film = StringField('Search Film', validators=[DataRequired()])
     submit = SubmitField('Search')
+
+class OrderTickets(Form):
+    standard_tickets = IntegerField(
+        'Standard Tickets',
+        [validators.DataRequired(), validators.NumberRange(max=10)])
+
+    oap_tickets = IntegerField(
+        'OAP Tickets',
+        [validators.DataRequired(), validators.NumberRange(max=10)])
+
+    child_tickets = IntegerField(
+        'Child Tickets',
+        [validators.DataRequired(), validators.NumberRange(max=10)])
+
+    cvc_check = IntegerField(
+        'CVC Security Check',
+        [validators.DataRequired(), validators.Regexp(r'[0-9]{3}$')])
+        
+    submit = SubmitField('Order Tickets')
