@@ -18,7 +18,7 @@ class Account(db.Model):
     staff = db.Column(db.Boolean)
 
     def __repr__(self):
-        return '<User: %r>' % (self.email)
+        return '<User: %r>' %(self.email)
 
 
 class Profile(db.Model):
@@ -32,6 +32,9 @@ class Profile(db.Model):
     account = db.Column(db.Integer, ForeignKey(Account.id), primary_key=True)
     name = sb.Column(db.String(255))
 
+    def __repr__(self):
+        return '<Profile: %r>' % (self.name)
+
 
 class Certificate(db.Model):
     """
@@ -41,6 +44,9 @@ class Certificate(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     cert = db.Column(db.String(4), unique=True)
+
+    def __repr__(self):
+        return '<Certificate: %r>' % (self.cert)
 
 
 class FilmDetails(db.Model):
@@ -58,6 +64,8 @@ class FilmDetails(db.Model):
     filmActor = db.Column(db.String(255))
     filmCertificate = db.Column(db.Integer, ForeignKey(Certificate.id))
 
+    def __repr__(self):
+        return '<Film Name: %r>' % (self.filmName) 
 
 # from sqlalchemy.inspection import inspect
 
