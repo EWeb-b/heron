@@ -99,3 +99,19 @@ class TicketType(db.Model):
 
     def __repr__(self):
         return '<Ticket Type %r>' % (self.ticketType)
+
+
+# class Ticket(db.Model):
+#     """
+#     A table containing details for a ticket, including reference to a
+#     screening, Ticket Type, and seat number.
+#     """
+#     __tablename__ = 'ticket'
+
+#     id = Column(Integer, primary_key=True)
+#     ticketType = Column(Integer, ForeignKey(TicketType.id))
+#     ticketScreening = Column(Integer, ForeignKey(FilmScreening.id))
+#     ticketSeatNumber = Column(Integer)
+#     # TODO: add __repr__() and backrefs so this works
+
+    # TODO: Add CreditCard table stuffs
