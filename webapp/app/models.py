@@ -1,4 +1,5 @@
 from app import db
+import sqlalchemy
 
 
 class Account(db.Model):
@@ -9,7 +10,6 @@ class Account(db.Model):
 
     # TODO: Hash passwords!!!
     """
-
     __tablename__ = 'account'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -19,6 +19,18 @@ class Account(db.Model):
 
     def __repr__(self):
         return '<User: %r>' % (self.email)
+
+
+class Profile(db.Model):
+    """
+    A representation of a customer profile.
+    Each customer Profile will be associated with an Account object.
+    # TODO: Check whick other columns are needed in this table
+    """
+    __tablename__ = 'profile'
+
+    account = db.Column(db.Integer, ForeignKey(Account.id), primary_key=True)
+    name = sb.Column(db.String(255))
 
 
 # from sqlalchemy.inspection import inspect
