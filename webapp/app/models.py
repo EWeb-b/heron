@@ -39,7 +39,24 @@ class Certificate(db.Model):
     """
     __tablename__ = "certificate"
 
-    cert = db.Column(db.String(4), primary_key=True, unique=True)
+    id = db.Column(db.Integer, primary_key=True)
+    cert = db.Column(db.String(4), unique=True)
+
+
+class FilmDetails(db.Model):
+    """
+    A representation of a film. Contains movie name, short description(blurb),
+    the director of the film, the lead actor of the film and the certificate
+    of the film
+    """
+    __tablename__ = 'film_details'
+
+    id = db.Column(db.Integer, primary_key=True)
+    filmName = db.Column(db.String(255))
+    filmBlurb = db.Column(db.String(512))
+    filmDirector = db.Column(db.String(255))
+    filmActor = db.Column(db.String(255))
+    filmCertificate = db.Column(db.Integer, ForeignKey(Certificate.id))
 
 
 # from sqlalchemy.inspection import inspect
