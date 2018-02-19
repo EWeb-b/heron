@@ -152,11 +152,11 @@ def change_password():
                 current_user.email)
             return redirect('/change_password')
 
+
 @app.route('/list_films', methods=['GET', 'POST'])
 def list_films():
-    #print list of films stored in FilmDetails databse
+    # print list of films stored in FilmDetails databse
     filmList = models.FilmDetails.query.all()
 
-    return render_template('film_list.html,
-                            title='Film List',
-                            filmList=filmList)
+    return render_template(
+        'film_list.html', title='Film List', filmList=filmList)
