@@ -54,7 +54,8 @@ class FilmDetails(db.Model):
     """
     A representation of a film. Contains movie name, short description(blurb),
     the director of the film, the lead actor of the film and the certificate
-    of the film
+    of the film. screening is a backref so the film_screening table can
+    reference the Film Details.
     """
     __tablename__ = 'film_details'
 
@@ -84,3 +85,17 @@ class FilmScreening(db.Model):
     def __repr__(self):
         return '<Film: %r\nScreening: %r>' % (
             self.film.filmName, self.screeningTime)
+
+
+class TicketType(db.Model):
+    """
+    Simple representation of a ticket type i.e. standard, student,
+    OAP, child, etc.
+    """
+    __tablename__ = 'ticket_type'
+
+    id = Column(Integer, primary_key=True)
+    ticketType = Column(String(16), unique=True)
+
+    def __repr__(self):
+        return '<Ticket Type %r>' % (self.ticketType)
