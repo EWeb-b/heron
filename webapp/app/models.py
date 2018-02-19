@@ -1,5 +1,6 @@
 from app import db
 from sqlalchemy import Column, DateTime, String, Integer, ForeignKey, Boolean
+from sqlalchemy.orm import relationship, backref
 
 
 class Account(db.Model):
@@ -63,6 +64,7 @@ class FilmDetails(db.Model):
     filmDirector = Column(String(255))
     filmActor = Column(String(255))
     filmCertificate = Column(Integer, ForeignKey(Certificate.id))
+    screening = relationship('FilmScreening', backref='film')
 
     def __repr__(self):
         return '<Film Name: %r>' % (self.filmName)
@@ -77,4 +79,8 @@ class FilmScreening(db.Model):
 
     id = Column(Integer, primary_key=True)
     screeningFilm = Column(Integer, ForeignKey(FilmDetails.id))
-    screeningTime = Column
+    screeningTime = Column(DateTime)
+
+    def __repr__(self):
+        return '<Film: %r\nScreening: %r>' % (
+            self.film.filmName, self.screeningTime)
