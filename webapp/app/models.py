@@ -33,6 +33,15 @@ class Profile(db.Model):
     name = sb.Column(db.String(255))
 
 
+class Certificate(db.Model):
+    """
+    Simple table to store film certificates
+    """
+    __tablename__ = "certificate"
+
+    cert = db.Column(db.String(4), primary_key=True, unique=True)
+
+
 # from sqlalchemy.inspection import inspect
 
 
