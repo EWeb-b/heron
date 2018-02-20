@@ -1,0 +1,36 @@
+
+
+{% block content %}
+
+<style>
+i{
+  font-family: Arial, serif;
+}
+</style>
+
+<head>
+  <h1 align = "center">Film List</h1>
+</head>
+
+<body>
+
+<table style ="width:100%">
+  <tr>
+    <th>Film Name</th>
+    <th>Certificate</th>
+  </tr>
+
+  <tr>
+      {% for t in filmList %}<br>
+      <td><br>{{ t.film_name }} | {{t.age_certificate}}</td>
+      {% endfor %}
+  </tr>
+
+</table>
+
+</body>
+
+
+
+
+{% endblock %}
