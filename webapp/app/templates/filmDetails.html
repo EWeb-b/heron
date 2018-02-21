@@ -3,34 +3,37 @@
 {% block content %}
 
 <style>
+<head>
 i{
   font-family: Arial, serif;
 }
 </style>
-
-<head>
-  <h1 align = "center">Film List</h1>
+<h1 align = "center">Film List</h1>
 </head>
+
+
 
 <body>
 
-<table style ="width:100%">
+<table>
+  <table style ="width:100%">
+  <table border="10" class="dataframe">
   <tr>
-    <th>Film Name</th>
-    <th>Certificate</th>
+    <th align = "center">Film Name</th>
+    <th align = "center">Certificate</th>
+
   </tr>
 
+  {% for t in filmList %}
   <tr>
-      {% for t in filmList %}<br>
-      <td><br>{{ t.film_name }} | {{t.age_certificate}}</td>
-      {% endfor %}
+    <td>{{ t.film_name }}</td>
+    <td>{{t.age_certificate  }}</td>
   </tr>
+  s
+  {% endfor %}
+
+
 
 </table>
-
 </body>
-
-
-
-
 {% endblock %}
