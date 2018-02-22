@@ -34,7 +34,7 @@ def login():
 
     form = LogInForm()
     if request.method == 'GET':
-        return render_template('login.html', title='Log In', form=form)
+        return render_template('homepage.html', title='Log In', form=form)
 
     elif request.method == 'POST':
         if form.validate_on_submit():
@@ -161,10 +161,10 @@ def change_password():
 #     return render_template(
 #         'film_list.html', title='Film List', filmList=filmList)
 
-@app.route('/Film', methods=['GET', 'POST'])
+@app.route('/Films', methods=['GET', 'POST'])
 def list_films():
     # print list of films stored in FilmDetails databse
-    filmList = models.FilmDetails.query.all()
+    filmDetails = models.FilmDetails.query.all()
 
     return render_template(
-        'filmDetails.html', title='Film List', filmList=filmList)
+        'filmDetails.html', title='Film List', filmDetails=filmDetails)
