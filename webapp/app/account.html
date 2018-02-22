@@ -4,7 +4,7 @@
 
 
 <head>
-  <title>Home</title>
+  <title>Account</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -13,10 +13,10 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body style="height:1500px">
-<nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top">
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
   <form class="form-inline" action="/action_page.php">
-   <input class="mx-auto" type="text" placeholder="Search">
-    <button class="btn btn-success" type="submit">Search</button>
+  <!--  <input class="form-control" type="text" placeholder="Search">
+    <button class="btn btn-success" type="submit">Search</button>-->
 
 </form>
   <a class="navbar-nav" href="#">Heron</a>
@@ -38,23 +38,14 @@
 
 
 
-<pre align = "center">Log into Your Account</pre>
-<form action="" method="post" action="/login" align = "center">
-    {{ form.hidden_tag() }}
-    <br><pre align = "center">Email </pre>
-    <p>{{ form.email }}<br>
-       {% for error in form.email.errors %}
-       <span style="color: red;">{{ error }}</span>
-       {% endfor %}
-    </p>
-    <pre align = "center">  Password </pre>
-    <p>{{ form.password }}<br>
-       {% for error in form.password.errors %}
-       <span style="color: red;">{{ error }}</span>
-       {% endfor %}
-    </p>
-    <button type="submit" class="btn" value="Log In">Log In</button>
-    <br><a align = "center" href="/create_account" style="font-family:Arial, Arial, serif;" >Create Account </a>
-</form>
+
+<div align = "center" class="card" style="width:200px">
+  <img class="img-fluid" src="img_avatar1.png" alt="Card image">
+  <div class="card-body">
+    <h4 class="card-title">John Doe</h4>
+    <p class="card-text">Some example text.</p>
+    <a href="#" class="btn btn-primary">See Profile</a>
+  </div>
+</div>
 
 {% endblock %}
