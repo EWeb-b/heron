@@ -1,64 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-{% block content %}
-
-
-<head>
-  <title>Home</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-</head>
-<body style="height:1500px">
-<nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top">
-  <form class="form-inline" action="/action_page.php">
-   <!--<input class="mx-auto" type="text" placeholder="Search">
-    <button class="btn btn-success" type="submit">Search</button>-->
-
-</form>
-  <a class="navbar-nav" href="/heron/templates/homepage.html"></a>
-     <img href="/heron/templates/homepage.html" src="static/heron1.png" alt="Logo" style="width:60px;">Heron
-     <ul class="navbar-nav">
-     <li class="nav-item">
-     <a class="nav-link" href="/heron/templates/filmDetails.html">Film Details</a>
-    </li>
-    <li class="nav-item">
-     <a class="nav-link" href="#">Screenings</a>
-    </li>
-    <li class="nav-item">
-     <a class="nav-link" href="#">Basket</a>
-    </li>
-   <li class="nav-item">
-     <a class="nav-link"  href="#"><span class="glyphicon glyphicon-user"></span></a>
-   </li>
- </ul>
-</nav>
-
-
-
-
-
-<pre align = "center">Log into Your Account</pre>
-<form action="" method="post" action="/login" align = "center"></br>
-    {{ form.hidden_tag() }}
-    <br><a class= "font-weight-light" align = "center">Email </a>
-    <p>{{ form.email }}<br>
-       {% for error in form.email.errors %}
-       <span style="color: red;">{{ error }}</span>
-       {% endfor %}
-    </p>
-    <a class= "font-weight-light" align = "center">  Password </a>
-    <p>{{ form.password }}<br>
-       {% for error in form.password.errors %}
-       <span style="color: red;">{{ error }}</span>
-       {% endfor %}
-    </p>
-    <button type="submit" class="btn;font-weight-light value="Log In">Log In</button>
-    <br><a align = "center" href="/create_account" class="font-weight-light" >Create Account </a>
-</form>
-
-{% endblock %}
+   {% block content %}
+   <head>
+      <title>Home</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <style>
+         input[type=text] {
+         width: 130px;
+         box-sizing: border-box;
+         border: 2px solid #ccc;
+         border-radius: 4px;
+         font-size: 16px;
+         background-color: white;
+         background-image: url('searchicon.png');
+         background-position: 10px 10px;
+         background-repeat: no-repeat;
+         padding: 12px 20px 12px 40px;
+         -webkit-transition: width 0.4s ease-in-out;
+         transition: width 0.4s ease-in-out;
+         }
+         input[type=text]:focus {
+         width: 100%;
+         }
+      </style>
+   </head>
+   <body style="height:1500px">
+      <nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top">
+         <form class="form-inline" action="/action_page.php">
+            <!--<input class="mx-auto" type="text" placeholder="Search">
+               <button class="btn btn-success" type="submit">Search</button>-->
+            <input type="text" name="search" placeholder="Search..">
+         </form>
+         <a class="navbar-nav" href="#"></a>
+         <img href="/heron/templates/homepage.html" src="static/heron1.png" alt="Logo" style="width:40px;">Heron
+         <ul class="navbar-nav">
+            <li class="nav-item">
+               <a class="nav-link" href="/heron/templates/filmDetails.html">Film Details</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="#">Screenings</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="#">Basket</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link"  href="#"><span class="glyphicon glyphicon-user"></span></a>
+            </li>
+         </ul>
+      </nav>
+      <pre align = "center">Log into Your Account</pre>
+      <form action="" method="post" action="/login" align = "center">
+         {{ form.hidden_tag() }}
+         <br><a class= "font-weight-light" align = "center">Email </a>
+         <p>{{ form.email }}<br>
+            {% for error in form.email.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+         </p>
+         <a class= "font-weight-light" align = "center">  Password </a>
+         <p>{{ form.password }}<br>
+            {% for error in form.password.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+         </p>
+         <button type="submit" class="btn;font-weight-light value="Log In">Log In</button>
+         <br><a align = "center" href="/create_account" class="font-weight-light" >Create Account </a>
+      </form>
+      {% endblock %}
