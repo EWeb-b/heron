@@ -168,3 +168,6 @@ def list_films():
 
     return render_template(
         'filmDetails.html', title='Film List', filmDetails=filmDetails)
+
+# @app.route('/screenings', methods=['GET', 'POST'])
+# def screenings():
