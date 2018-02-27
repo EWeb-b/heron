@@ -39,48 +39,13 @@ tab1 { padding-left: 4em; }
        <span style="color: red;">{{ error }}</span>
        {% endfor %}
     </p>
-    <a><tab1>  Forename: </a></tab1>
-    <p>{{ form.forename }}<br>
-       {% for error in form.forename.errors %}
+    <a><tab1> Confirm Password: </a></tab1>
+    <p>{{ form.passwordCheck }}<br>
+       {% for error in form.passwordCheck.errors %}
        <span style="color: red;">{{ error }}</span>
        {% endfor %}
     </p>
-    <a>  Surname: </a>
-    <p>{{ form.surname }}<br>
-       {% for error in form.surname.errors %}
-       <span style="color: red;">{{ error }}</span>
-       {% endfor %}
-    </p>
-    <a>  Date of Birth: </a>
-    <p>{{ form.date_of_birth }}<br>
-       {% for error in form.date_of_birth.errors %}
-       <span style="color: red;">{{ error }}</span>
-       {% endfor %}
-    </p>
-    <a>  Card Number: </a>
-    <p>{{ form.card_number }}<br>
-       {% for error in form.card_number.errors %}
-       <span style="color: red;">{{ error }}</span>
-       {% endfor %}
-    </p>
-    <a>  CVC: </a>
-    <p>{{ form.cvc }}<br>
-       {% for error in form.cvc.errors %}
-       <span style="color: red;">{{ error }}</span>
-       {% endfor %}
-    </p>
-    <a>  Expiry Date Month: </a>
-    <p>{{ form.expiry_date_month }}<br>
-       {% for error in form.expiry_date_month.errors %}
-       <span style="color: red;">{{ error }}</span>
-       {% endfor %}
-    </p>
-    <a>  Expiry Date Year: </a>
-    <p>{{ form.expiry_date_year }}<br>
-       {% for error in form.expiry_date_year.errors %}
-       <span style="color: red;">{{ error }}</span>
-       {% endfor %}
-    </p>
+
     <p><input class = "button; font-weight-light" type="submit" value="Create"></p>
     <a href="/login" align = "center" href="/create_account" class="font-weight-light" >Already have an account? </a>
 </form>

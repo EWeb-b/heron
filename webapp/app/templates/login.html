@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block content %}
+
+
+      <div>
+       <!-- <pre align = "center">Log into Your Account</pre></br> -->
+       <form action="" method="post" action="/login" align = "center">
+         {{ form.hidden_tag() }}
+         <a class= "font-weight-light" align = "center">Email </a>
+         <p>{{ form.email }}<br>
+            {% for error in form.email.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+         </p>
+         <a class= "font-weight-light" align = "center">Password </a>
+         <p>{{ form.password }}<br>
+            {% for error in form.password.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+         </p>
+         <button type="submit" class="btn; font-weight-light" value="Log In">Log In</button></br>
+         <br><button type="button" align="center" class="btn btn-danger" data-toggle="collapse" data-target="#demo">Create Account</button>
+         <div id="demo" class="collapse">
+           /create_account information should be here
+         </div>
+
+
+      </form>
+    </div>
+      {% endblock %}
