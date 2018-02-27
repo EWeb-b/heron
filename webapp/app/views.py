@@ -3,7 +3,7 @@ from flask import (
     make_response, session)
 from app import app, db, models
 from .forms import CreateAccountForm, ChangePasswordForm, LogInForm
-from .models import UserInfo, FilmDetails, FilmScreenings
+from .models import Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
 import datetime
@@ -20,13 +20,19 @@ login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
-    return UserInfo.query.filter(UserInfo.id == int(user_id)).first()
+    return Account.query.filter(Account.id == int(user_id)).first()
 
 
 @app.route('/')
 @app.route('/index')
 def index():
     return redirect('/login')
+
+@app.route('/home')
+def home():
+    return render_template(
+        'home.html', title='Heron Home')
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -39,15 +45,14 @@ def login():
     elif request.method == 'POST':
         if form.validate_on_submit():
             # sets user to email in database
-            user = UserInfo.query.filter_by(email=form.email.data).first()
+            user = Account.query.filter_by(email=form.email.data).first()
             if user:  # if user exists
                 # checks password with database
                 if user.password == form.password.data:
                     login_user(user)  # logs in
                     flash("Logged in successfully")
                     logging.info('%s logged in successfully', user.email)
-                    return redirect('/account')
-
+                    return redirect('/profile')
                 else:
                     flash("Incorrect Password")
                     logging.warning('User entered the wrong password')
@@ -71,31 +76,34 @@ def create_account():
             'create_account.html', title='Create Account', form=form)
 
     elif request.method == 'POST':
+        print("POST METHOD")
         if form.validate_on_submit():
+            print("FORM VALID")
             # storedUser and newuser are not the same - keep them separate
-            storedUser = User.query.filter_by(email=form.email.data).first()
+            storedUser = Account.query.filter_by(email=form.email.data).first()
+            print(storedUser)
             if storedUser is not None:
+                print("foo")
                 flash("That email has already been used, try a different one")
                 return redirect('/create_account')
             else:
-                newuser = UserInfo(
-                    form.email.data,
-                    form.password.data,
-                    form.forename.data,
-                    form.surname.data,
-                    form.date_of_birth.data,
-                    form.card_number.data,
-                    form.cvc.data,
-                    form.expiry_date_month.data,
-                    form.expiry_date_year.data)
-
-                db.session.add(newuser)
-                db.session.commit()
-                login_user(newuser)
-
-                flash("Account created successfully")
-                logging.info('New account created. Email: %s', newuser.email)
-                return redirect('/account')
+                print("bar")
+                if form.password.data == form.passwordCheck.data :
+                    print("password matched")
+                    newuser = Account(
+                        email=form.email.data,
+                        password=form.password.data,
+                        staff=False)
+                    db.session.add(newuser)
+                    db.session.commit()
+                    login_user(newuser)
+                    flash("Account created successfully")
+                    logging.info('New account created. Email: %s', newuser.email)
+                    return redirect('/profile')
+                else:
+                    print("passed didnt match")
+                    flash("Passwords don't match")
+                    return redirect('/create_account')
 
         else:  # when there's an error validating
             flash("Error creating your account, please try again")
@@ -107,12 +115,11 @@ def create_account():
 @login_required
 def logout():
     # need the name variable otherwise logging does not work
-    name = current_user.email
+    name_email = current_user.email
     logout_user()
-    logging.info('User %s logged out', name)
+    logging.info('User %s logged out', name_email)
     flash("Logged out successfully")
-
-    logging.info('%s logged out successfully', email)
+    logging.info('%s logged out successfully', name_email)
     return redirect('/login')
 
 
@@ -130,13 +137,11 @@ def change_password():
             if current_user.password == form.prev_password.data:
                 current_user.password = form.new_password.data
                 db.session.commit()
-
                 flash('Password changed successfully')
                 logging.info(
                     '%s successfully changed their password',
                     current_user.email)
                 return redirect('/logout')
-
             else:
                 flash('Previous Password is incorrect')
                 logging.warning(
@@ -144,7 +149,6 @@ def change_password():
                     'is incorrect',
                     current_user.email)
                 return redirect('/change_password')
-
         else:
             flash('Inputs Missing')
             logging.warning(
@@ -153,10 +157,16 @@ def change_password():
             return redirect('/change_password')
 
 
-@app.route('/list_films', methods=['GET', 'POST'])
+@app.route('/filmDetails', methods=['GET', 'POST'])
 def list_films():
     # print list of films stored in FilmDetails databse
-    filmList = models.FilmDetails.query.all()
+    filmDetails = models.FilmDetails.query.all()
+    #userList = models.Account.query.all()
+    return render_template(
+        'filmDetails.html', title='Film List', filmDetails=filmDetails)#, userList=userList)
+
+@app.route('/profile', methods=['GET'])
+def profile():
 
     return render_template(
-        'film_list.html', title='Film List', filmList=filmList)
+        'profile.html', title='User Profile')

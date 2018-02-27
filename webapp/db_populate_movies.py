@@ -5,28 +5,25 @@ import json
 
 sampleData = [
     {
-      "age_certificate": 12, 
-      "blurb": "Home alone, but on mars.", 
-      "director": "Ridley Scott", 
-      "film_name": "The Martian", 
-      "id": 1, 
-      "lead_actor": "Matt Damon"
-    }, 
+      "filmCertificate": 12,
+      "filmBlurb": "Home alone, but on mars.",
+      "filmDirector": "Ridley Scott",
+      "filmName": "The Martian",
+      "filmActor": "Matt Damon"
+    },
     {
-      "age_certificate": 1, 
-      "blurb": "Professor has unusually productive sabatical.", 
-      "director": "Steven Spielberg", 
-      "film_name": "Raiders of the Lost Ark", 
-      "id": 2, 
-      "lead_actor": "Harrison Ford"
-    }, 
+      "filmCertificate": 1,
+      "filmBlurb": "Professor has unusually productive sabatical.",
+      "filmDirector": "Steven Spielberg",
+      "filmName": "Raiders of the Lost Ark",
+      "filmActor": "Harrison Ford"
+    },
     {
-      "age_certificate": 15, 
-      "blurb": "Professor finds a shiny head.", 
-      "director": "Steven Spielberg", 
-      "film_name": "Indiana Jones and the Kingdom of the Crystal Skull", 
-      "id": 3, 
-      "lead_actor": "Harrison Ford"
+      "filmCertificate": 15,
+      "filmBlurb": "Professor finds a shiny head.",
+      "filmDirector": "Steven Spielberg",
+      "filmName": "Indiana Jones and the Kingdom of the Crystal Skull",
+      "filmActor": "Harrison Ford"
     }
     ]
 
