@@ -42,9 +42,10 @@
            <img href="/heron/templates/homepage.html" src="static/heron1.png" alt="Logo" style="width:60px;">
         </li>
         <li><a class="nav-link" href="/home">Heron</a></li>
-        <li><a class="nav-link" href="/Films">Film Details</a></li>
-        <li><a class="nav-link" href="/Screenings">Screenings</a></li>
+        <li><a class="nav-link" href="/filmDetails">Film Details</a></li>
+        <li><a class="nav-link" href="/screenings">Screenings</a></li>
         <li><a class="nav-link" href="/login">Login</a></li>
+        <li><a class="nav-link" href="/logout">Logout</a></li>
       </ul>
 
      <ul class="nav navbar-nav ml-auto">
@@ -57,6 +58,8 @@
      </ul>
   </nav>
   <div>
-  {% block content %}{% endblock %}
+    <center>
+      {% block content %}{% endblock %}
+    </center>
   </div>
   </html>

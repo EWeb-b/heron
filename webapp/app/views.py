@@ -115,11 +115,11 @@ def create_account():
 @login_required
 def logout():
     # need the name variable otherwise logging does not work
-    name = current_user.email
+    name_email = current_user.email
     logout_user()
-    logging.info('User %s logged out', email)
+    logging.info('User %s logged out', name_email)
     flash("Logged out successfully")
-    logging.info('%s logged out successfully', email)
+    logging.info('%s logged out successfully', name_email)
     return redirect('/login')
 
 
@@ -157,13 +157,13 @@ def change_password():
             return redirect('/change_password')
 
 
-@app.route('/films', methods=['GET', 'POST'])
+@app.route('/filmDetails', methods=['GET', 'POST'])
 def list_films():
     # print list of films stored in FilmDetails databse
     filmDetails = models.FilmDetails.query.all()
-    userList = models.Account.query.all()
+    #userList = models.Account.query.all()
     return render_template(
-        'filmDetails.html', title='Film List', filmDetails=filmDetails, userList=userList)
+        'filmDetails.html', title='Film List', filmDetails=filmDetails)#, userList=userList)
 
 @app.route('/profile', methods=['GET'])
 def profile():
