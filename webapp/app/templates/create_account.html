@@ -1,70 +1,52 @@
 
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+   {% block content %}
+   <head>
+      <title>Create Account</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   </head>
+
+
+
 <style>
 i{
   font-family:"Arial", Arial, serif;
 }
+tab1 { padding-left: 4em; }
 </style>
 
-<h2 align = "center">Create an Account</h2>
+<a align = "center">Create an Account</a>
 <form action="/create_account" method="POST">
     {{ form.hidden_tag() }}
-    <h5> Email </h5>
+    <a><tab1> Email: </a></tab1>
     <p>{{ form.email }}<br>
        {% for error in form.email.errors %}
        <span style="color: red;">{{ error }}</span>
        {% endfor %}
     </p>
-    <h5>  Password </h5>
+    <a><tab1>  Password: </a></tab1>
     <p>{{ form.password }}<br>
        {% for error in form.password.errors %}
        <span style="color: red;">{{ error }}</span>
        {% endfor %}
     </p>
-    <h5>  Forename </h5>
-    <p>{{ form.forename }}<br>
-       {% for error in form.forename.errors %}
+    <a><tab1> Confirm Password: </a></tab1>
+    <p>{{ form.passwordCheck }}<br>
+       {% for error in form.passwordCheck.errors %}
        <span style="color: red;">{{ error }}</span>
        {% endfor %}
     </p>
-    <h5>  Surname </h5>
-    <p>{{ form.surname }}<br>
-       {% for error in form.surname.errors %}
-       <span style="color: red;">{{ error }}</span>
-       {% endfor %}
-    </p>
-    <h5>  Date of Birth </h5>
-    <p>{{ form.date_of_birth }}<br>
-       {% for error in form.date_of_birth.errors %}
-       <span style="color: red;">{{ error }}</span>
-       {% endfor %}
-    </p>
-    <h5>  Card Number </h5>
-    <p>{{ form.card_number }}<br>
-       {% for error in form.card_number.errors %}
-       <span style="color: red;">{{ error }}</span>
-       {% endfor %}
-    </p>
-    <h5>  CVC </h5>
-    <p>{{ form.cvc }}<br>
-       {% for error in form.cvc.errors %}
-       <span style="color: red;">{{ error }}</span>
-       {% endfor %}
-    </p>
-    <h5>  Expiry Date Month </h5>
-    <p>{{ form.expiry_date_month }}<br>
-       {% for error in form.expiry_date_month.errors %}
-       <span style="color: red;">{{ error }}</span>
-       {% endfor %}
-    </p>
-    <h5>  Expiry Date Year </h5>
-    <p>{{ form.expiry_date_year }}<br>
-       {% for error in form.expiry_date_year.errors %}
-       <span style="color: red;">{{ error }}</span>
-       {% endfor %}
-    </p>
-    <p><input class = "button" type="submit" value="Create"></p>
-    <a href="/login" style="font-family:Times New Roman, Times, serif;" >Already have an account? </a>
-</form>
 
+    <p><input class = "button; font-weight-light" type="submit" value="Create"></p>
+    <a href="/login" align = "center" href="/create_account" class="font-weight-light" >Already have an account? </a>
+</form>
 {% endblock %}

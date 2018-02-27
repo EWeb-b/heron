@@ -10,48 +10,48 @@ from wtforms.fields import (
 
 
 class LogInForm(Form):
-    email = StringField('Email', validators=[DataRequired()])
+    email = StringField(
+        'Email', [validators.DataRequired(), validators.Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Log In')
 
 
 class CreateAccountForm(Form):
     email = EmailField(
-        'Email Address', [validators.DataRequired(), validators.Email()])
-
+        'Email', [validators.DataRequired(), validators.Email()])
     password = PasswordField('Password', validators=[DataRequired()])
+    passwordCheck = PasswordField('Password Confirmation', validators=[DataRequired()])
+    submit = SubmitField('Register')
+
+class Profile(Form):
     forename = StringField('Forename', validators=[DataRequired()])
     surname = StringField('Surname', validators=[DataRequired()])
-    date_of_birth = DateField(
-        'Date of Birth', format='%d/%m/%Y', validators=[DataRequired()])
+
+class CardDetails(Form):
     card_number = IntegerField(
         'Card Number',
         [validators.DataRequired(), validators.Regexp(r'[0-9]{16}$')])
-
     cvc = IntegerField(
         'CVC',
         [validators.DataRequired(), validators.Regexp(r'[0-9]{3}$')])
-
     expiry_date_month = DateField(
-        'Expiry Date',
+        'Expiry Date Month',
         [validators.DataRequired, validators.NumberRange(min=1, max=12)])
-
     expiry_date_year = IntegerField(
         'Expiry Date Year',
         [validators.DataRequired, validators.NumberRange(min=2018)])
-
     submit = SubmitField('Register')
 
 
 class ChangePasswordForm(Form):
     prev_password = PasswordField(
         'Previous Password', validators=[DataRequired()])
-    new_password = PasswordField('new_password', validators=[DataRequired()])
+    new_password = PasswordField(
+        'new_password', validators=[DataRequired()])
     confirmation = PasswordField(
         'confirmation',
-        validators=[
-            DataRequired(),
-            EqualTo('new_password', message='Passwords need to match')])
+        validators=[DataRequired(),EqualTo(
+            'new_password', message='Passwords need to match')])
     submit = SubmitField('Change Password')
 
 
@@ -63,17 +63,13 @@ class OrderTickets(Form):
     standard_tickets = IntegerField(
         'Standard Tickets',
         [validators.DataRequired(), validators.NumberRange(max=10)])
-
     oap_tickets = IntegerField(
         'OAP Tickets',
         [validators.DataRequired(), validators.NumberRange(max=10)])
-
     child_tickets = IntegerField(
         'Child Tickets',
         [validators.DataRequired(), validators.NumberRange(max=10)])
-
     cvc_check = IntegerField(
         'CVC Security Check',
         [validators.DataRequired(), validators.Regexp(r'[0-9]{3}$')])
-        
     submit = SubmitField('Order Tickets')
