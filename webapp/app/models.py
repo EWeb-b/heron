@@ -21,6 +21,19 @@ class Account(db.Model):
     def __repr__(self):
         return '<User: %r>' % (self.email)
 
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return true
+
+    def is_anonymous(self):
+        return false
+
+    def get_id(self):
+        return str(self.id)
+        
+
 
 class Profile(db.Model):
     """

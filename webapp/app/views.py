@@ -91,8 +91,9 @@ def create_account():
                 if form.password.data == form.passwordCheck.data :
                     print("password matched")
                     newuser = Account(
-                        form.email.data,
-                        form.password.data)
+                        email=form.email.data,
+                        password=form.password.data,
+                        staff=False)
                     db.session.add(newuser)
                     db.session.commit()
                     login_user(newuser)
@@ -156,7 +157,7 @@ def change_password():
             return redirect('/change_password')
 
 
-@app.route('/Films', methods=['GET', 'POST'])
+@app.route('/films', methods=['GET', 'POST'])
 def list_films():
     # print list of films stored in FilmDetails databse
     filmDetails = models.FilmDetails.query.all()
@@ -164,7 +165,7 @@ def list_films():
     return render_template(
         'filmDetails.html', title='Film List', filmDetails=filmDetails, userList=userList)
 
-@app.route('/Profile', methods=['GET'])
+@app.route('/profile', methods=['GET'])
 def profile():
 
     return render_template(
