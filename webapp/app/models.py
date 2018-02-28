@@ -121,7 +121,7 @@ class TicketType(db.Model):
 class Card(db.Model):
     """
     Representation of a debit/credit card.
-    Using strings instead of integer for some fields for the hashes
+    Need to hash fields.
     """
     __tablename__= 'card'
 
