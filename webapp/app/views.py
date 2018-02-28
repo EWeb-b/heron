@@ -178,7 +178,7 @@ def add_card():
                     cvc = generate_password_hash(form.cvc.data),
                     expiry_date_month = generate_password_hash(form.expiry_date_month.data),
                     expiry_date_year = generate_password_hash(form.expiry_date_year.data),
-                    profile = current_user.id
+                    profile_id = current_user.id
                 )
                 db.session.add(newCard)
                 db.session.commit()
