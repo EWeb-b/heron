@@ -1,31 +1,9 @@
 
 <!DOCTYPE html>
-<html lang="en">
-   {% block content %}
-   <head>
-      <title>Create Account</title>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends "base.html" %}
+{% block content %}
 
-   </head>
-
-
-
-<style>
-i{
-  font-family:"Arial", Arial, serif;
-}
-tab1 { padding-left: 4em; }
-</style>
-
-<a align = "center">Create an Account</a>
-<form action="/create_account" method="POST">
+<form action="/create_account" method="POST" style="margin-top: 100px">
     {{ form.hidden_tag() }}
     <a><tab1> Email: </a></tab1>
     <p>{{ form.email }}<br>
@@ -46,7 +24,7 @@ tab1 { padding-left: 4em; }
        {% endfor %}
     </p>
 
-    <p><input class = "button; font-weight-light" type="submit" value="Create"></p>
-    <a href="/login" align = "center" href="/create_account" class="font-weight-light" >Already have an account? </a>
+    <p><input class = "btn btn-success" type="submit" value="Create Account" style="margin-top: 5px"></p>
+    <a href="/login" align = "center" class="font-weight-light" >Already have an account? </a>
 </form>
 {% endblock %}

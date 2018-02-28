@@ -26,7 +26,7 @@ def load_user(user_id):
 @app.route('/')
 @app.route('/index')
 def index():
-    return redirect('/login')
+    return redirect('/home')
 
 @app.route('/home')
 def home():
@@ -41,7 +41,6 @@ def login():
     form = LogInForm()
     if request.method == 'GET':
         return render_template('login.html', title='Log In', form=form)
-
     elif request.method == 'POST':
         if form.validate_on_submit():
             # sets user to email in database
