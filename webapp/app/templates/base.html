@@ -19,7 +19,7 @@
 
 <style>
   body {
-      font-family: Arial;
+      font-family: Arial, Helvetica, sans-serif;
   }
 
   * {
@@ -30,13 +30,13 @@
       background: #f1f1f1;
       border: none;
       padding: 10px 15px;
-      font-size: 20px;
+      font-size: 15px;
       cursor: pointer;
   }
 
-  .openBtn:hover {
+  /* .openBtn:hover {
       background: #bbb;
-  }
+  } */
 
   .overlay {
       height: 100%;
@@ -68,9 +68,9 @@
       color: white;
   }
 
-  .overlay .closebtn:hover {
+  /* .overlay .closebtn:hover {
       color: #ccc;
-  }
+  } */
 
   .overlay input[type=text] {
       padding: 15px;
@@ -89,15 +89,15 @@
       float: left;
       width: 20%;
       padding: 15px;
-      background: #ddd;
+      /* background: #ddd; */
       font-size: 17px;
       border: none;
       cursor: pointer;
   }
 
-  .overlay button:hover {
+  /* .overlay button:hover {
       background: #bbb;
-  }
+  } */
   </style>
 
 
@@ -107,7 +107,7 @@
         <li class="nav-item">
            <a href="/home"><img src="static/heron1.png" alt="Logo" style="width:60px;"></a>
         </li>
-      
+
         <li><a class="nav-link" href="/Films">Film Details</a></li>
         <li><a class="nav-link" href="/Screenings">Screenings</a></li>
         <li><a class="nav-link" href="/login">Login</a></li>
@@ -121,17 +121,15 @@
              <a href="/Profile"><img src="static/avatar-default.png" alt="User" style="width:40px;"></a>
           </li>
 
-          </a>
 
 
 
-
-        <li class="nav-item>"><form class="form-inline" action="/action_page.php">
+        <!-- <li class="nav-item>"><form class="form-inline" action="/action_page.php">
 
 
 
           </form>
-        </li>
+        </li> -->
         <div id="myOverlay" class="overlay">
   <span class="closebtn" onclick="closeSearch()" title="Close Overlay">×</span>
   <div class="overlay-content">
