@@ -1,7 +1,7 @@
 from app import db
 from sqlalchemy import Column, DateTime, String, Integer, ForeignKey, Boolean
 from sqlalchemy.orm import relationship, backref
-
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class Account(db.Model):
     """
@@ -32,7 +32,7 @@ class Account(db.Model):
 
     def get_id(self):
         return str(self.id)
-        
+
 
 
 class Profile(db.Model):

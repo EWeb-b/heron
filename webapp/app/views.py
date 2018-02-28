@@ -8,6 +8,8 @@ from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
 import datetime
 import logging
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 logging.basicConfig(
     filename='website.log', format='%(asctime)s%(levelname)s:%(message)s',
@@ -47,7 +49,8 @@ def login():
             user = Account.query.filter_by(email=form.email.data).first()
             if user:  # if user exists
                 # checks password with database
-                if user.password == form.password.data:
+                if (check_password_hash(user.password, form.password.data)):
+                    print(user.password)
                     login_user(user)  # logs in
                     flash("Logged in successfully")
                     logging.info('%s logged in successfully', user.email)
@@ -90,9 +93,10 @@ def create_account():
                 if form.password.data == form.passwordCheck.data :
                     print("password matched")
                     newuser = Account(
-                        email=form.email.data,
-                        password=form.password.data,
-                        staff=False)
+                        email = form.email.data,
+                        password = generate_password_hash(form.password.data),
+                        staff = False)
+                    print(newuser.password)
                     db.session.add(newuser)
                     db.session.commit()
                     login_user(newuser)
