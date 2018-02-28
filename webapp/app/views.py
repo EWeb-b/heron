@@ -6,7 +6,8 @@ from .forms import CreateAccountForm, ChangePasswordForm, LogInForm, CardDetails
 from .models import Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType, Card
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
-import datetime, hashlib
+import datetime
+import hashlib
 import logging
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -20,6 +21,8 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 # Uses Knuth's Multiplicative Method to hash numbers
+
+
 def hashNumber(numberToBeHashed):
     string = str(numberToBeHashed)
     hashedNumber = print(hashlib.md5(string.encode('utf-8')).hexdigest())
@@ -36,11 +39,11 @@ def load_user(user_id):
 def index():
     return redirect('/home')
 
+
 @app.route('/home')
 def home():
     return render_template(
         'home.html', title='Heron Home')
-
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -96,19 +99,20 @@ def create_account():
                 return redirect('/create_account')
             else:
                 print("bar")
-                if form.password.data == form.passwordCheck.data :
+                if form.password.data == form.passwordCheck.data:
                     print("password matched")
                     newuser = Account(
-                        email = form.email.data,
-                        password = generate_password_hash(form.password.data),
-                        staff = False)
+                        email=form.email.data,
+                        password=generate_password_hash(form.password.data),
+                        staff=False)
                     print(newuser.password)
                     db.session.add(newuser)
                     db.session.commit()
                     login_user(newuser)
                     print(current_user.id)
                     flash("Account created successfully")
-                    logging.info('New account created. Email: %s', newuser.email)
+                    logging.info('New account created. Email: %s',
+                                 newuser.email)
                     return redirect('/profile')
                 else:
                     print("passed didnt match")
@@ -181,12 +185,12 @@ def add_card():
             if (check_password_hash(current_user.password, form.password.data)):
                 print('passwords match')
                 newCard = Card(
-                    name_on_card = form.name_on_card.data,
-                    billing_address = form.billing_address.data,
-                    card_number = hashNumber(form.card_number.data),
-                    cvc = hashNumber(form.cvc.data),
-                    expiry_date_month = hashNumber(form.expiry_date_month.data),
-                    expiry_date_year = hashNumber(form.expiry_date_year.data)
+                    name_on_card=form.name_on_card.data,
+                    billing_address=form.billing_address.data,
+                    card_number=hashNumber(form.card_number.data),
+                    cvc=hashNumber(form.cvc.data),
+                    expiry_date_month=hashNumber(form.expiry_date_month.data),
+                    expiry_date_year=hashNumber(form.expiry_date_year.data)
                 )
                 print('card created not added')
                 db.session.add(newCard)
@@ -203,13 +207,32 @@ def add_card():
             return redirect('/add_card')
 
 
-@app.route('/filmDetails', methods=['GET', 'POST'])
+@app.route('/order_ticket', methods=['GET', 'POST'])
+def orderTicket():
+
+    film = models.FilmDetails.query.filter_by(film.filmName).first
+
+    return render_template(
+        'order_ticket.html', title='Tickets', film=film)
+
+
+@app.route('/film_info', methods=['GET', 'POST'])
+def film_details():
+    passed = request.args.get('passed', None)
+    film = models.FilmDetails.query.filter_by(filmName=passed).first_or_404()
+
+    return render_template(
+        'filmInfo.html', title='Film Details', film=film)
+
+
+@app.route('/film_details', methods=['GET', 'POST'])
 def list_films():
     # print list of films stored in FilmDetails databse
     filmDetails = models.FilmDetails.query.all()
-    #userList = models.Account.query.all()
+    # userList = models.Account.query.all()
     return render_template(
-        'filmDetails.html', title='Film List', filmDetails=filmDetails)#, userList=userList)
+        'filmDetails.html', title='Film List', filmDetails=filmDetails)
+
 
 @app.route('/profile', methods=['GET'])
 def profile():

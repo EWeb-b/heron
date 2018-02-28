@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+  {% extends "base.html" %}
+   {% block content %}
+<style>
+   h3 {
+       color: #979497
+   }
+   body {
+       color: #4582EC
+   }
+   .image {
+     margin-left:2%;
+     float:left;
+     height:450px;
+     width:300px;
+   }
+   }
+   .container {
+    color: #4582EC;
+    background-color: #4582EC;
+   	width:100%;
+   	height:auto;
+   	padding:1%;
+   }
+   .btn {
+      background-color:#4582EC;
+    }
+
+</style>
+  <body>
+      <div class="container">
+        <div>
+            <img src="/static/portraits/{{film.filmName}}.jpg" alt="Film Image" class="image"></a>
+        </div>
+
+        <div style='margin-right:-20px'>
+          <h3>Film Name</h3>
+         <div>
+           {{film.filmName}}
+         </div>
+         <h3>Blurb</h3>
+         <div>
+           {{film.filmBlurb}}
+         </div>
+         <h3>Film Certificate</h3>
+         <div>
+           {{film.filmCertificate}}
+         </div>
+         <h3>Director</h3>
+         <div>
+           {{film.filmDirector}}
+         </div>
+         <h3>Lead Actor</h3>
+         <div>
+           {{film.filmActor}}
+         </div>
+
+      </div>
+      <div>
+    </div>
+  </div>
+    <a href="{{ url_for('orderTicket', passed='{{film.filmName}}') }}">
+    <button name="test" type=button  class="btn btn-default" style="margin-top: 50px">Buy Tickets</button></a>
+  </div>
+   </body>
+</html>
+{% endblock %}
