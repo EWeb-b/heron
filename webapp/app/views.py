@@ -2,7 +2,7 @@ from flask import (
     render_template, flash, redirect, request, Flask, url_for,
     make_response, session)
 from app import app, db, models
-from .forms import CreateAccountForm, ChangePasswordForm, LogInForm
+from .forms import CreateAccountForm, ChangePasswordForm, LogInForm, CardDetails
 from .models import Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
@@ -100,6 +100,7 @@ def create_account():
                     db.session.add(newuser)
                     db.session.commit()
                     login_user(newuser)
+                    print(current_user.id)
                     flash("Account created successfully")
                     logging.info('New account created. Email: %s', newuser.email)
                     return redirect('/profile')
@@ -159,6 +160,7 @@ def change_password():
                 current_user.email)
             return redirect('/change_password')
 
+
 @app.route('/add_card', methods=['GET', 'POST'])
 @login_required
 def add_card():
@@ -180,7 +182,8 @@ def add_card():
                 )
                 db.session.add(newCard)
                 db.session.commit()
-                return redirect('add_card')
+                print('successfully added card(?)')
+                return redirect('/add_card')
 
 
 

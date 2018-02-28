@@ -129,7 +129,7 @@ class Card(db.Model):
     cvc = Column(String(250))
     expiry_date_month = Column(String(250))
     expiry_date_year = Column(String(250))
-    profile_id = Column(Integer, ForeignKey('profile.id'))
+    profile_id = Column(Integer, ForeignKey('profile.account'))
 
     def __repr__(self):
         return '' % (self.id,

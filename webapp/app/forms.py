@@ -45,7 +45,7 @@ class CardDetails(Form):
     expiry_date_year = IntegerField(
         'Expiry Date Year',
         [validators.DataRequired, validators.NumberRange(min=2018)])
-    submit = SubmitField('Register')
+    submit = SubmitField('Add Card')
 
 
 class ChangePasswordForm(Form):
