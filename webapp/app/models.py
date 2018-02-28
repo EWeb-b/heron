@@ -43,9 +43,10 @@ class Profile(db.Model):
     """
     __tablename__ = 'profile'
 
-    account = Column(Integer, ForeignKey(Account.id), primary_key=True)
     forename = Column(String(255))
     surname = Column(String(255))
+    account = Column(Integer, ForeignKey(Account.id), primary_key=True)
+    profile_cards = db.relationship('Card', backref='profile', lazy='dynamic')
 
     def __repr__(self):
         return '<Profile: %r>' % (self.name)
@@ -113,6 +114,32 @@ class TicketType(db.Model):
 
     def __repr__(self):
         return '<Ticket Type %r>' % (self.ticketType)
+
+class Card(db.Model):
+    """
+    Representation of a debit/credit card.
+    Using strings instead of integer for some fields for the hashes
+    """
+    __tablename__= 'card'
+
+    id = Column(Integer, primary_key=True)
+    name_on_card = Column(String(250))
+    billing_address = Column(String(250))
+    card_number = Column(String(250))
+    cvc = Column(String(250))
+    expiry_date_month = Column(String(250))
+    expiry_date_year = Column(String(250))
+    profile_id = Column(Integer, ForeignKey('profile.id'))
+
+    def __repr__(self):
+        return '' % (self.id,
+                        self.name_on_card,
+                        self.billing_address,
+                        self.card_number,
+                        self.cvc,
+                        self.expiry_date_month,
+                        self.expiry_date_year,
+                    )
 
 
 # class Ticket(db.Model):

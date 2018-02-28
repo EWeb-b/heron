@@ -28,6 +28,11 @@ class Profile(Form):
     surname = StringField('Surname', validators=[DataRequired()])
 
 class CardDetails(Form):
+    password = PasswordField('Password', validators=[DataRequired()])
+    name_on_card = StringField('Name on Card',
+        validators=[DataRequired()])
+    billing_address = StringField('Billing Address',
+        validators=[DataRequired()])
     card_number = IntegerField(
         'Card Number',
         [validators.DataRequired(), validators.Regexp(r'[0-9]{16}$')])

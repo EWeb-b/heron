@@ -159,6 +159,30 @@ def change_password():
                 current_user.email)
             return redirect('/change_password')
 
+@app.route('/add_card', methods=['GET', 'POST'])
+@login_required
+def add_card():
+    form = CardDetails()
+    if request.method == 'GET':
+        return render_template(
+            'add_card.html', title='Add Card', form=form)
+    elif request.method == 'POST':
+        if form.validate_on_submit():
+            if (check_password_hash(user.password, form.password.data)):
+                newCard = Card(
+                    name_on_card = form.name_on_card.data,
+                    billing_address = form.billing_address.data,
+                    card_number = generate_password_hash(form.card_number.data),
+                    cvc = generate_password_hash(form.cvc.data),
+                    expiry_date_month = generate_password_hash(form.expiry_date_month.data),
+                    expiry_date_year = generate_password_hash(form.expiry_date_year.data),
+                    profile = current_user.id
+                )
+                db.session.add(newCard)
+                db.session.commit()
+                return redirect('add_card')
+
+
 
 @app.route('/filmDetails', methods=['GET', 'POST'])
 def list_films():
