@@ -9,51 +9,153 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<style>
-  input[type=text] {
-  width: 130px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  background-color: white;
-  background-image: url('searchicon.png');
-  background-position: 10px 10px;
-  background-repeat: no-repeat;
-  padding: 12px 20px 12px 40px;
-  -webkit-transition: width 0.4s ease-in-out;
-  transition: width 0.4s ease-in-out;
-  }
-  input[type=text]:focus {
-  width: 100%;
-  }
-</style>
+
+
+
 <body style="height:1500px">
 
+<style>
+  body {
+      font-family: Arial;
+  }
+
+  * {
+      box-sizing: border-box;
+  }
+
+  .openBtn {
+      background: #f1f1f1;
+      border: none;
+      padding: 10px 15px;
+      font-size: 20px;
+      cursor: pointer;
+  }
+
+  .openBtn:hover {
+      background: #bbb;
+  }
+
+  .overlay {
+      height: 100%;
+      width: 100%;
+      display: none;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0, 0.9);
+  }
+
+  .overlay-content {
+      position: relative;
+      top: 46%;
+      width: 80%;
+      text-align: center;
+      margin-top: 30px;
+      margin: auto;
+  }
+
+  .overlay .closebtn {
+      position: absolute;
+      top: 20px;
+      right: 45px;
+      font-size: 60px;
+      cursor: pointer;
+      color: white;
+  }
+
+  .overlay .closebtn:hover {
+      color: #ccc;
+  }
+
+  .overlay input[type=text] {
+      padding: 15px;
+      font-size: 17px;
+      border: none;
+      float: left;
+      width: 80%;
+      background: white;
+  }
+
+  .overlay input[type=text]:hover {
+      background: #f1f1f1;
+  }
+
+  .overlay button {
+      float: left;
+      width: 20%;
+      padding: 15px;
+      background: #ddd;
+      font-size: 17px;
+      border: none;
+      cursor: pointer;
+  }
+
+  .overlay button:hover {
+      background: #bbb;
+  }
+  </style>
 
 
-  <nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top">
+
+  <nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top ">
      <ul class="navbar-nav">
         <li class="nav-item">
-           <img href="/heron/templates/homepage.html" src="static/heron1.png" alt="Logo" style="width:60px;">
+           <a href="/home"><img src="static/heron1.png" alt="Logo" style="width:60px;"></a>
         </li>
-        <li><a class="nav-link" href="/home">Heron</a></li>
+      
         <li><a class="nav-link" href="/Films">Film Details</a></li>
         <li><a class="nav-link" href="/Screenings">Screenings</a></li>
         <li><a class="nav-link" href="/login">Login</a></li>
       </ul>
 
      <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item"><a href="/Profile" class="fa fa-user-circle-o" style="font-size:36px;center"></a></li>
-        <li class="nav-item"><a href="/" class="fa fa-shopping-basket"  style="font-size:36px;center"><a></i>
+          <li class="nav-item">
+             <a href="/home"><img src="static/shopping.png" alt="Basket" style="width:40px;"></a>
+          </li>
+          <li class="nav-item">
+             <a href="/Profile"><img src="static/avatar-default.png" alt="User" style="width:40px;"></a>
+          </li>
+
+          </a>
+
+
+
+
         <li class="nav-item>"><form class="form-inline" action="/action_page.php">
-           <input align="center"  type="text" name="search" placeholder="Search..">
+
+
+
           </form>
         </li>
+        <div id="myOverlay" class="overlay">
+  <span class="closebtn" onclick="closeSearch()" title="Close Overlay">×</span>
+  <div class="overlay-content">
+    <form action="/action_page.php">
+      <input type="text" placeholder="Search.." name="search">
+      <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+  </div>
+</div>
+
+
+<button class="openBtn" onclick="openSearch()"> Search</button>
+
+<script>
+function openSearch() {
+    document.getElementById("myOverlay").style.display = "block";
+}
+
+function closeSearch() {
+    document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+
+
      </ul>
   </nav>
   <div>
