@@ -2,31 +2,66 @@
   {% extends "base.html" %}
    {% block content %}
 <style>
-   body {
-       background-color: #343a40;
-       text-color: #6f42c1;
+   h3 {
+       color: #979497
    }
+   body {
+       color: #4582EC
+   }
+   .image {
+     margin-left:2%;
+     float:left;
+     height:450px;
+     width:300px;
+   }
+   }
+   .container {
+    color: #4582EC;
+    background-color: #4582EC;
+   	width:100%;
+   	height:auto;
+   	padding:1%;
+   }
+   .btn {
+      background-color:#4582EC;
+    }
+
 </style>
-      <div class="container-fluid" style="color: #4582EC" style="margin-top:20px"></div>
+  <body>
       <div class="container">
-         <h2>Film Info</h2>
-         <table class="table table-hover">
-            <thead>
-               <tr class="table-info">
-                  <th>Film Name</th>
-                  <th>Certificate</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td>{{ film.filmName }}</td>
-                  <td>{{ film.filmCertificate  }}</td>
-               </tr>
+        <div>
+            <img src="/static/portraits/{{film.filmName}}.jpg" alt="Film Image" class="image"></a>
+        </div>
 
-            </tbody>
-         </table>
+        <div style='margin-right:-20px'>
+          <h3>Film Name</h3>
+         <div>
+           {{film.filmName}}
+         </div>
+         <h3>Blurb</h3>
+         <div>
+           {{film.filmBlurb}}
+         </div>
+         <h3>Film Certificate</h3>
+         <div>
+           {{film.filmCertificate}}
+         </div>
+         <h3>Director</h3>
+         <div>
+           {{film.filmDirector}}
+         </div>
+         <h3>Lead Actor</h3>
+         <div>
+           {{film.filmActor}}
+         </div>
+
       </div>
-
+      <div>
+    </div>
+  </div>
+  <a href="{{ url_for('order_ticket', passed='{{film.filmName}}') }}">
+    <button class="btn btn-default" style="margin-top: 50px">Buy Tickets</button></a>
+  </div>
    </body>
 </html>
 {% endblock %}

@@ -158,6 +158,15 @@ def change_password():
             return redirect('/change_password')
 
 
+@app.route('/order_ticket', method=['GET', 'POST'])
+def order_ticket():
+    passed = request.args.get('passed', None)
+    film = models.FilmDetails.query.filter_by(filmName=passed).first_or_404()
+
+    return render_template(
+        'order_ticket.html', title='Tickets', film=film)
+
+
 @app.route('/film_info', methods=['GET', 'POST'])
 def film_details():
     passed = request.args.get('passed', None)

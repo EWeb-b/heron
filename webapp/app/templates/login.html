@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
 {% block content %}
-
+<style>
+.btn {
+   background-color:#4582EC;
+ }
+ </style>
 
       <div>
        <!-- <pre align = "center">Log into Your Account</pre></br> -->
@@ -19,7 +23,7 @@
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
          </p>
-         <button type="submit" class="btn btn-success" value="Log In" style="margin-top: 5px">Log In</button></p>
+         <button type="submit" class="btn btn-default" value="Log In" style="margin-top: 5px">Log In</button></p>
        <!-- <div>
        </form>
          <form href="/create_account">
