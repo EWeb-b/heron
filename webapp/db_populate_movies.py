@@ -5,7 +5,6 @@ import json
 
 sampleData = [
     {
-        << << << < 0cda86d41cca84e4915db9f9e885404d674d4dac
         "filmCertificate": 12,
         "filmBlurb": "Home alone, but on mars.",
         "filmDirector": "Ridley Scott",
@@ -27,8 +26,7 @@ sampleData = [
         "filmActor": "Harrison Ford"
     }
 ]
-== == == =
->>>>>> > bringing other files uptodate to continue test development
+
 
 for movie in sampleData:
     newMovie = FilmDetails(**movie)
