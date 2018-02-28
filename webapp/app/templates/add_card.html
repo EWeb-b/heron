@@ -24,15 +24,27 @@
     </p>
     <a><tab1> Card Number: </a></tab1>
     <p>{{ form.card_number }}<br>
+        {% for error in form.card_number.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
     </p>
     <a><tab1> CVC: </a></tab1>
     <p>{{ form.cvc }}<br>
+        {% for error in form.cvc.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
     </p>
     <a><tab1> Expiry month: </a></tab1>
     <p>{{ form.expiry_date_month }}<br>
+        {% for error in form.expiry_date_month.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
     </p>
     <a><tab1> expiry year: </a></tab1>
     <p>{{ form.expiry_date_year }}<br>
+        {% for error in form.expiry_date_year.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
     </p>
 
     <p><input class = "btn btn-success" type="submit" value="Add Card" style="margin-top: 5px"></p>

@@ -17,7 +17,7 @@ class Account(db.Model):
     email = Column(String(254), unique=True)
     password = Column(String(255))
     staff = Column(Boolean)
-    profiles = relationship("Profile", backref=backref("account", uselist=False))
+    profile = relationship("Profile", uselist=False, back_populates="account")
 
     def __repr__(self):
         return '<User: %r>' % (self.email)
@@ -48,7 +48,7 @@ class Profile(db.Model):
     forename = Column(String(255))
     surname = Column(String(255))
     account_id = Column(Integer, ForeignKey('account.id'))
-    account = relationship('Account', backref='profile', lazy='dynamic')
+    account = relationship("Account", back_populates="profile")
     cards = relationship('Card')
 
     def __repr__(self):
@@ -128,10 +128,10 @@ class Card(db.Model):
     id = Column(Integer, primary_key=True)
     name_on_card = Column(String(250))
     billing_address = Column(String(250))
-    card_number = Column(String(250))
-    cvc = Column(String(250))
-    expiry_date_month = Column(String(250))
-    expiry_date_year = Column(String(250))
+    card_number = Column(Integer)
+    cvc = Column(Integer)
+    expiry_date_month = Column(Integer)
+    expiry_date_year = Column(Integer)
     profile_id = Column(Integer, ForeignKey('profile.id'))
 
     def __repr__(self):
@@ -141,7 +141,7 @@ class Card(db.Model):
                         self.card_number,
                         self.cvc,
                         self.expiry_date_month,
-                        self.expiry_date_year,
+                        self.expiry_date_year
                     )
 
 

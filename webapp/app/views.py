@@ -3,7 +3,7 @@ from flask import (
     make_response, session)
 from app import app, db, models
 from .forms import CreateAccountForm, ChangePasswordForm, LogInForm, CardDetails
-from .models import Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType
+from .models import Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType, Card
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
 import datetime
@@ -169,22 +169,32 @@ def add_card():
         return render_template(
             'add_card.html', title='Add Card', form=form)
     elif request.method == 'POST':
+        print('POST method')
         if form.validate_on_submit():
-            if (check_password_hash(user.password, form.password.data)):
+            print('form validate_on_submit')
+            if (check_password_hash(current_user.password, form.password.data)):
+                print('passwords match')
                 newCard = Card(
                     name_on_card = form.name_on_card.data,
                     billing_address = form.billing_address.data,
-                    card_number = generate_password_hash(form.card_number.data),
-                    cvc = generate_password_hash(form.cvc.data),
-                    expiry_date_month = generate_password_hash(form.expiry_date_month.data),
-                    expiry_date_year = generate_password_hash(form.expiry_date_year.data),
-                    profile_id = current_user.id
+                    card_number = form.card_number.data,
+                    cvc = form.cvc.data,
+                    expiry_date_month = form.expiry_date_month.data,
+                    expiry_date_year = form.expiry_date_year.data
                 )
+                print('card created not added')
                 db.session.add(newCard)
                 db.session.commit()
                 print('successfully added card(?)')
+                return redirect('/profile')
+            else:
+                flash('passwords dont match')
+                print('passwords didnt match')
                 return redirect('/add_card')
-
+        else:
+            flash('form did not validate on submit')
+            print('form didnt validate on submit')
+            return redirect('/add_card')
 
 
 @app.route('/filmDetails', methods=['GET', 'POST'])
