@@ -1,11 +1,15 @@
-
 <!DOCTYPE html>
   {% extends "base.html" %}
    {% block content %}
-
+<style>
+   body {
+       background-color: #343a40;
+       text-color: #6f42c1;
+   }
+</style>
       <div class="container-fluid" style="color: #4582EC" style="margin-top:20px"></div>
       <div class="container">
-         <h2>Film List</h2>
+         <h2>Film Info</h2>
          <table class="table table-hover">
             <thead>
                <tr class="table-info">
@@ -15,13 +19,10 @@
             </thead>
             <tbody>
                <tr>
-                  {% for t in filmDetails %}
-               <tr>
-                  <td>{{ t.filmName }}</td>
-                  <td>{{t.filmCertificate  }}</td>
+                  <td>{{ film.filmName }}</td>
+                  <td>{{ film.filmCertificate  }}</td>
                </tr>
-               {% endfor %}
-               </tr>
+
             </tbody>
          </table>
       </div>

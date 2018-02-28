@@ -3,7 +3,8 @@ from flask import (
     make_response, session)
 from app import app, db, models
 from .forms import CreateAccountForm, ChangePasswordForm, LogInForm
-from .models import Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType
+from .models import (
+    Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType)
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
 import datetime
@@ -28,11 +29,11 @@ def load_user(user_id):
 def index():
     return redirect('/home')
 
+
 @app.route('/home')
 def home():
     return render_template(
         'home.html', title='Heron Home')
-
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -87,7 +88,7 @@ def create_account():
                 return redirect('/create_account')
             else:
                 print("bar")
-                if form.password.data == form.passwordCheck.data :
+                if form.password.data == form.passwordCheck.data:
                     print("password matched")
                     newuser = Account(
                         email=form.email.data,
@@ -97,7 +98,8 @@ def create_account():
                     db.session.commit()
                     login_user(newuser)
                     flash("Account created successfully")
-                    logging.info('New account created. Email: %s', newuser.email)
+                    logging.info('New account created. Email: %s',
+                                 newuser.email)
                     return redirect('/profile')
                 else:
                     print("passed didnt match")
@@ -156,13 +158,23 @@ def change_password():
             return redirect('/change_password')
 
 
-@app.route('/filmDetails', methods=['GET', 'POST'])
+@app.route('/film_info', methods=['GET', 'POST'])
+def film_details():
+    passed = request.args.get('passed', None)
+    film = models.FilmDetails.query.filter_by(filmName=passed).first_or_404()
+
+    return render_template(
+        'filmInfo.html', title='Film Details', film=film)
+
+
+@app.route('/film_details', methods=['GET', 'POST'])
 def list_films():
     # print list of films stored in FilmDetails databse
     filmDetails = models.FilmDetails.query.all()
-    #userList = models.Account.query.all()
+    # userList = models.Account.query.all()
     return render_template(
-        'filmDetails.html', title='Film List', filmDetails=filmDetails)#, userList=userList)
+        'filmDetails.html', title='Film List', filmDetails=filmDetails)
+
 
 @app.route('/profile', methods=['GET'])
 def profile():

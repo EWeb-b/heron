@@ -7,13 +7,13 @@
        <!-- <pre align = "center">Log into Your Account</pre></br> -->
        <form style="margin-top: 100px" action="" method="post" action="/login" align = "center">
          {{ form.hidden_tag() }}
-         <a class= "font-weight-light" align = "center">Email </a>
+         <a class= "font-weight-light" align = "center" style="color: #4582EC" style="margin-bottom:10px">Email </a>
          <p>{{ form.email }}<br>
             {% for error in form.email.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
          </p>
-         <a class= "font-weight-light" align = "center">Password </a>
+         <a class= "font-weight-light" align = "center" style="color: #4582EC">Password </a>
          <p>{{ form.password }}<br>
             {% for error in form.password.errors %}
             <span style="color: red;">{{ error }}</span>

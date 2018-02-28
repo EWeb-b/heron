@@ -32,12 +32,13 @@
   width: 100%;
   }
 
+  body {
+      background-color: #343a40;
+      text-color: #6f42c1;
+  }
+
 
 </style>
-
-<body style="height:1000px">
-
-
 
   <nav class="navbar navbar-expand-sm bg-light navbar-default  ">
      <ul class="navbar-nav">
@@ -45,7 +46,7 @@
            <img href="/heron/templates/homepage.html" src="static/heron1.png" alt="Logo" style="width:60px;">
         </li>
         <li><a class="nav-link" href="/home">Heron</a></li>
-        <li><a class="nav-link" href="/filmDetails">Film Details</a></li>
+        <li><a class="nav-link" href="/film_details">Film List</a></li>
         <!-- <li><a class="nav-link" href="/screenings">Screenings</a></li> -->
         <li><a class="nav-link" href="/login">Login</a></li>
         <li><a class="nav-link" href="/logout">Logout</a></li>
@@ -55,7 +56,7 @@
         <li class="nav-item"><a href="/profile" class="fa fa-user-circle-o" style="font-size:36px;center"></a></li>
         <li class="nav-item"><a href="/" class="fa fa-shopping-basket"  style="font-size:36px;center"><a></i>
         <li class="nav-item>"><form class="form-inline" action="/action_page.php">
-           <input align="center"  type="text" name="search" placeholder="Search..">
+           <input align="center"  type="text" name="search" placeholder="Search">
           </form>
         </li>
      </ul>
