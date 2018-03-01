@@ -2,11 +2,11 @@ from flask import (
     render_template, flash, redirect, request, Flask, url_for,
     make_response, session)
 from app import app, db, models
-from .forms import CreateAccountForm, ChangePasswordForm, LogInForm
-from .models import Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType
+from .forms import CreateAccountForm, ChangePasswordForm, LogInForm, CardDetails
+from .models import Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType, Card
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
-import datetime
+import datetime, hashlib
 import logging
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -18,6 +18,12 @@ logging.basicConfig(
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
+# Uses Knuth's Multiplicative Method to hash numbers
+def hashNumber(numberToBeHashed):
+    string = str(numberToBeHashed)
+    hashedNumber = print(hashlib.md5(string.encode('utf-8')).hexdigest())
+    return hashedNumber
 
 
 @login_manager.user_loader
@@ -100,6 +106,7 @@ def create_account():
                     db.session.add(newuser)
                     db.session.commit()
                     login_user(newuser)
+                    print(current_user.id)
                     flash("Account created successfully")
                     logging.info('New account created. Email: %s', newuser.email)
                     return redirect('/profile')
@@ -158,6 +165,42 @@ def change_password():
                 'Change password error for %s: form validation error',
                 current_user.email)
             return redirect('/change_password')
+
+
+@app.route('/add_card', methods=['GET', 'POST'])
+@login_required
+def add_card():
+    form = CardDetails()
+    if request.method == 'GET':
+        return render_template(
+            'add_card.html', title='Add Card', form=form)
+    elif request.method == 'POST':
+        print('POST method')
+        if form.validate_on_submit():
+            print('form validate_on_submit')
+            if (check_password_hash(current_user.password, form.password.data)):
+                print('passwords match')
+                newCard = Card(
+                    name_on_card = form.name_on_card.data,
+                    billing_address = form.billing_address.data,
+                    card_number = hashNumber(form.card_number.data),
+                    cvc = hashNumber(form.cvc.data),
+                    expiry_date_month = hashNumber(form.expiry_date_month.data),
+                    expiry_date_year = hashNumber(form.expiry_date_year.data)
+                )
+                print('card created not added')
+                db.session.add(newCard)
+                db.session.commit()
+                print('successfully added card(?)')
+                return redirect('/profile')
+            else:
+                flash('passwords dont match')
+                print('passwords didnt match')
+                return redirect('/add_card')
+        else:
+            flash('form did not validate on submit')
+            print('form didnt validate on submit')
+            return redirect('/add_card')
 
 
 @app.route('/filmDetails', methods=['GET', 'POST'])

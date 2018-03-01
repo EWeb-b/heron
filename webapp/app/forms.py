@@ -28,19 +28,14 @@ class Profile(Form):
     surname = StringField('Surname', validators=[DataRequired()])
 
 class CardDetails(Form):
-    card_number = IntegerField(
-        'Card Number',
-        [validators.DataRequired(), validators.Regexp(r'[0-9]{16}$')])
-    cvc = IntegerField(
-        'CVC',
-        [validators.DataRequired(), validators.Regexp(r'[0-9]{3}$')])
-    expiry_date_month = DateField(
-        'Expiry Date Month',
-        [validators.DataRequired, validators.NumberRange(min=1, max=12)])
-    expiry_date_year = IntegerField(
-        'Expiry Date Year',
-        [validators.DataRequired, validators.NumberRange(min=2018)])
-    submit = SubmitField('Register')
+    password = PasswordField('Password', validators=[DataRequired()])
+    name_on_card = StringField('Name on Card', validators=[DataRequired()])
+    billing_address = StringField('Billing Address', validators=[DataRequired()])
+    card_number = IntegerField('Card Number', validators = [DataRequired()])
+    cvc = IntegerField('CVC', validators = [DataRequired()])
+    expiry_date_month = IntegerField('Expiry Date Month', validators=[DataRequired()])
+    expiry_date_year = IntegerField('Expiry Date Year', validators=[DataRequired()])
+    submit = SubmitField('Add Card')
 
 
 class ChangePasswordForm(Form):

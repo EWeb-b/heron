@@ -17,6 +17,7 @@ class Account(db.Model):
     email = Column(String(254), unique=True)
     password = Column(String(255))
     staff = Column(Boolean)
+    profile = relationship("Profile", uselist=False, back_populates="account")
 
     def __repr__(self):
         return '<User: %r>' % (self.email)
@@ -43,9 +44,12 @@ class Profile(db.Model):
     """
     __tablename__ = 'profile'
 
-    account = Column(Integer, ForeignKey(Account.id), primary_key=True)
+    id = Column(Integer, primary_key=True)
     forename = Column(String(255))
     surname = Column(String(255))
+    account_id = Column(Integer, ForeignKey('account.id'))
+    account = relationship("Account", back_populates="profile")
+    cards = relationship('Card')
 
     def __repr__(self):
         return '<Profile: %r>' % (self.name)
@@ -113,6 +117,33 @@ class TicketType(db.Model):
 
     def __repr__(self):
         return '<Ticket Type %r>' % (self.ticketType)
+
+class Card(db.Model):
+    """
+    Representation of a debit/credit card.
+    All integer rows are now hashed, but cannot be unhashed. This seems
+    stupid but backlog asks for user security?
+    """
+    __tablename__= 'card'
+
+    id = Column(Integer, primary_key=True)
+    name_on_card = Column(String(250))
+    billing_address = Column(String(250))
+    card_number = Column(Integer)
+    cvc = Column(Integer)
+    expiry_date_month = Column(Integer)
+    expiry_date_year = Column(Integer)
+    profile_id = Column(Integer, ForeignKey('profile.id'))
+
+    def __repr__(self):
+        return '' % (self.id,
+                        self.name_on_card,
+                        self.billing_address,
+                        self.card_number,
+                        self.cvc,
+                        self.expiry_date_month,
+                        self.expiry_date_year
+                    )
 
 
 # class Ticket(db.Model):
