@@ -1,5 +1,6 @@
 from app import app, models, db
 import unittest
+import flask_testing
 from flask import Flask, request
 from flask_testing import TestCase
 from flask_login import LoginManager, current_user, AnonymousUserMixin
@@ -17,7 +18,7 @@ class Anonymous(AnonymousUserMixin):
 class BaseTestCase(TestCase):
 
     def create_app(self):
-        app = Flask(_name_)
+        app = Flask(__name__)
         app.config.from_object('config.TestConfig')
         db.init_app(app)
         login_manager = LoginManager()
@@ -65,5 +66,5 @@ class FlaskTestCase(BaseTestCase):
             self.assertTrue(current_user.email == 'jack@yahooo.com')
 
 
-if __name__ == '__main_':
+if __name__ == '__main__':
     unittest.main()
