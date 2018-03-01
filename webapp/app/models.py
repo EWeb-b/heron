@@ -121,7 +121,8 @@ class TicketType(db.Model):
 class Card(db.Model):
     """
     Representation of a debit/credit card.
-    Need to hash fields.
+    All integer rows are now hashed, but cannot be unhashed. This seems
+    stupid but backlog asks for user security?
     """
     __tablename__= 'card'
 

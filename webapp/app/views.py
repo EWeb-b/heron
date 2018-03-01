@@ -6,7 +6,7 @@ from .forms import CreateAccountForm, ChangePasswordForm, LogInForm, CardDetails
 from .models import Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType, Card
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
-import datetime
+import datetime, hashlib
 import logging
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -18,6 +18,12 @@ logging.basicConfig(
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
+# Uses Knuth's Multiplicative Method to hash numbers
+def hashNumber(numberToBeHashed):
+    string = str(numberToBeHashed)
+    hashedNumber = print(hashlib.md5(string.encode('utf-8')).hexdigest())
+    return hashedNumber
 
 
 @login_manager.user_loader
@@ -177,10 +183,10 @@ def add_card():
                 newCard = Card(
                     name_on_card = form.name_on_card.data,
                     billing_address = form.billing_address.data,
-                    card_number = form.card_number.data,
-                    cvc = form.cvc.data,
-                    expiry_date_month = form.expiry_date_month.data,
-                    expiry_date_year = form.expiry_date_year.data
+                    card_number = hashNumber(form.card_number.data),
+                    cvc = hashNumber(form.cvc.data),
+                    expiry_date_month = hashNumber(form.expiry_date_month.data),
+                    expiry_date_year = hashNumber(form.expiry_date_year.data)
                 )
                 print('card created not added')
                 db.session.add(newCard)
