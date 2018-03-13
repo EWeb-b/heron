@@ -73,20 +73,21 @@ class Window(QScrollArea):
         self.header.setText('Select Movies to compare takings')
         layout.addWidget(self.header)
 
-        hbox = QHBoxLayout()
+        hbox1 = QHBoxLayout()
+        hbox2 = QHBoxLayout()
 
         # check boxes
         self.daily = QRadioButton('daily')
         self.weekly = QRadioButton('weekly')
         self.overall = QRadioButton('overall')
 
-        hbox.addWidget(self.daily)
-        hbox.addStretch()
-        hbox.addWidget(self.weekly)
-        hbox.addStretch()
-        hbox.addWidget(self.overall)
+        hbox1.addWidget(self.daily)
+        hbox1.addStretch()
+        hbox1.addWidget(self.weekly)
+        hbox1.addStretch()
+        hbox1.addWidget(self.overall)
 
-        layout.addLayout(hbox)
+        layout.addLayout(hbox1)
 
         self.daily.setChecked(True)
         self.daily.toggled.connect(lambda:self.selectDaily())
@@ -122,8 +123,9 @@ class Window(QScrollArea):
         self.compareButton.clicked.connect(lambda:self.compare())
         layout.addWidget(self.compareButton)
 
-        layout.addWidget(self.movieScroll)
-        layout.addWidget(self.bufferScroll)
+        hbox2.addWidget(self.movieScroll)
+        hbox2.addWidget(self.bufferScroll)
+        layout.addLayout(hbox2)
         layout.addWidget(self.compareButton)
         self.setLayout(layout)
         self.setWindowTitle("Choose movie tab")
