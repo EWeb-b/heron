@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<style>
+  /* Make the image fully responsive */
+  .carousel-inner img {
+      width: 100%;
+      height: 100%;
+
+  }
+
+
+  </style>
+
+<body>
+
+<div id="demo" class="carousel slide" data-ride="carousel">
+
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+    <li data-target="#demo" data-slide-to="3"></li>
+  </ul>
+
+  <!-- The slideshow     <href="{{ url_for('film_details', passed='inception') }}"  -->
+  <div class="carousel-inner" style="margin-top:0px">
+    <div class="carousel-item active">
+      <a href="{{ url_for('film_details', passed='The Martian') }}">
+      <img src="/static/the-martian-home-test.jpg" alt="The Martian" width="1200" height="500"></a>
+    </div>
+    <div class="carousel-item">
+      <a href="{{ url_for('film_details', passed='Inception') }}">
+      <img src="/static/inception-home-test.jpg" alt="Inception" width="1200" height="500"></a>
+    </div>
+    <div class="carousel-item">
+      <a href="{{ url_for('film_details', passed='Interstellar') }}">
+      <img src="/static/interstellar-test.jpg" alt="Interstellar" width="1200" height="500"></a>
+    </div>
+    <div class="carousel-item">
+      <a href="{{ url_for('film_details', passed='Mad Max: Fury Road') }}">
+      <img src="/static/mad-max-test.jpg" alt="Mad Max" width="1200" height="500"></a>
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
+
+
+
+
+</body>
+</html>
+{% endblock %}
