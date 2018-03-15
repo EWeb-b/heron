@@ -1,6 +1,7 @@
 from flask import (
     render_template, flash, redirect, request, Flask, url_for,
     make_response, session)
+from flask_bootstrap import Bootstrap
 from app import app, db, models
 from .forms import CreateAccountForm, ChangePasswordForm, LogInForm, CardDetails
 from .models import Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType, Card
