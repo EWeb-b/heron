@@ -1,15 +1,14 @@
 {% extends "bootstrap/base.html" %}
 {% block title %}This is an example page{% endblock %}
 <head>
-  <link href = "style.css" rel = "stylesheet" type = "text/css">
+  <link href = "/static/style.css" rel = "stylesheet" type = "text/css">
 </head>
 {% block navbar %}
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
-      <a class="navbar-brand" href="/home">
       <li><img href="/home" src="static/heron1.png" alt="Logo" style="width:60px;"></li>
-      <li><a href="/home"></a></li></a>
+      <li><a href="/home"></a></li>
       <li><a class="nav-link" href="/film_details">Films</a></li>
       <li><a class="nav-link" href="/book_tickets">Book Tickets</a></li>
       <li><a class="nav-link" href="/screenings">Screenings</a></li>
@@ -73,17 +72,17 @@
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
-                    <a href="#!">Films</a>
+                    <a href="/film_details">Films</a>
                 </p>
                 <p>
-                    <a href="#!">Book Tickets</a>
+                    <a href="/book_tickets">Book Tickets</a>
                 </p>
                 <p>
-                    <a href="#!">Sign up</a>
+                    <a href="/create_account">Sign up</a>
                 </p>
                 {% if current_user.is_authenticated %}
                 <p>
-                    <a href="#!">Sign out</a>
+                    <a href="/login">Sign out</a>
                 </p>
                 {% else %}
                 <p>
