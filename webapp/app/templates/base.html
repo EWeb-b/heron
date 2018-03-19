@@ -1,17 +1,20 @@
 {% extends "bootstrap/base.html" %}
 {% block title %}This is an example page{% endblock %}
-
+<head>
+  <link href = "style.css" rel = "stylesheet" type = "text/css">
+</head>
 {% block navbar %}
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
-      <li><img href="/heron/templates/homepage.html" src="static/heron1.png" alt="Logo" style="width:60px;"></li>
+      <li><img href="/home" src="static/heron1.png" alt="Logo" style="width:60px;"></li>
       <li><a href="/home"></a></li>
       <li><a class="nav-link" href="/film_details">Films</a></li>
       <li><a class="nav-link" href="/book_tickets">Book Tickets</a></li>
       <li><a class="nav-link" href="/screenings">Screenings</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
+  <li><a href="/basket"><span class="glyphicon glyphicon-shopping-cart"></span> Basket</a></li>
   <li><a href="/create_account"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
   {% if current_user.is_authenticated %}
   <li><a href="/home"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>

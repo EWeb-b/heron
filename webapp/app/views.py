@@ -240,3 +240,9 @@ def profile():
 
     return render_template(
         'profile.html', title='User Profile')
+
+@app.route('/basket', methods=['GET'])
+def basket():
+
+    return render_template(
+        'basket.html', title='Checkout')
