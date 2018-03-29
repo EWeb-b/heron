@@ -1,7 +1,8 @@
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 import sys
-
+import random
 from pie import *
 
 listOfMovieNames = ['Black Panther', 'The Sound of Water', 'The Greatest Showman'] # To be changed to work with DB
@@ -12,32 +13,42 @@ timeSpan = 'daily'
 # global bufferNumber
 # bufferNumber = 0
 
-class Window(QScrollArea):
+color_buffer = []
+
+class Compare(QScrollArea):
+    def random_color(self):
+        levels = range(32,256,32)
+        return tuple(random.choice(levels) for _ in range(3))
+
     def removeBuffer(self, button):
         print(button)
         print('Layout',self.bufferScrollLayout)
         #self.bufferScrollLayout.removeWidget(button)
         #button.setParent(None)
         button.setVisible(False)
-        print button.text()
+        print( button.text())
         movieBuffer.remove(button.text())
+        #color_buffer.remove()
         # def __str__(self):
         #     return "name"
-        print movieBuffer
+        print(movieBuffer)
 
     def movie2Buffer(self,button):
         print(self.bufferScrollLayout)
         if button.text() not in movieBuffer:
+            color = self.random_color()
+            color_buffer.append(color)
+            print(color_buffer)
             #bufferNumber += 1
             # buff = 'buffer'+str(bufferNumber)
             movieBuffer.append(button.text())
             self.butt = QPushButton(button.text())
-            self.butt.setStyleSheet('background-color: red; color: white;')
+            self.butt.setStyleSheet('background-color: rgb'+ str(color) +'; color: white;')
             self.make_buffer_button(self.butt)
             #self.butt.clicked.connect(lambda:self.removeBuffer(self.butt))
             self.bufferScrollLayout.addWidget(self.butt)
             self.butt.setVisible(True)
-        print movieBuffer
+        print (movieBuffer)
     def make_buffer_button(self,button):
         return button.clicked.connect(lambda:self.removeBuffer(button))
 
@@ -45,13 +56,13 @@ class Window(QScrollArea):
         return button.clicked.connect(lambda:self.movie2Buffer(button))
     def selectDaily(self):
         timeSpan = 'daily'
-        print timeSpan+'\n'
+        print (timeSpan+'\n')
     def selectWeeky(self):
         timeSpan = 'weekly'
-        print timeSpan+'\n'
+        print (timeSpan+'\n')
     def selectOverall(self):
         timeSpan = 'overall'
-        print timeSpan+'\n'
+        print (timeSpan+'\n')
     def compare(self):
         print('plot',movieBuffer,'for',timeSpan)
         bufferTakings = []
@@ -60,10 +71,14 @@ class Window(QScrollArea):
             bufferTakings.append(takings[index])
         print(bufferTakings)
         print(movieBuffer)
+        print(color_buffer)
         pie_plot_week(movieBuffer,bufferTakings)
+        #color_buffer = []
+        self.img.setPixmap(QPixmap("takings.png"))
+
         #pie_plot_week(movieBuffer,takings)
     def __init__(self):
-        super(Window, self).__init__()
+        super(Compare, self).__init__()
 
         # layout
         layout = QVBoxLayout()
@@ -76,6 +91,12 @@ class Window(QScrollArea):
         hbox1 = QHBoxLayout()
         hbox2 = QHBoxLayout()
 
+        vbox2 = QVBoxLayout()
+        graphbox = QVBoxLayout()
+
+        self.img = QLabel()
+        #self.img.setPixmap(QPixmap("takings.png"))
+        graphbox.addWidget(self.img)
         # check boxes
         self.daily = QRadioButton('daily')
         self.weekly = QRadioButton('weekly')
@@ -113,7 +134,7 @@ class Window(QScrollArea):
 
         for i in range(len(listOfMovieNames)):
             movie = 'movie'+str(i)
-            print movie
+            print (movie)
             self.movie = QPushButton(listOfMovieNames[i])
             self.movie.setStyleSheet('background-color: green; color: white')
             self.make_movie_button(self.movie)
@@ -124,12 +145,16 @@ class Window(QScrollArea):
         layout.addWidget(self.compareButton)
 
         hbox2.addWidget(self.movieScroll)
-        hbox2.addWidget(self.bufferScroll)
+        vbox2.addWidget(self.bufferScroll)
+        vbox2.addLayout(graphbox)
+        hbox2.addLayout(vbox2)
+        #hbox2.addWidget(self.bufferScroll)
         layout.addLayout(hbox2)
         layout.addWidget(self.compareButton)
         self.setLayout(layout)
         self.setWindowTitle("Choose movie tab")
-
+class Settings(QScrollArea):
+    hey = 1
 def main():
 
     app 	= QApplication(sys.argv)
@@ -144,7 +169,7 @@ def main():
     # Resize width and height
     tabs.showMaximized()
 
-    ex = Window()
+    ex = Compare()
     vBoxlayout2	= QVBoxLayout()
     vBoxlayout2.addWidget(ex)
     tab2.setLayout(vBoxlayout2)
