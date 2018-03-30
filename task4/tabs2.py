@@ -5,6 +5,15 @@ import sys
 import random
 from pie import *
 
+from matplotlib.backends.qt_compat import QtCore, QtWidgets, is_pyqt5
+if is_pyqt5():
+    from matplotlib.backends.backend_qt5agg import (
+        FigureCanvas, NavigationToolbar2QT as NavigationToolbar)
+else:
+    from matplotlib.backends.backend_qt4agg import (
+        FigureCanvas, NavigationToolbar2QT as NavigationToolbar)
+from matplotlib.figure import Figure
+
 listOfMovieNames = ['Black Panther', 'The Sound of Water', 'The Greatest Showman'] # To be changed to work with DB
 BPtakings = ['100','120','300']
 takings = ['1320', '1222', '950']
@@ -16,9 +25,9 @@ timeSpan = 'daily'
 color_buffer = []
 
 class Compare(QScrollArea):
-    def random_color(self):
-        levels = range(32,256,32)
-        return tuple(random.choice(levels) for _ in range(3))
+    # def random_color(self):
+    #     levels = range(32,256,32)
+    #     return tuple(random.choice(levels) for _ in range(3))
 
     def removeBuffer(self, button):
         print(button)
@@ -36,14 +45,14 @@ class Compare(QScrollArea):
     def movie2Buffer(self,button):
         print(self.bufferScrollLayout)
         if button.text() not in movieBuffer:
-            color = self.random_color()
-            color_buffer.append(color)
-            print(color_buffer)
+            # color = self.random_color()
+            # color_buffer.append(color)
+            # print(color_buffer)
             #bufferNumber += 1
             # buff = 'buffer'+str(bufferNumber)
             movieBuffer.append(button.text())
             self.butt = QPushButton(button.text())
-            self.butt.setStyleSheet('background-color: rgb'+ str(color) +'; color: white;')
+            self.butt.setStyleSheet('background-color: red; color: white;')
             self.make_buffer_button(self.butt)
             #self.butt.clicked.connect(lambda:self.removeBuffer(self.butt))
             self.bufferScrollLayout.addWidget(self.butt)
@@ -72,9 +81,11 @@ class Compare(QScrollArea):
         print(bufferTakings)
         print(movieBuffer)
         print(color_buffer)
-        pie_plot_week(movieBuffer,bufferTakings)
+        self._dynamic_ax.clear()
+        self._dynamic_ax.pie(bufferTakings,labels = movieBuffer, autopct='%1.1f%%', shadow=False)
+        #pie_plot_week(movieBuffer,bufferTakings)
         #color_buffer = []
-        self.img.setPixmap(QPixmap("takings.png"))
+        #self.img.setPixmap(QPixmap("takings.png"))
 
         #pie_plot_week(movieBuffer,takings)
     def __init__(self):
@@ -94,9 +105,16 @@ class Compare(QScrollArea):
         vbox2 = QVBoxLayout()
         graphbox = QVBoxLayout()
 
-        self.img = QLabel()
+        dynamic_canvas = FigureCanvas(Figure(figsize=(5, 5)))
+        self._dynamic_ax = dynamic_canvas.figure.subplots()
+        self._dynamic_ax.pie([1],labels = [''], autopct='', shadow=False, colors = 'white')
+        graphbox.addWidget(dynamic_canvas)
+
+        #addToolBar(NavigationToolbar(dynamic_canvas, self))
+
+        #self.img = QLabel()
         #self.img.setPixmap(QPixmap("takings.png"))
-        graphbox.addWidget(self.img)
+        #graphbox.addWidget(self.img)
         # check boxes
         self.daily = QRadioButton('daily')
         self.weekly = QRadioButton('weekly')
