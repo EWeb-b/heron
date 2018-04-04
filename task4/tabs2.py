@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 import sys
 import random
-from pie import *
+#from pie import *
 
 from matplotlib.backends.qt_compat import QtCore, QtWidgets, is_pyqt5
 if is_pyqt5():
@@ -73,6 +73,7 @@ class Compare(QScrollArea):
         timeSpan = 'overall'
         print (timeSpan+'\n')
     def compare(self):
+        self.tableButton.setEnabled(True)
         print('plot',movieBuffer,'for',timeSpan)
         bufferTakings = []
         for i in range(len(movieBuffer)):
@@ -88,6 +89,8 @@ class Compare(QScrollArea):
         #self.img.setPixmap(QPixmap("takings.png"))
 
         #pie_plot_week(movieBuffer,takings)
+    def table(self):
+        print('table')
     def __init__(self):
         super(Compare, self).__init__()
 
@@ -162,6 +165,11 @@ class Compare(QScrollArea):
         self.compareButton.clicked.connect(lambda:self.compare())
         layout.addWidget(self.compareButton)
 
+        self.tableButton = QPushButton('Table')
+        self.tableButton.clicked.connect(lambda:self.table())
+        layout.addWidget(self.tableButton)
+        self.tableButton.setEnabled(False)
+
         hbox2.addWidget(self.movieScroll)
         vbox2.addWidget(self.bufferScroll)
         vbox2.addLayout(graphbox)
@@ -177,7 +185,7 @@ def main():
 
     app 	= QApplication(sys.argv)
     tabs	= QTabWidget()
-
+    app.setWindowIcon(QIcon('heron2.png'))
     # Create tabs
     tab1	= QWidget()
     tab2	= QWidget()
