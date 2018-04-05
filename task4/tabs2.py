@@ -2,7 +2,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 import sys
-import random
+from movieDetails import *
 #from pie import *
 
 from matplotlib.backends.qt_compat import QtCore, QtWidgets, is_pyqt5
@@ -14,16 +14,58 @@ else:
         FigureCanvas, NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.figure import Figure
 
-listOfMovieNames = ['Black Panther', 'The Sound of Water', 'The Greatest Showman'] # To be changed to work with DB
+listOfMovieNames = ['Black Panther', 'The Sound of Water', 'The Greatest Showman','Movie1','Movie2','Movie3','Movie4','Movie5','Movie6'] # To be changed to work with DB
 BPtakings = ['100','120','300']
-takings = ['1320', '1222', '950']
+takings = ['1320', '1222', '950','100','100','100','100','100','100']
 movieBuffer = []
 timeSpan = 'daily'
 # global bufferNumber
 # bufferNumber = 0
 
 color_buffer = []
+class Takings(QScrollArea):
 
+    @pyqtSlot()
+    def on_click(self):
+        print("\n")
+        for currentQTableWidgetItem in self.tableWidget.selectedItems():
+            print(currentQTableWidgetItem.row(), currentQTableWidgetItem.column(), currentQTableWidgetItem.text())
+        # detapp = QApplication(sys.argv)
+        # ex = Example()
+        # ex.show()
+        # sys.exit(detapp.exec_())
+        self.dialog = Example()
+        self.dialog.show()
+
+    def createTable(self,rows,colums):
+        num_of_row = len(rows)
+        num_of_col = len(colums)
+       # Create table
+        self.tableWidget = QTableWidget()
+        self.tableWidget.setRowCount(num_of_row)
+        self.tableWidget.setColumnCount(num_of_col)
+        self.tableWidget.setVerticalHeaderLabels(rows)
+        self.tableWidget.setHorizontalHeaderLabels(colums)
+        # self.tableWidget.setItem(0,0, QTableWidgetItem("Cell (1,1)"))
+        # self.tableWidget.setItem(0,1, QTableWidgetItem("Cell (1,2)"))
+        # self.tableWidget.setItem(1,0, QTableWidgetItem("Cell (2,1)"))
+        # self.tableWidget.setItem(1,1, QTableWidgetItem("Cell (2,2)"))
+        # self.tableWidget.setItem(2,0, QTableWidgetItem("Cell (3,1)"))
+        # self.tableWidget.setItem(2,1, QTableWidgetItem("Cell (3,2)"))
+        # self.tableWidget.setItem(3,0, QTableWidgetItem("Cell (4,1)"))
+        # self.tableWidget.setItem(3,1, QTableWidgetItem("Cell (4,2)"))
+        # self.tableWidget.move(0,0)
+
+        # table selection change
+        self.tableWidget.doubleClicked.connect(self.on_click)
+    def __init__(self):
+        super(Takings, self).__init__()
+        self.daysWeek = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','Total']
+        self.createTable(listOfMovieNames,self.daysWeek)
+
+        self.layout = QVBoxLayout()
+        self.layout.addWidget(self.tableWidget)
+        self.setLayout(self.layout)
 class Compare(QScrollArea):
     # def random_color(self):
     #     levels = range(32,256,32)
@@ -73,10 +115,11 @@ class Compare(QScrollArea):
         timeSpan = 'overall'
         print (timeSpan+'\n')
     def compare(self):
-        self.tableButton.setEnabled(True)
+
         print('plot',movieBuffer,'for',timeSpan)
         bufferTakings = []
         for i in range(len(movieBuffer)):
+            self.tableButton.setEnabled(True)
             index = listOfMovieNames.index(movieBuffer[i])
             bufferTakings.append(takings[index])
         print(bufferTakings)
@@ -161,11 +204,11 @@ class Compare(QScrollArea):
             self.make_movie_button(self.movie)
             self.movieScrollLayout.addWidget(self.movie)
 
-        self.compareButton = QPushButton('Compare')
+        self.compareButton = QPushButton('Compare (graphically)')
         self.compareButton.clicked.connect(lambda:self.compare())
         layout.addWidget(self.compareButton)
 
-        self.tableButton = QPushButton('Table')
+        self.tableButton = QPushButton('View Table')
         self.tableButton.clicked.connect(lambda:self.table())
         layout.addWidget(self.tableButton)
         self.tableButton.setEnabled(False)
@@ -178,9 +221,15 @@ class Compare(QScrollArea):
         layout.addLayout(hbox2)
         layout.addWidget(self.compareButton)
         self.setLayout(layout)
-        self.setWindowTitle("Choose movie tab")
+        #self.setWindowTitle("Choose movie tab")
 class Settings(QScrollArea):
-    hey = 1
+    def __init__(self):
+        super(Settings, self).__init__()
+
+
+        self.layout = QVBoxLayout()
+
+        self.setLayout(self.layout)
 def main():
 
     app 	= QApplication(sys.argv)
@@ -194,6 +243,10 @@ def main():
 
     # Resize width and height
     tabs.showMaximized()
+    ta = Takings()
+    vBoxlayout3	= QVBoxLayout()
+    vBoxlayout3.addWidget(ta)
+    tab1.setLayout(vBoxlayout3)
 
     ex = Compare()
     vBoxlayout2	= QVBoxLayout()
