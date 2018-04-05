@@ -1,18 +1,3 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-
-"""
-ZetCode PyQt5 tutorial
-
-In this example, we position two push
-buttons in the bottom-right corner
-of the window.
-
-Author: Jan Bodnar
-Website: zetcode.com
-Last edited: August 2017
-"""
-
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
