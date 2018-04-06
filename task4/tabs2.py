@@ -14,9 +14,13 @@ else:
         FigureCanvas, NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.figure import Figure
 
-listOfMovieNames = ['Black Panther', 'The Sound of Water', 'The Greatest Showman','Movie1','Movie2','Movie3','Movie4','Movie5','Movie6'] # To be changed to work with DB
-BPtakings = ['100','120','300']
-takings = ['1320', '1222', '950','100','100','100','100','100','100']
+listOfMovieNames = ['Black Panther', 'The Sound of Water', 'The Greatest Showman'] # To be changed to work with DB
+BPtakings = ['120','120','300','200','180','240','150']
+SWtakings = ['170','120','180','240','150','300','200']
+GStakings = ['180','240','150','300','160','120','200']
+
+weekTakings = [BPtakings,SWtakings,GStakings]
+takings = ['1320', '1222', '950']
 movieBuffer = []
 timeSpan = 'daily'
 # global bufferNumber
@@ -25,19 +29,38 @@ timeSpan = 'daily'
 color_buffer = []
 class Takings(QScrollArea):
 
+    trigger1 = pyqtSignal()
+
     @pyqtSlot()
     def on_click(self):
-        print("\n")
+        # for currentQTableWidgetItem in self.tableWidget.selectedItems():
+        #     row = currentQTableWidgetItem.row()
+        #     col = currentQTableWidgetItem.column()
+        #     print("\n")
+        #     print('hey:',row,col)
+
         for currentQTableWidgetItem in self.tableWidget.selectedItems():
+
             print(currentQTableWidgetItem.row(), currentQTableWidgetItem.column(), currentQTableWidgetItem.text())
+            row = currentQTableWidgetItem.row()
+            col = currentQTableWidgetItem.column()
+            #print('ahhh:',currentQTableWidgetItem.columnSpan(row,col))
+            if col == 7 and row != 3:
+                print('weekly total!')
+                self.dialog = Example()
+                self.dialog.show()
+            elif row == 3 and col != 7: # needs to be changed to take len(rows)
+                print('daily total!')
+
         # detapp = QApplication(sys.argv)
         # ex = Example()
         # ex.show()
         # sys.exit(detapp.exec_())
-        self.dialog = Example()
-        self.dialog.show()
+
+
 
     def createTable(self,rows,colums):
+        rows.append('Total')
         num_of_row = len(rows)
         num_of_col = len(colums)
        # Create table
@@ -46,16 +69,25 @@ class Takings(QScrollArea):
         self.tableWidget.setColumnCount(num_of_col)
         self.tableWidget.setVerticalHeaderLabels(rows)
         self.tableWidget.setHorizontalHeaderLabels(colums)
-        # self.tableWidget.setItem(0,0, QTableWidgetItem("Cell (1,1)"))
-        # self.tableWidget.setItem(0,1, QTableWidgetItem("Cell (1,2)"))
-        # self.tableWidget.setItem(1,0, QTableWidgetItem("Cell (2,1)"))
-        # self.tableWidget.setItem(1,1, QTableWidgetItem("Cell (2,2)"))
-        # self.tableWidget.setItem(2,0, QTableWidgetItem("Cell (3,1)"))
-        # self.tableWidget.setItem(2,1, QTableWidgetItem("Cell (3,2)"))
-        # self.tableWidget.setItem(3,0, QTableWidgetItem("Cell (4,1)"))
-        # self.tableWidget.setItem(3,1, QTableWidgetItem("Cell (4,2)"))
-        # self.tableWidget.move(0,0)
+        rows = rows[:-1]
+        print('rows',rows)
+        #self.colum1 = self.tableWidget.horizontalHeaderItem(1)
+        self.dailyTOT = [0,0,0,0,0,0,0]
+        # QObject.connect(colum1,SIGNAL("clicked()"),on_click)
+        # self.tableWidget.connect(self.tableWidget.verticalHeader(),SIGNAL("sectionClicked(int)"),self.on_click)
+        # self.tableWidget.connect(self.tableWidget.horizontalHeader(),SIGNAL("sectionClicked(int)"),self.on_click)
+        for i in range(num_of_row-1):
+            for j in range(num_of_col-1):
+                self.tableWidget.setItem(i,j, QTableWidgetItem(weekTakings[i][j]))
+                self.dailyTOT[j] += int(weekTakings[i][j])
+            self.tableWidget.setItem(i,7, QTableWidgetItem(str(sum(map(int,weekTakings[i])))))
 
+        #map(str,self.dailyTOT)
+        print('TOT:',self.dailyTOT)
+        for i in range(7):
+            self.tableWidget.setItem(3,i, QTableWidgetItem(str(self.dailyTOT[i])))
+        # print('0,0:',self.mondayTot)
+        #self.mondayTot.doubleClicked.connect(self.on_click)
         # table selection change
         self.tableWidget.doubleClicked.connect(self.on_click)
     def __init__(self):
