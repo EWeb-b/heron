@@ -198,8 +198,8 @@ def add_card():
                 print('successfully added card(?)')
                 return redirect('/profile')
             else:
-                flash('passwords dont match')
-                print('passwords didnt match')
+                flash("passwords didn't match")
+                print("passwords didn't match")
                 return redirect('/add_card')
         else:
             flash('form did not validate on submit')
@@ -208,12 +208,14 @@ def add_card():
 
 
 @app.route('/order_ticket', methods=['GET', 'POST'])
-def orderTicket():
+def order_ticket():
+    passed = film_details()
+    print(passed)
 
-    film = models.FilmDetails.query.filter_by(film.filmName).first
+    #film = models.FilmDetails.query.filter_by(passed).first
 
     return render_template(
-        'order_ticket.html', title='Tickets', film=film)
+        'login.html', title='Tickets', film=film)
 
 
 @app.route('/film_info', methods=['GET', 'POST'])
@@ -222,7 +224,7 @@ def film_details():
     film = models.FilmDetails.query.filter_by(filmName=passed).first_or_404()
 
     return render_template(
-        'filmInfo.html', title='Film Details', film=film)
+        'filmInfo.html', title='Film Details', film=film, passed=passed)
 
 
 @app.route('/film_details', methods=['GET', 'POST'])
