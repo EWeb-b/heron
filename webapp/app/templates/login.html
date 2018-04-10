@@ -1,13 +1,18 @@
 
 {% extends "base.html" %}
 {% block content %}
-<style>
-.btn {
-   background-color:#4582EC;
- }
- </style>
 
-      <div>
+<html lang="en">
+  <head>
+    <link href = "style.css" rel = "stylesheet">
+    <link href="form-validation.css" rel="stylesheet">
+  </head>
+  <div>
+    <div class="container">
+      <div class="py-5 text-center text-muted">
+        <img class="d-block mx-auto mb-4" src="static/logo3.png" alt="" width="92" height="72">
+        <h2>Login</h2>
+      </div>
        <!-- <pre align = "center">Log into Your Account</pre></br> -->
        <form style="margin-top: 100px" action="" method="post" action="/login" align = "center">
          {{ form.hidden_tag() }}
