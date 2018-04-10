@@ -47,7 +47,7 @@ class Profile(db.Model):
     id = Column(Integer, primary_key=True)
     forename = Column(String(255))
     surname = Column(String(255))
-    account_id = Column(Integer, ForeignKey('account.id'))
+    accountId = Column(Integer, ForeignKey('account.id'))
     account = relationship("Account", back_populates="profile")
     cards = relationship('Card')
 
@@ -127,22 +127,22 @@ class Card(db.Model):
     __tablename__= 'card'
 
     id = Column(Integer, primary_key=True)
-    name_on_card = Column(String(250))
-    billing_address = Column(String(250))
-    card_number = Column(Integer)
+    nameOnCard = Column(String(250))
+    billingAddress = Column(String(250))
+    cardNumber = Column(Integer)
     cvc = Column(Integer)
-    expiry_date_month = Column(Integer)
-    expiry_date_year = Column(Integer)
-    profile_id = Column(Integer, ForeignKey('profile.id'))
+    expiryDateMonth = Column(Integer)
+    expiryDateYear = Column(Integer)
+    profileId = Column(Integer, ForeignKey('profile.id'))
 
     def __repr__(self):
         return '<Card %r>' % (self.id,
-                        self.name_on_card,
-                        self.billing_address,
-                        self.card_number,
+                        self.nameOnCard,
+                        self.billingAddress,
+                        self.cardNumber,
                         self.cvc,
-                        self.expiry_date_month,
-                        self.expiry_date_year
+                        self.expiryDateMonth,
+                        self.expiryDateYear
                     )
 
 class Ticket(db.Model):
@@ -155,8 +155,8 @@ class Ticket(db.Model):
     __tablename__ = 'ticket'
     
     id = Column(Integer, primary_key=True)
-    ticketType = Column(Integer, ForeignKey('TicketType.id'))
-    ticketScreening = Column(Integer, ForeignKey('FilmScreening.id'))
+    ticketType = Column(Integer, ForeignKey('ticket_type.id'))
+    ticketScreening = Column(Integer, ForeignKey('film_screening.id'))
     ticketSeatNumber = Column(Integer)
     
     def __repr__(self):
