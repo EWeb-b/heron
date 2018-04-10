@@ -11,6 +11,7 @@ import hashlib
 import logging
 from werkzeug.security import generate_password_hash, check_password_hash
 
+# Ignore this comment
 
 logging.basicConfig(
     filename='website.log', format='%(asctime)s%(levelname)s:%(message)s',
