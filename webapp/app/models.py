@@ -62,7 +62,7 @@ class Certificate(db.Model):
     __tablename__ = "certificate"
 
     id = Column(Integer, primary_key=True)
-    cert = Column(String(4), unique=True)
+    cert = Column(String(4))
 
     def __repr__(self):
         return '<Certificate: %r>' % (self.cert)
