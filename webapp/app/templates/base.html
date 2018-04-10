@@ -1,11 +1,15 @@
 {% extends "bootstrap/base.html" %}
-{% block title %}This is an example page{% endblock %}
-<head>
-  <link href = "/static/style.css" rel = "stylesheet" type = "text/css">
-</head>
+{% block title %}Home{% endblock %}
+{% block styles %}
+{{ super() }}
+<link href = "../static/style.css" rel = "stylesheet" type = "text/css">
+{% endblock %}
+
+<body>
 {% block navbar %}
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
   <div class="container-fluid">
+
     <ul class="nav navbar-nav">
       <li><img href="/home" src="static/heron1.png" alt="Logo" style="width:60px;"></li>
       <li><a href="/home"></a></li>
@@ -26,8 +30,11 @@
 </nav>
 {% endblock %}
 
+
 {% block content %}
+
 <!--Footer-->
+
 <footer class="page-footer font-small unique-color-dark pt-0">
 
     <div style="background-color: #6351ce;">
