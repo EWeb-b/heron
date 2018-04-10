@@ -49,6 +49,7 @@ class Profile(db.Model):
     accountId = Column(Integer, ForeignKey('account.id'))
     account = relationship("Account", back_populates="profile")
     cards = relationship("Card", backref="profile")
+    profileTickets = relationship("Ticket", backref="profile")
 
     def __repr__(self):
         return '<Profile: %r>' % (self.name)
@@ -150,15 +151,16 @@ class TicketType(db.Model):
 
 class Ticket(db.Model):
     """
-    A table containing details for a ticket, including reference to a
+    A table containing details for a ticket, including reference to its owner, 
     screening, Ticket Type, and seat number
     
-    TODO: check backrefs (they're in the TicketType and FilmScreening tables)
-    work
+    TODO: check backrefs (they're in the Profile, TicketType, and 
+    FilmScreening tables) work
     """
     __tablename__ = 'ticket'
     
     id = Column(Integer, primary_key=True)
+    owner = Column(Integer, ForeignKey('profile.id'))
     ticketType = Column(Integer, ForeignKey('ticket_type.id'))
     ticketScreening = Column(Integer, ForeignKey('film_screening.id'))
     ticketSeatNumber = Column(Integer)
