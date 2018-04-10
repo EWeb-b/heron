@@ -35,7 +35,6 @@ class Account(db.Model):
         return str(self.id)
 
 
-
 class Profile(db.Model):
     """
     A representation of a customer profile.
@@ -49,10 +48,38 @@ class Profile(db.Model):
     surname = Column(String(255))
     accountId = Column(Integer, ForeignKey('account.id'))
     account = relationship("Account", back_populates="profile")
-    cards = relationship('Card')
+    cards = relationship("Card", backref="profile")
 
     def __repr__(self):
         return '<Profile: %r>' % (self.name)
+
+
+class Card(db.Model):
+    """
+    Representation of a debit/credit card.
+    All integer rows are now hashed, but cannot be unhashed. This seems
+    stupid but backlog asks for user security?
+    """
+    __tablename__= 'card'
+
+    id = Column(Integer, primary_key=True)
+    nameOnCard = Column(String(250))
+    billingAddress = Column(String(250))
+    cardNumber = Column(Integer)
+    cvc = Column(Integer)
+    expiryDateMonth = Column(Integer)
+    expiryDateYear = Column(Integer)
+    profileId = Column(Integer, ForeignKey('profile.id'))
+
+    def __repr__(self):
+        return '<Card %r>' % (self.id,
+                        self.nameOnCard,
+                        self.billingAddress,
+                        self.cardNumber,
+                        self.cvc,
+                        self.expiryDateMonth,
+                        self.expiryDateYear
+                    )
 
 
 class Certificate(db.Model):
@@ -99,6 +126,7 @@ class FilmScreening(db.Model):
     id = Column(Integer, primary_key=True)
     screeningFilm = Column(Integer, ForeignKey(FilmDetails.id))
     screeningTime = Column(DateTime)
+    filmScreeningTickets = relationship("Ticket", backref="film_screening")
 
     def __repr__(self):
         return '<Film: %r\nScreening: %r>' % (
@@ -114,43 +142,19 @@ class TicketType(db.Model):
 
     id = Column(Integer, primary_key=True)
     ticketType = Column(String(16), unique=True)
+    ticketTypeTickets = relationship("Ticket", backref="ticket_type")
 
     def __repr__(self):
         return '<Ticket Type %r>' % (self.ticketType)
 
-class Card(db.Model):
-    """
-    Representation of a debit/credit card.
-    All integer rows are now hashed, but cannot be unhashed. This seems
-    stupid but backlog asks for user security?
-    """
-    __tablename__= 'card'
-
-    id = Column(Integer, primary_key=True)
-    nameOnCard = Column(String(250))
-    billingAddress = Column(String(250))
-    cardNumber = Column(Integer)
-    cvc = Column(Integer)
-    expiryDateMonth = Column(Integer)
-    expiryDateYear = Column(Integer)
-    profileId = Column(Integer, ForeignKey('profile.id'))
-
-    def __repr__(self):
-        return '<Card %r>' % (self.id,
-                        self.nameOnCard,
-                        self.billingAddress,
-                        self.cardNumber,
-                        self.cvc,
-                        self.expiryDateMonth,
-                        self.expiryDateYear
-                    )
 
 class Ticket(db.Model):
     """
     A table containing details for a ticket, including reference to a
     screening, Ticket Type, and seat number
     
-    Possible TODO: add backrefs? not sure if needed
+    TODO: check backrefs (they're in the TicketType and FilmScreening tables)
+    work
     """
     __tablename__ = 'ticket'
     
