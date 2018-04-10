@@ -58,12 +58,11 @@ class Profile(db.Model):
 class Certificate(db.Model):
     """
     Simple table to store film certificates
-    Changed the cert column so it's not unique (not sure why it was before) - Ed
     """
     __tablename__ = "certificate"
 
     id = Column(Integer, primary_key=True)
-    cert = Column(String(4))
+    cert = Column(String(4), unique=True)
 
     def __repr__(self):
         return '<Certificate: %r>' % (self.cert)
@@ -137,7 +136,7 @@ class Card(db.Model):
     profile_id = Column(Integer, ForeignKey('profile.id'))
 
     def __repr__(self):
-        return '' % (self.id,
+        return '<Card %r>' % (self.id,
                         self.name_on_card,
                         self.billing_address,
                         self.card_number,
@@ -146,18 +145,19 @@ class Card(db.Model):
                         self.expiry_date_year
                     )
 
-
-# class Ticket(db.Model):
-#     """
-#     A table containing details for a ticket, including reference to a
-#     screening, Ticket Type, and seat number.
-#     """
-#     __tablename__ = 'ticket'
-
-#     id = Column(Integer, primary_key=True)
-#     ticketType = Column(Integer, ForeignKey(TicketType.id))
-#     ticketScreening = Column(Integer, ForeignKey(FilmScreening.id))
-#     ticketSeatNumber = Column(Integer)
-#     # TODO: add __repr__() and backrefs so this works
-
-    # TODO: Add CreditCard table stuffs
+class Ticket(db.Model):
+    """
+    A table containing details for a ticket, including reference to a
+    screening, Ticket Type, and seat number
+    
+    Possible TODO: add backrefs? not sure if needed
+    """
+    __tablename__ = 'ticket'
+    
+    id = Column(Integer, primary_key=True)
+    ticketType = Column(Integer, ForeignKey('TicketType.id'))
+    ticketScreening = Column(Integer, ForeignKey('FilmScreening.id'))
+    ticketSeatNumber = Column(Integer)
+    
+    def __repr__(self):
+        return 'Ticket %r>' % (self.id)
