@@ -58,6 +58,7 @@ class Profile(db.Model):
 class Certificate(db.Model):
     """
     Simple table to store film certificates
+    Changed the cert column so it's not unique (not sure why it was before) - Ed
     """
     __tablename__ = "certificate"
 
