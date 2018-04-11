@@ -6,13 +6,27 @@
 {% endblock %}
 
 <body>
+
+
+
+  <a class="navbar-brand" href="#">
+    <img src="/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+    Bootstrap
+  </a>
+</nav>
 {% block navbar %}
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
 
+
+<a class="navbar-brand" href="/home">
+  <img src="static/logo5.png" width="30" height="30" class="d-inline-block align-top" alt="">
+
+
+    <!-- <li><img href="/home" src="static/logo5.png" alt="Logo" style="width:60px;"></li>
+    <li><a href="/home"></a></li> -->
     <ul class="nav navbar-nav">
-      <li><img href="/home" src="static/logo5.png" alt="Logo" style="width:60px;"></li>
-      <li><a href="/home"></a></li>
+
       <li><a class="nav-link" href="/film_details">Films</a></li>
       <li><a class="nav-link" href="/book_tickets">Book Tickets</a></li>
       <li><a class="nav-link" href="/screenings">Screenings</a></li>
@@ -25,6 +39,8 @@
   {% else %}
   <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
   {% endif %}
+  <li class="mainnav__search" data-fadeIndex="10"><a href="#" data-grunticon-embed class="icon icon-search"></a></li>
+
 </ul>
   </div>
 </nav>
