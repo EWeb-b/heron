@@ -59,8 +59,9 @@
       <div>
     </div>
   </div>
-    <a href="/order_ticket">
-    <button name="test" type=button  class="btn btn-default" style="margin-top: 50px">Buy Tickets</button></a>
+    <form action="{{url_for('order_ticket')}}">
+      <button class="btn btn-success" type="submit" name="buy" value="Order Tickets" style="margin-top: 5px">Order Ticket</button>
+    </form>
   </div>
    </body>
 </html>

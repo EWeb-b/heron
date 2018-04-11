@@ -1,6 +1,6 @@
 from flask import (
     render_template, flash, redirect, request, Flask, url_for,
-    make_response, session)
+    make_response, session, request)
 from app import app, db, models
 from .forms import CreateAccountForm, ChangePasswordForm, LogInForm, CardDetails
 from .models import Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType, Card
@@ -209,19 +209,19 @@ def add_card():
 
 @app.route('/order_ticket', methods=['GET', 'POST'])
 def order_ticket():
-    passed = film_details()
-    print(passed)
-
-    #film = models.FilmDetails.query.filter_by(passed).first
+    film_title = session.get('film_title', None)
+    film = models.FilmDetails.query.filter_by(filmName=film_title).first_or_404()
 
     return render_template(
-        'login.html', title='Tickets', film=film)
+        'order_ticket.html', title='Tickets', film=film)
 
 
 @app.route('/film_info', methods=['GET', 'POST'])
 def film_details():
     passed = request.args.get('passed', None)
     film = models.FilmDetails.query.filter_by(filmName=passed).first_or_404()
+
+    session['film_title'] = passed
 
     return render_template(
         'filmInfo.html', title='Film Details', film=film, passed=passed)

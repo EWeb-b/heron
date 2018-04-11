@@ -2,6 +2,15 @@
 {% extends "base.html" %}
 {% block content %}
 
+<style>
+h3 {
+    color: #979497
+}
+body {
+    color: #4582EC
+}
+</style>
+
 <form action="/add_card" method="POST" style="margin-top: 100px">
     {{ form.hidden_tag() }}
     <a><tab1> password: </a></tab1>
