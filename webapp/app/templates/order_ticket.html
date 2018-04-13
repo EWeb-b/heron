@@ -23,6 +23,7 @@
 </style>
   <body>
       <div class="container">
+        <center>
 
 
         <div>
@@ -31,9 +32,16 @@
          <div>
            {{film.filmName}}
          </div>
+
+
+      <div>
+        <center>
+        <form action="{{url_for('order_ticket')}}">
+          <button class="btn btn-default" type="submit" name="buy" value="Order Tickets" style="margin-top: 5px">Order Ticket</button>
+        </form>
+      </center>
       </div>
-  </div>
-    <button class="btn btn-default" style="margin-top: 50px">Buy Tickets</button></a>
+    </center>
   </div>
    </body>
 </html>
