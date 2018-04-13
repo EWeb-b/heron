@@ -1,82 +1,148 @@
-<!DOCTYPE html>
-<html>
- <head>
+{% extends "bootstrap/base.html" %}
+{% block title %}Home{% endblock %}
+{% block styles %}
+{{ super() }}
+<link href = "../static/style.css" rel = "stylesheet" type = "text/css">
+{% endblock %}
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<style>
-  input[type=text] {
-    color: #979497;
-  width: 130px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  background-color: white;
-  background-image: url('searchicon.png');
-  background-position: 10px 10px;
-  background-repeat: no-repeat;
-  padding: 12px 20px 12px 40px;
-  -webkit-transition: width 0.4s ease-in-out;
-  transition: width 0.4s ease-in-out;
-  }
-  input[type=text]:focus {
-  width: 100%;
-  }
-
-  body {
-      background-color: #343a40;
-      text-color: #6f42c1;
-  }
+<body>
 
 
-</style>
 
-  <nav class="navbar navbar-expand-sm bg-light navbar-default  ">
-     <ul class="navbar-nav">
-        <li class="nav-item">
-           <img href="/heron/templates/homepage.html" src="static/heron1.png" alt="Logo" style="width:60px;">
-        </li>
-        <li><a class="nav-link" href="/home">Heron</a></li>
-        <li><a class="nav-link" href="/film_details">Films</a></li>
-        <!-- <li><a class="nav-link" href="/screenings">Screenings</a></li> -->
-        <li><a class="nav-link" href="/login">Login</a></li>
-        <li><a class="nav-link" href="/logout">Logout</a></li>
-      </ul>
+  <a class="navbar-brand" href="#">
+    <img src="/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+    Bootstrap
+  </a>
+</nav>
+{% block navbar %}
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
 
-     <ul class="nav navbar-nav ml-auto" style="margin-top:0px;">
-        <li class="nav-item"><a href="/profile" class="fa fa-user-circle-o" style="font-size:36px;center"></a></li>
-        <li class="nav-item"><a href="/" class="fa fa-shopping-basket"  style="font-size:36px;center"><a></i>
-        <li class="nav-item>"><form class="form-inline" action="/action_page.php">
-           <input align="center"  type="text" name="search" placeholder="Search">
-          </form>
-        </li>
-     </ul>
-  </nav>
-  <div>
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-      <ul>
-        {% for message in messages %}
-        <li>{{ message }} </li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-      {% endwith %}
-     
-    </div>
-  <div>
-    <center>
-      {% block content %}{% endblock %}
-    </center>
+
+<a class="navbar-brand" href="/home">
+  <img src="static/logo5.png" width="30" height="30" class="d-inline-block align-top" alt="">
+
+
+    <!-- <li><img href="/home" src="static/logo5.png" alt="Logo" style="width:60px;"></li>
+    <li><a href="/home"></a></li> -->
+    <ul class="nav navbar-nav">
+
+      <li><a class="nav-link" href="/film_details">Films</a></li>
+      <li><a class="nav-link" href="/book_tickets">Book Tickets</a></li>
+      <li><a class="nav-link" href="/screenings">Screenings</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+  <li><a href="/basket"><span class="glyphicon glyphicon-shopping-cart"></span> Basket</a></li>
+  <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Profile </a></li>
+  <li><a href="/create_account"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+  {% if current_user.is_authenticated %}
+  <li><a href="/home"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+  {% else %}
+  <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+  {% endif %}
+  <li class="mainnav__search" data-fadeIndex="10"><a href="#" data-grunticon-embed class="icon icon-search"></a></li>
+
+</ul>
   </div>
-  </html>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+
+<!--Footer-->
+
+<footer class="page-footer font-small unique-color-dark pt-0">
+
+    <div style="background-color: #6351ce;">
+        <div class="container">
+            <!--Grid row-->
+            <div class="row py-4 d-flex align-items-center">
+
+            </div>
+            <!--Grid row-->
+        </div>
+    </div>
+
+    <!--Footer Links-->
+    <div class="container mt-5 mb-4 text-center text-md-left">
+        <div class="row mt-3">
+
+            <!--First column-->
+            <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
+                <h6 class="text-uppercase font-weight-bold">
+                    <strong>Team Heron</strong>
+                </h6>
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>This is Team Heron's submission for Software Project.</p>
+            </div>
+
+            <!--Second column-->
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                <h6 class="text-uppercase font-weight-bold">
+                    <strong>Latest Films</strong>
+                </h6>
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <a href="#!">Mad Max</a>
+                </p>
+            </div>
+            <!--/.Second column-->
+
+            <!--Third column-->
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                <h6 class="text-uppercase font-weight-bold">
+                    <strong>Useful links</strong>
+                </h6>
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <a href="/film_details">Films</a>
+                </p>
+                <p>
+                    <a href="/book_tickets">Book Tickets</a>
+                </p>
+                <p>
+                    <a href="/create_account">Sign up</a>
+                </p>
+                {% if current_user.is_authenticated %}
+                <p>
+                    <a href="/login">Sign out</a>
+                </p>
+                {% else %}
+                <p>
+                    <a href="#!">Sign in</a>
+                </p>
+                {% endif %}
+            </div>
+            <!--/.Third column-->
+
+            <!--Fourth column-->
+            <div class="col-md-4 col-lg-3 col-xl-3">
+                <h6 class="text-uppercase font-weight-bold">
+                    <strong>Contact</strong>
+                </h6>
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <i class="fa fa-envelope mr-3"></i> heron@heron.com</p>
+                <p>
+                    <i class="fa fa-print mr-3"></i> + 044 7 78778  7878</p>
+            </div>
+            <!--/.Fourth column-->
+
+        </div>
+    </div>
+    <!--/.Footer Links-->
+
+    <!-- Copyright-->
+    <div class="footer-copyright py-3 text-center">
+        © 2018 Copyright:
+        <a href="https://gitlab.com/comp2931/18/heron">
+            <strong> Team Heron</strong>
+        </a>
+    </div>
+    <!--/.Copyright -->
+
+</footer>
+<!--/.Footer-->
+
+{% endblock%}
