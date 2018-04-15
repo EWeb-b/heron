@@ -34,74 +34,68 @@
   <body>
       <div class="container">
         <center>
-
-
-        <div>
-          <h3>Buy Tickets</h3>
-          <h4>Film:</h4>
-         <div>
-           {{film.filmName}}
-         </div>
-         <form>
-       <fieldset>
-
-          <p>
-             <label style="margin-top: 20px">Ticket Type</label>
-             <select id = "ticketType">
-               <option value = "standard">Standard</option>
-               <option value = "child">Child</option>
-               <option value = "student">Student</option>
-               <option value = "oap">OAP</option>
-             </select>
-          </p>
-
-          <h3> Select Seat</h3>
           <div>
-          <aa class=""><input type="checkbox">a1</aa>
-          <aa class=""><input type="checkbox">a2</aa>
-          <aa class=""><input type="checkbox">a3</aa>
-          <aa class=""><input type="checkbox">a4</aa>
-          <aa class=""><input type="checkbox">a5</aa>
-          <aa class=""><input type="checkbox">a6</aa>
-          <aa class=""><input type="checkbox">a7</aa>
-          <aa class=""><input type="checkbox">a8</aa>
-          <aa class=""><input type="checkbox">a9</aa>
-        </div>
-        <div>
-          <bb class=""><input type="checkbox">b1</bb>
-          <bb class=""><input type="checkbox">b2</bb>
-          <bb class=""><input type="checkbox">b3</bb>
-          <bb class=""><input type="checkbox">b4</bb>
-          <bb class=""><input type="checkbox">b5</bb>
-          <bb class=""><input type="checkbox">b6</bb>
-          <bb class=""><input type="checkbox">b7</bb>
-          <bb class=""><input type="checkbox">b8</bb>
-          <bb class=""><input type="checkbox">b9</bb>
-        </div>
-        <div>
-          <cc class=""><input type="checkbox">c1</cc>
-          <cc class=""><input type="checkbox">c2</cc>
-          <cc class=""><input type="checkbox">c3</cc>
-          <cc class=""><input type="checkbox">c4</cc>
-          <cc class=""><input type="checkbox">c5</cc>
-          <cc class=""><input type="checkbox">c6</cc>
-          <cc class=""><input type="checkbox">c7</cc>
-          <cc class=""><input type="checkbox">c8</cc>
-          <cc class=""><input type="checkbox">c9</cc>
-        </div>
-       </fieldset>
-    </form>
+            <h3>Buy Tickets</h3>
+            <h4>Film:</h4>
+           <div>
+             {{film.filmName}}
+           </div>
 
+           <label style="margin-top: 20px">Ticket Type</label>
+           <form method = 'POST'>
+             <fieldset>
+             <p>
+               {{form.ticketType}}
+             </p>
 
-      <div>
-        <center>
-        <form action="{{url_for('order_ticket')}}">
-          <button class="btn btn-default" type="submit" name="buy" value="Order Tickets" style="margin-top: 15px">Order Ticket</button>
-        </form>
+             <p><input class = "btn btn-default" type="submit" value="Order Ticket" style="margin-top: 5px"></p>
+           </fieldset>
+           </form>
+
+              <h3> Select Seat</h3>
+              <div>
+              <aa class=""><input type="checkbox">a1</aa>
+              <aa class=""><input type="checkbox">a2</aa>
+              <aa class=""><input type="checkbox">a3</aa>
+              <aa class=""><input type="checkbox">a4</aa>
+              <aa class=""><input type="checkbox">a5</aa>
+              <aa class=""><input type="checkbox">a6</aa>
+              <aa class=""><input type="checkbox">a7</aa>
+              <aa class=""><input type="checkbox">a8</aa>
+              <aa class=""><input type="checkbox">a9</aa>
+            </div>
+            <div>
+              <bb class=""><input type="checkbox">b1</bb>
+              <bb class=""><input type="checkbox">b2</bb>
+              <bb class=""><input type="checkbox">b3</bb>
+              <bb class=""><input type="checkbox">b4</bb>
+              <bb class=""><input type="checkbox">b5</bb>
+              <bb class=""><input type="checkbox">b6</bb>
+              <bb class=""><input type="checkbox">b7</bb>
+              <bb class=""><input type="checkbox">b8</bb>
+              <bb class=""><input type="checkbox">b9</bb>
+            </div>
+            <div>
+              <cc class=""><input type="checkbox">c1</cc>
+              <cc class=""><input type="checkbox">c2</cc>
+              <cc class=""><input type="checkbox">c3</cc>
+              <cc class=""><input type="checkbox">c4</cc>
+              <cc class=""><input type="checkbox">c5</cc>
+              <cc class=""><input type="checkbox">c6</cc>
+              <cc class=""><input type="checkbox">c7</cc>
+              <cc class=""><input type="checkbox">c8</cc>
+              <cc class=""><input type="checkbox">c9</cc>
+            </div>
+
+        <div>
+          <center>
+
+            <button class="btn btn-default"  name="buy" value="Order Tickets" style="margin-top: 15px">Order Ticket</button>
+
+          </center>
+        </div>
       </center>
-      </div>
-    </center>
-  </div>
+    </div>
    </body>
 </html>
 {% endblock %}
