@@ -6,7 +6,7 @@ from wtforms.validators import (
 from wtforms.fields.html5 import EmailField
 from wtforms.fields import (
     TextField, TextAreaField, PasswordField,
-    StringField, SubmitField, DateField, IntegerField)
+    StringField, SubmitField, DateField, IntegerField, SelectField)
 
 
 class LogInForm(Form):
@@ -23,16 +23,18 @@ class CreateAccountForm(Form):
     passwordCheck = PasswordField('Password Confirmation', validators=[DataRequired()])
     submit = SubmitField('Register')
 
+
 class Profile(Form):
     forename = StringField('Forename', validators=[DataRequired()])
     surname = StringField('Surname', validators=[DataRequired()])
+
 
 class CardDetails(Form):
     password = PasswordField('Password', validators=[DataRequired()])
     name_on_card = StringField('Name on Card', validators=[DataRequired()])
     billing_address = StringField('Billing Address', validators=[DataRequired()])
-    card_number = IntegerField('Card Number', validators = [DataRequired()])
-    cvc = IntegerField('CVC', validators = [DataRequired()])
+    card_number = IntegerField('Card Number', validators=[DataRequired()])
+    cvc = IntegerField('CVC', validators=[DataRequired()])
     expiry_date_month = IntegerField('Expiry Date Month', validators=[DataRequired()])
     expiry_date_year = IntegerField('Expiry Date Year', validators=[DataRequired()])
     submit = SubmitField('Add Card')
@@ -45,7 +47,7 @@ class ChangePasswordForm(Form):
         'new_password', validators=[DataRequired()])
     confirmation = PasswordField(
         'confirmation',
-        validators=[DataRequired(),EqualTo(
+        validators=[DataRequired(), EqualTo(
             'new_password', message='Passwords need to match')])
     submit = SubmitField('Change Password')
 
@@ -54,17 +56,12 @@ class Search(Form):
     film = StringField('Search Film', validators=[DataRequired()])
     submit = SubmitField('Search')
 
-class OrderTickets(Form):
-    standard_tickets = IntegerField(
-        'Standard Tickets',
-        [validators.DataRequired(), validators.NumberRange(max=10)])
-    oap_tickets = IntegerField(
-        'OAP Tickets',
-        [validators.DataRequired(), validators.NumberRange(max=10)])
-    child_tickets = IntegerField(
-        'Child Tickets',
-        [validators.DataRequired(), validators.NumberRange(max=10)])
-    cvc_check = IntegerField(
-        'CVC Security Check',
-        [validators.DataRequired(), validators.Regexp(r'[0-9]{3}$')])
-    submit = SubmitField('Order Tickets')
+
+class OrderTicket(Form):
+    ticketType = SelectField('Ticket Type',
+                             choices=[('standard', 'Standard'), ('child', 'Child'),
+                                      ('student', 'Student'), ('oap', 'OAP')],
+                             validators=[DataRequired()])
+    # seatNumber = widgets.CheckboxInput()
+
+    submit = SubmitField('Order Ticket')

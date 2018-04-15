@@ -3,7 +3,7 @@ from flask import (
     make_response, session)
 from flask_bootstrap import Bootstrap
 from app import app, db, models
-from .forms import CreateAccountForm, ChangePasswordForm, LogInForm, CardDetails
+from .forms import CreateAccountForm, ChangePasswordForm, LogInForm, CardDetails, OrderTicket
 from .models import Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType, Card
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
@@ -208,13 +208,34 @@ def add_card():
             return redirect('/add_card')
 
 
+@app.route('/basket', methods=['GET'])
+def basket():
+
+    return render_template(
+        'basket.html', title='Checkout')
+
+
 @app.route('/order_ticket', methods=['GET', 'POST'])
 def order_ticket():
+    form = OrderTicket()
     film_title = session.get('film_title', None)
     film = models.FilmDetails.query.filter_by(filmName=film_title).first_or_404()
 
-    return render_template(
-        'order_ticket.html', title='Tickets', film=film)
+    if request.method == 'GET':
+        return render_template(
+            'order_ticket.html', title='Order Ticket', form=form, film=film)
+
+    elif request.method == 'POST':
+        print('posting')
+        if form.validate() == True:
+            return redirect('/basket')
+        else:
+            return redirect('/home')
+
+        #    if form.validate_on_submit():
+        #        ticketType = form.
+
+        #    session['ticket'] =
 
 
 @app.route('/film_info', methods=['GET', 'POST'])
@@ -242,10 +263,3 @@ def profile():
 
     return render_template(
         'profile.html', title='User Profile')
-
-
-@app.route('/basket', methods=['GET'])
-def basket():
-
-    return render_template(
-        'basket.html', title='Checkout')
