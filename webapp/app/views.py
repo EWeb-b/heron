@@ -56,6 +56,18 @@ def home():
         'home.html', title='Heron Home')
 
 
+@app.route('/logout')
+@login_required
+def logout():
+    # need the name variable otherwise logging does not work
+    name_email = current_user.email
+    logout_user()
+    logging.info('User %s logged out', name_email)
+    flash("Logged out successfully")
+    logging.info('%s logged out successfully', name_email)
+    return redirect('/login')
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 
@@ -133,18 +145,6 @@ def create_account():
             flash("Error creating your account, please try again")
             # logging.info()
             return redirect('/create_account')
-
-
-@app.route('/logout')
-@login_required
-def logout():
-    # need the name variable otherwise logging does not work
-    name_email = current_user.email
-    logout_user()
-    logging.info('User %s logged out', name_email)
-    flash("Logged out successfully")
-    logging.info('%s logged out successfully', name_email)
-    return redirect('/login')
 
 
 @app.route('/change_password', methods=['GET', 'POST'])

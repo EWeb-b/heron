@@ -7,7 +7,7 @@
 
 <style>
 .error {
-    color: red
+    color: white;
 }
 </style>
 
@@ -42,7 +42,7 @@
   <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Profile </a></li>
   <li><a href="/create_account"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
   {% if current_user.is_authenticated %}
-  <li><a href="/home"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+  <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
   {% else %}
   <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
   {% endif %}

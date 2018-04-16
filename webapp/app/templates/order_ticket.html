@@ -2,24 +2,10 @@
   {% extends "base.html" %}
   {% block title %}Order Ticket{% endblock %}
    {% block content %}
+
+
 <style>
-   h3 {
-       color: #979497
-   }
-   body {
-       color: #4582EC
-   }
-   }
-   .container {
-    color: #4582EC;
-    background-color: #4582EC;
-   	width:100%;
-   	height:auto;
-   	padding:1%;
-   }
-   .btn {
-      background-color:#4582EC;
-    }
+
 
     aa {
       display:inline;
@@ -32,7 +18,14 @@
     }
 
 </style>
-  <body>
+
+<html lang="en">
+  <head>
+    <link href = "style.css" rel = "stylesheet">
+    <link href="form-validation.css" rel="stylesheet">
+  </head>
+
+<body>
       <div class="container">
         <center>
           <div>
@@ -49,7 +42,7 @@
                {{form.ticketType}}
              </p>
 
-             <p><input class = "btn btn-default" type="submit" value="Order Ticket" style="margin-top: 5px"></p>
+             <p><input class = "btn btn-danger" type="submit" value="Order Ticket" style="margin-top: 5px"></p>
            </fieldset>
            </form>
 
@@ -91,12 +84,13 @@
         <div>
           <center>
 
-            <button class="btn btn-default"  name="buy" value="Order Tickets" style="margin-top: 15px">Order Ticket</button>
+            <button class="btn btn-danger"  name="buy" value="Order Tickets" style="margin-top: 15px">Order Ticket</button>
 
           </center>
         </div>
       </center>
     </div>
-   </body>
+  </body>
+
 </html>
 {% endblock %}

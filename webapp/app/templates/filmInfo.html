@@ -3,12 +3,7 @@
   {% block title %}Current Films{% endblock %}
    {% block content %}
 <style>
-   h3 {
-       color: #979497
-   }
-   body {
-       color: #4582EC
-   }
+
    .image {
      margin-left:2%;
      float:left;
@@ -23,11 +18,15 @@
    	height:auto;
    	padding:1%;
    }
-   .btn {
-      background-color:#4582EC;
-    }
 
 </style>
+
+<html lang="en">
+  <head>
+    <link href = "style.css" rel = "stylesheet">
+    <link href="form-validation.css" rel="stylesheet">
+  </head>
+
   <body>
       <div class="container">
         <div>
@@ -60,7 +59,7 @@
       <div>
     </div>
     <form action="{{url_for('order_ticket')}}">
-      <button class="btn btn-default" type="submit" name="orderTickets" style="margin-top: 100px">Order Ticket</button>
+      <button class="btn btn-danger" type="submit" name="orderTickets" style="margin-top: 100px">Order Ticket</button>
     </form>
   </div>
   </div>
