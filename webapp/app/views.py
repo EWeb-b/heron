@@ -1,12 +1,15 @@
 from flask import (
     render_template, flash, redirect, request, Flask, url_for,
     make_response, session)
+from flask_bootstrap import Bootstrap
 from app import app, db, models
-from .forms import CreateAccountForm, ChangePasswordForm, LogInForm
-from .models import Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType
+from .forms import (CreateAccountForm, ChangePasswordForm, LogInForm,
+                    CardDetails, OrderTicket, ShowTimes)
+from .models import Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType, Card
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
 import datetime
+import hashlib
 import logging
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -19,10 +22,27 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+# Uses Knuth's Multiplicative Method to hash numbers
+
+
+def hashNumber(numberToBeHashed):
+    string = str(numberToBeHashed)
+    hashedNumber = print(hashlib.md5(string.encode('utf-8')).hexdigest())
+    return hashedNumber
+
 
 @login_manager.user_loader
 def load_user(user_id):
     return Account.query.filter(Account.id == int(user_id)).first()
+
+
+def flash_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+            ))
 
 
 @app.route('/')
@@ -30,11 +50,23 @@ def load_user(user_id):
 def index():
     return redirect('/home')
 
+
 @app.route('/home')
 def home():
     return render_template(
         'home.html', title='Heron Home')
 
+
+@app.route('/logout')
+@login_required
+def logout():
+    # need the name variable otherwise logging does not work
+    name_email = current_user.email
+    logout_user()
+    logging.info('User %s logged out', name_email)
+    flash("Logged out successfully")
+    logging.info('%s logged out successfully', name_email)
+    return redirect('/login')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -90,18 +122,20 @@ def create_account():
                 return redirect('/create_account')
             else:
                 print("bar")
-                if form.password.data == form.passwordCheck.data :
+                if form.password.data == form.passwordCheck.data:
                     print("password matched")
                     newuser = Account(
-                        email = form.email.data,
-                        password = generate_password_hash(form.password.data),
-                        staff = False)
+                        email=form.email.data,
+                        password=generate_password_hash(form.password.data),
+                        staff=False)
                     print(newuser.password)
                     db.session.add(newuser)
                     db.session.commit()
                     login_user(newuser)
+                    print(current_user.id)
                     flash("Account created successfully")
-                    logging.info('New account created. Email: %s', newuser.email)
+                    logging.info('New account created. Email: %s',
+                                 newuser.email)
                     return redirect('/profile')
                 else:
                     print("passed didnt match")
@@ -112,18 +146,6 @@ def create_account():
             flash("Error creating your account, please try again")
             # logging.info()
             return redirect('/create_account')
-
-
-@app.route('/logout')
-@login_required
-def logout():
-    # need the name variable otherwise logging does not work
-    name_email = current_user.email
-    logout_user()
-    logging.info('User %s logged out', name_email)
-    flash("Logged out successfully")
-    logging.info('%s logged out successfully', name_email)
-    return redirect('/login')
 
 
 @app.route('/change_password', methods=['GET', 'POST'])
@@ -160,13 +182,104 @@ def change_password():
             return redirect('/change_password')
 
 
-@app.route('/filmDetails', methods=['GET', 'POST'])
+@app.route('/add_card', methods=['GET', 'POST'])
+@login_required
+def add_card():
+    form = CardDetails()
+    if request.method == 'GET':
+        return render_template(
+            'add_card.html', title='Add Card', form=form)
+    elif request.method == 'POST':
+        print('POST method')
+        if form.validate_on_submit():
+            print('form validate_on_submit')
+            if (check_password_hash(current_user.password, form.password.data)):
+                print('passwords match')
+                newCard = Card(
+                    name_on_card=form.name_on_card.data,
+                    billing_address=form.billing_address.data,
+                    card_number=hashNumber(form.card_number.data),
+                    cvc=hashNumber(form.cvc.data),
+                    expiry_date_month=hashNumber(form.expiry_date_month.data),
+                    expiry_date_year=hashNumber(form.expiry_date_year.data)
+                )
+                print('card created not added')
+                db.session.add(newCard)
+                db.session.commit()
+                print('successfully added card(?)')
+                return redirect('/profile')
+            else:
+                flash("passwords didn't match")
+                print("passwords didn't match")
+                return redirect('/add_card')
+        else:
+            flash('form did not validate on submit')
+            print('form didnt validate on submit')
+            return redirect('/add_card')
+
+
+@app.route('/basket', methods=['GET'])
+@login_required
+def basket():
+
+    ticket_basket = session.get('ticket_type')
+
+    return render_template(
+        'basket.html', title='Checkout')
+
+
+@app.route('/order_ticket', methods=['GET', 'POST'])
+def order_ticket():
+    form = OrderTicket()
+    film_title = session.get('film_title', None)
+    film = models.FilmDetails.query.filter_by(filmName=film_title).first_or_404()
+
+    if request.method == 'GET':
+        return render_template(
+            'order_ticket.html', title='Order Ticket', form=form, film=film)
+
+    elif request.method == 'POST':
+        print('posting')
+        flash_errors(form)
+        if form.validate() == True:
+            print('validated')
+            session['ticket_type'] = form.ticketType.data
+            return redirect('/basket')
+        else:
+            print('Fail')
+            return redirect('/order_ticket')
+
+        #    if form.validate_on_submit():
+        #        ticketType = form.
+
+        #    session['ticket'] =
+
+
+@app.route('/film_info', methods=['GET', 'POST'])
+def film_details():
+    form = ShowTimes()
+    passed = request.args.get('passed', None)
+    film = models.FilmDetails.query.filter_by(filmName=passed).first_or_404()
+
+    if request.method == 'GET':
+        return render_template(
+            'filmInfo.html', title='Film Details', film=film, passed=passed, form=form)
+    elif request.method == 'POST':
+        print('posting')
+        if form.validate() == True:
+            session['film_title'] = passed
+            session['film_time'] = form.times.data
+            return redirect('/order_ticket')
+
+
+@app.route('/film_details', methods=['GET', 'POST'])
 def list_films():
     # print list of films stored in FilmDetails databse
     filmDetails = models.FilmDetails.query.all()
-    #userList = models.Account.query.all()
+    # userList = models.Account.query.all()
     return render_template(
-        'filmDetails.html', title='Film List', filmDetails=filmDetails)#, userList=userList)
+        'filmDetails.html', title='Film List', filmDetails=filmDetails)
+
 
 @app.route('/profile', methods=['GET'])
 def profile():

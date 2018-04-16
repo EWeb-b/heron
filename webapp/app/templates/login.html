@@ -1,25 +1,40 @@
-<!DOCTYPE html>
+
 {% extends "base.html" %}
+{% block title %}Login{% endblock %}
 {% block content %}
 
+<html lang="en">
+  <head>
+    <link href = "style.css" rel = "stylesheet">
+    <link href="form-validation.css" rel="stylesheet">
+  </head>
 
-      <div>
+
+
+  <div>
+    <div class="container">
+      <div class="py-5 text-center text-muted">
+        <img class="d-block mx-auto mb-4" src="static/logo5.png" alt="" width="92" height="72">
+        <h2>Login</h2>
+      </div>
        <!-- <pre align = "center">Log into Your Account</pre></br> -->
-       <form style="margin-top: 100px" action="" method="post" action="/login" align = "center">
+       <form style="margin-top: 100px" method="post" action="/login" align = "center">
          {{ form.hidden_tag() }}
-         <a class= "font-weight-light" align = "center">Email </a>
+         <a class= "py-5 text-center text-muted" align = "center"  style="margin-bottom:10px">Email </a>
          <p>{{ form.email }}<br>
             {% for error in form.email.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
          </p>
-         <a class= "font-weight-light" align = "center">Password </a>
+
+
+         <a class= "py-5 text-center text-muted" align = "center" style="margin-bottom:10px">Password </a>
          <p>{{ form.password }}<br>
             {% for error in form.password.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
          </p>
-         <button type="submit" class="btn btn-success" value="Log In" style="margin-top: 5px">Log In</button></p>
+         <button type="submit" class="btn btn-danger" value="Log In" style="margin-top: 5px">Log In</button></p>
        <!-- <div>
        </form>
          <form href="/create_account">
@@ -27,5 +42,7 @@
          </form>
        </div> -->
        <a href="create_account" align = "center" class="font-weight-light" >Create Account</a>
+
+
      </form>
 {% endblock %}

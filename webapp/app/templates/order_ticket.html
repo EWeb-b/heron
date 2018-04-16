@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+  {% extends "base.html" %}
+  {% block title %}Order Ticket{% endblock %}
+   {% block content %}
+
+
+<style>
+
+
+    aa {
+      display:inline;
+    }
+    bb {
+      display:inline;
+    }
+    cc {
+      display:inline;
+    }
+
+</style>
+
+<html lang="en">
+  <head>
+    <link href = "style.css" rel = "stylesheet">
+    <link href="form-validation.css" rel="stylesheet">
+  </head>
+
+<body>
+      <div class="container">
+        <center>
+          <div>
+            <h3>Buy Tickets</h3>
+            <h4>Film:</h4>
+           <div>
+             {{film.filmName}}
+           </div>
+
+           <label style="margin-top: 20px">Ticket Type</label>
+           <form method = 'POST'>
+             <fieldset>
+             <p>{{form.ticketType}}<br>
+             </p>
+
+             <p><input class ="btn btn-danger" type="submit" value="Order Ticket" style="margin-top: 5px"></p>
+           </fieldset>
+           </form>
+
+           <h3> Select Seat</h3>
+           <div>
+             <aa>
+              STANDARD
+            </aa>
+              <aa class=""><input type="checkbox">a1</aa>
+              <aa class=""><input type="checkbox">a2</aa>
+              <aa class=""><input type="checkbox">a3</aa>
+              <aa class=""><input type="checkbox">a4</aa>
+              <aa class=""><input type="checkbox">a5</aa>
+              <aa class=""><input type="checkbox">a6</aa>
+              <aa class=""><input type="checkbox">a7</aa>
+              <aa class=""><input type="checkbox">a8</aa>
+              <aa class=""><input type="checkbox">a9</aa>
+            </div>
+            <div>
+              <bb>
+               VIP
+             </bb>
+              <bb class=""><input type="checkbox">b1</bb>
+              <bb class=""><input type="checkbox">b2</bb>
+              <bb class=""><input type="checkbox">b3</bb>
+              <bb class=""><input type="checkbox">b4</bb>
+              <bb class=""><input type="checkbox">b5</bb>
+              <bb class=""><input type="checkbox">b6</bb>
+              <bb class=""><input type="checkbox">b7</bb>
+              <bb class=""><input type="checkbox">b8</bb>
+              <bb class=""><input type="checkbox">b9</bb>
+            </div>
+            <div>
+              <cc>
+               STANDARD
+             </cc>
+              <cc class=""><input type="checkbox">c1</cc>
+              <cc class=""><input type="checkbox">c2</cc>
+              <cc class=""><input type="checkbox">c3</cc>
+              <cc class=""><input type="checkbox">c4</cc>
+              <cc class=""><input type="checkbox">c5</cc>
+              <cc class=""><input type="checkbox">c6</cc>
+              <cc class=""><input type="checkbox">c7</cc>
+              <cc class=""><input type="checkbox">c8</cc>
+              <cc class=""><input type="checkbox">c9</cc>
+            </div>
+
+        <div>
+          <center>
+
+            <button class="btn btn-danger"  name="buy" value="Order Tickets" style="margin-top: 15px">Order Ticket</button>
+
+          </center>
+        </div>
+      </center>
+    </div>
+  </body>
+
+</html>
+{% endblock %}

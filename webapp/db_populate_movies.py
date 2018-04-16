@@ -6,27 +6,33 @@ import json
 sampleData = [
     {
         "filmCertificate": 12,
+        "filmBlurb": "Entering dreams.",
+        "filmDirector": "Christopher Nolan",
+        "filmName": "Inception",
+        "filmActor": "Leonardo DiCaprio"
+    },
+    {
+        "filmCertificate": 12,
         "filmBlurb": "Home alone, but on mars.",
         "filmDirector": "Ridley Scott",
         "filmName": "The Martian",
         "filmActor": "Matt Damon"
     },
     {
-        "filmCertificate": 1,
-        "filmBlurb": "Professor has unusually productive sabatical.",
-        "filmDirector": "Steven Spielberg",
-        "filmName": "Raiders of the Lost Ark",
-        "filmActor": "Harrison Ford"
+        "filmCertificate": 12,
+        "filmBlurb": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival",
+        "filmDirector": "Christopher Nolan",
+        "filmName": "Interstellar",
+        "filmActor": "Matthew McConaughey"
     },
     {
-        "filmCertificate": 15,
-        "filmBlurb": "Professor finds a shiny head.",
-        "filmDirector": "Steven Spielberg",
-        "filmName": "Indiana Jones and the Kingdom of the Crystal Skull",
-        "filmActor": "Harrison Ford"
+        "filmCertificate": 18,
+        "filmBlurb": "Post apocolyptic madness",
+        "filmDirector": "George Miller",
+        "filmName": "Mad Max: Fury Road",
+        "filmActor": "Tom Hardy"
     }
 ]
-
 
 for movie in sampleData:
     newMovie = FilmDetails(**movie)
