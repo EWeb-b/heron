@@ -2,61 +2,61 @@
 {% extends "base.html" %}
 {% block content %}
 
-<style>
-h3 {
-    color: #979497
-}
-body {
-    color: #4582EC
-}
-</style>
+<html lang="en">
+  <head>
+    <link href = "style.css" rel = "stylesheet">
+    <link href="form-validation.css" rel="stylesheet">
+  </head>
+
+<div class="container">
 
 <form action="/add_card" method="POST" style="margin-top: 100px">
     {{ form.hidden_tag() }}
-    <a><tab1> password: </a></tab1>
+    <a><tab1> Account Password </a></tab1>
     <p>{{ form.password }}<br>
        {% for error in form.password.errors %}
        <span style="color: red;">{{ error }}</span>
        {% endfor %}
     </p>
-    <a><tab1>  name on card: </a></tab1>
+    <a><tab1>  Name on Card </a></tab1>
     <p>{{ form.name_on_card }}<br>
        {% for error in form.name_on_card.errors %}
        <span style="color: red;">{{ error }}</span>
        {% endfor %}
     </p>
-    <a><tab1> Billing Address: </a></tab1>
+    <a><tab1> Billing Address </a></tab1>
     <p>{{ form.billing_address }}<br>
        {% for error in form.billing_address.errors %}
        <span style="color: red;">{{ error }}</span>
        {% endfor %}
     </p>
-    <a><tab1> Card Number: </a></tab1>
+    <a><tab1> Card Number </a></tab1>
     <p>{{ form.card_number }}<br>
         {% for error in form.card_number.errors %}
         <span style="color: red;">{{ error }}</span>
         {% endfor %}
     </p>
-    <a><tab1> CVC: </a></tab1>
+    <a><tab1> CVC </a></tab1>
     <p>{{ form.cvc }}<br>
         {% for error in form.cvc.errors %}
         <span style="color: red;">{{ error }}</span>
         {% endfor %}
     </p>
-    <a><tab1> Expiry month: </a></tab1>
+    <a><tab1> Expiry month </a></tab1>
     <p>{{ form.expiry_date_month }}<br>
         {% for error in form.expiry_date_month.errors %}
         <span style="color: red;">{{ error }}</span>
         {% endfor %}
     </p>
-    <a><tab1> expiry year: </a></tab1>
+    <a><tab1> Expiry Year </a></tab1>
     <p>{{ form.expiry_date_year }}<br>
         {% for error in form.expiry_date_year.errors %}
         <span style="color: red;">{{ error }}</span>
         {% endfor %}
     </p>
 
-    <p><input class = "btn btn-success" type="submit" value="Add Card" style="margin-top: 5px"></p>
-    <!-- <a href="/login" align = "center" class="font-weight-light" >Already have an account? </a> -->
+    <p><input class = "btn btn-danger" type="submit" value="Add Card" style="margin-top: 5px"></p>
+ 
 </form>
+</div>
 {% endblock %}
