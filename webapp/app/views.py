@@ -228,9 +228,11 @@ def order_ticket():
     elif request.method == 'POST':
         print('posting')
         if form.validate() == True:
+            print('validated')
             return redirect('/basket')
         else:
-            return redirect('/home')
+            print('FAIL')
+            return redirect('/order_ticket')
 
         #    if form.validate_on_submit():
         #        ticketType = form.
