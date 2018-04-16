@@ -4,6 +4,10 @@
    {% block content %}
 <style>
 
+aa {
+  display:inline;
+}
+
    .image {
      margin-left:2%;
      float:left;
@@ -56,11 +60,16 @@
          </div>
 
       </div>
-      <div>
-    </div>
-    <form action="{{url_for('order_ticket')}}">
-      <button class="btn btn-danger" type="submit" name="orderTickets" style="margin-top: 100px">Order Ticket</button>
-    </form>
+
+      <h3> Show Times Today</h3>
+      <form method="POST">
+        <fieldset>
+        <p>{{form.times}}<br>
+        </p>
+
+        <p><input class="btn btn-danger" type="submit" value"Order Ticket" style="margin-top: 10px"></p>
+      </fieldset>
+      </form>
   </div>
   </div>
    </body>

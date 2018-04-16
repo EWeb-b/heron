@@ -6,9 +6,7 @@
 {% endblock %}
 
 <style>
-.error {
-    color: white;
-}
+
 </style>
 
 <body>
@@ -49,6 +47,18 @@
 </ul>
   </div>
 </nav>
+
+<div style="color: white">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }} </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+</div>
 
 
 {% endblock %}
