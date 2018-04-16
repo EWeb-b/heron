@@ -221,11 +221,14 @@ def add_card():
 @app.route('/basket', methods=['GET'])
 @login_required
 def basket():
-
-    ticket_basket = session.get('ticket_type')
+    #film_title = session.get('film_title', None)
+    #film_time = session.get('film_title', None)
+    #ticket_type = session.get('ticket_type', None)
+    #seat_number = session.get('seat_number', None)
 
     return render_template(
-        'basket.html', title='Checkout')
+        'basket.html', title='Checkout', ticket_example='Interstellar 14:00',
+        ticket_value='5')
 
 
 @app.route('/order_ticket', methods=['GET', 'POST'])
@@ -244,15 +247,11 @@ def order_ticket():
         if form.validate() == True:
             print('validated')
             session['ticket_type'] = form.ticketType.data
+            #session['seat_number'] = form.seatNumber.data
             return redirect('/basket')
         else:
             print('Fail')
             return redirect('/order_ticket')
-
-        #    if form.validate_on_submit():
-        #        ticketType = form.
-
-        #    session['ticket'] =
 
 
 @app.route('/film_info', methods=['GET', 'POST'])
