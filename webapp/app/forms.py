@@ -57,6 +57,14 @@ class Search(Form):
     submit = SubmitField('Search')
 
 
+class ShowTimes(Form):
+    times = SelectField('Showing Times',
+                        choices=[('10am', '10:00'), ('2pm', '14:00'),
+                                 ('8pm', '20:00')],
+                        validators=[DataRequired()])
+    submit = SubmitField('Order Ticket')
+
+
 class OrderTicket(Form):
     ticketType = SelectField('Ticket Type',
                              choices=[('standard', 'Standard'), ('child', 'Child'),

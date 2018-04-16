@@ -3,7 +3,8 @@ from flask import (
     make_response, session)
 from flask_bootstrap import Bootstrap
 from app import app, db, models
-from .forms import CreateAccountForm, ChangePasswordForm, LogInForm, CardDetails, OrderTicket
+from .forms import (CreateAccountForm, ChangePasswordForm, LogInForm,
+                    CardDetails, OrderTicket, ShowTimes)
 from .models import Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType, Card
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
@@ -218,7 +219,10 @@ def add_card():
 
 
 @app.route('/basket', methods=['GET'])
+@login_required
 def basket():
+
+    ticket_basket = session.get('ticket_type')
 
     return render_template(
         'basket.html', title='Checkout')
@@ -236,11 +240,13 @@ def order_ticket():
 
     elif request.method == 'POST':
         print('posting')
+        flash_errors(form)
         if form.validate() == True:
             print('validated')
+            session['ticket_type'] = form.ticketType.data
             return redirect('/basket')
         else:
-            print('FAIL')
+            print('Fail')
             return redirect('/order_ticket')
 
         #    if form.validate_on_submit():
@@ -251,13 +257,19 @@ def order_ticket():
 
 @app.route('/film_info', methods=['GET', 'POST'])
 def film_details():
+    form = ShowTimes()
     passed = request.args.get('passed', None)
     film = models.FilmDetails.query.filter_by(filmName=passed).first_or_404()
 
-    session['film_title'] = passed
-
-    return render_template(
-        'filmInfo.html', title='Film Details', film=film, passed=passed)
+    if request.method == 'GET':
+        return render_template(
+            'filmInfo.html', title='Film Details', film=film, passed=passed, form=form)
+    elif request.method == 'POST':
+        print('posting')
+        if form.validate() == True:
+            session['film_title'] = passed
+            session['film_time'] = form.times.data
+            return redirect('/order_ticket')
 
 
 @app.route('/film_details', methods=['GET', 'POST'])
