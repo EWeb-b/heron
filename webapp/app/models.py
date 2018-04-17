@@ -144,11 +144,16 @@ class TicketType(db.Model):
     """
     Simple representation of a ticket type i.e. standard, student,
     OAP, child, etc.
+
+    OAPs will be '3' in table
+    Adults will be '2' in table
+    Students will be '1' in table
+    Children will be '0' in table
     """
     __tablename__ = 'ticket_type'
 
     id = Column(Integer, primary_key=True)
-    ticketType = Column(String(16), unique=True)
+    ticketType = Column(Integer(4), unique=True)
     ticketTypeTickets = relationship("Ticket", backref="ticket_type")
 
     def __repr__(self):
