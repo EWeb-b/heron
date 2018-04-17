@@ -3,27 +3,26 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 from collections import namedtuple
 
-def weeklyBAR(date):
-    n_groups = 3
+def weeklyBAR(date,movies,data):
+    # ARGUMENTS: date = date of the bar chart,
+    #            data = [[adult],[student],[child],[OAP],[VIP]] a list(length = 5) of lists(length = number of movies this week)
+    n_groups = len(data[0])
 
-    ADULT = [20, 35, 30]
+    ADULT = data[0]
 
+    STUDENT = data[1]
 
-    STUDENT = [25, 32, 34]
+    CHILD = data[2]
 
+    OAP = data[3]
 
-    CHILD = [40, 25, 32]
-
-    OAP = [10, 15, 17]
-
-    VIP = [5, 2, 10]
+    VIP = data[4]
 
     fig, ax = plt.subplots()
 
     index = np.arange(n_groups)
     bar_width = 0.2
 
-    opacity = 0.4
     error_config = {'ecolor': '0.3'}
 
     rects1 = ax.bar(index, ADULT, bar_width,
@@ -53,9 +52,9 @@ def weeklyBAR(date):
     ax.set_ylabel('Ticket sales')
     ax.set_title('Daily breakdown for: '+date)
     ax.set_xticks(index + 2*bar_width)
-    ax.set_xticklabels(['Black Panther', 'The Sound of Water', 'The Greatest Showman'])
+    ax.set_xticklabels(movies)
     ax.legend()
 
     fig.tight_layout()
     plt.show()
-weeklyBAR('06/04/2018')
+#weeklyBAR('06/04/2018',['Black Panther', 'The Sound of Water', 'The Greatest Showman','hey'],[[20, 35, 30,10],[25, 32, 34,13],[40, 25, 32,12],[10, 15, 17,10],[5, 2, 10,9]])
