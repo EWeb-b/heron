@@ -1,6 +1,6 @@
 <!DOCTYPE html>
   {% extends "base.html" %}
-  {% block title %}Current Films{% endblock %}
+  {% block title %}Film Info{% endblock %}
    {% block content %}
 <style>
 
@@ -63,6 +63,7 @@ aa {
 
       <h3> Show Times Today</h3>
       <form method="POST">
+        {{ form.csrf_token }}
         <fieldset>
         <p>{{form.times}}<br>
         </p>
