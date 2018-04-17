@@ -3,6 +3,7 @@ from sqlalchemy import Column, DateTime, String, Integer, ForeignKey, Boolean
 from sqlalchemy.orm import relationship, backref
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 class Account(db.Model):
     """
     Account table represents a user in the database
@@ -87,15 +88,16 @@ class Certificate(db.Model):
     """
     Simple table to store film certificates.
 
-    OAPs will be '3' in table
-    Adults will be '2' in table
-    Students will be '1' in table
-    Children will be '0' in table
+    OAPs will be 'oap' in table
+    Adults will be 'adult' in table
+    Students will be 'stud' in table
+    Children will be 'child' in table
     """
     __tablename__ = "certificate"
 
     id = Column(Integer, primary_key=True)
-    cert = Column(Integer(4), unique=True)
+    cert = Column(String(5), unique=True)
+    certFilmDets = relationship('Ticket', backref='filmDetCertificate')
 
     def __repr__(self):
         return '<Certificate: %r>' % (self.cert)
@@ -115,8 +117,8 @@ class FilmDetails(db.Model):
     filmBlurb = Column(String(512))
     filmDirector = Column(String(255))
     filmActor = Column(String(255))
-    filmCertificate = Column(Integer, ForeignKey(Certificate.id))
-    screening = relationship('FilmScreening', backref='film')
+    filmCertificateId = Column(Integer, ForeignKey(Certificate.id))
+    screening = relationship('FilmScreening', backref='filmDetScreening')
 
     def __repr__(self):
         return '<Film Name: %r>' % (self.filmName)
@@ -131,33 +133,13 @@ class FilmScreening(db.Model):
     __tablename__ = 'film_screening'
 
     id = Column(Integer, primary_key=True)
-    filmScreeningFilmDetails = Column(Integer, ForeignKey(FilmDetails.id))
+    filmScreeningFilmDet = Column(Integer, ForeignKey(FilmDetails.id))
     filmScreeningTime = Column(DateTime)
     filmScreeningTickets = relationship("Ticket", backref="film_screening")
 
     def __repr__(self):
         return '<Film: %r\nScreening: %r>' % (
             self.film.filmName, self.screeningTime)
-
-
-class TicketType(db.Model):
-    """
-    Simple representation of a ticket type i.e. standard, student,
-    OAP, child, etc.
-
-    OAPs will be '3' in table
-    Adults will be '2' in table
-    Students will be '1' in table
-    Children will be '0' in table
-    """
-    __tablename__ = 'ticket_type'
-
-    id = Column(Integer, primary_key=True)
-    ticketType = Column(Integer(4), unique=True)
-    ticketTypeTickets = relationship("Ticket", backref="ticket_type")
-
-    def __repr__(self):
-        return '<Ticket Type %r>' % (self.ticketType)
 
 
 class Ticket(db.Model):
@@ -171,15 +153,88 @@ class Ticket(db.Model):
     __tablename__ = 'ticket'
 
     id = Column(Integer, primary_key=True)
-    owner = Column(Integer, ForeignKey('profile.id'))
-    ticketType = Column(Integer, ForeignKey('ticket_type.id'))
-    ticketScreening = Column(Integer, ForeignKey('film_screening.id'))
-    ticketSeatNumber = Column(Integer, unique=True)
+    ownerProfileId = Column(Integer, ForeignKey('profile.id'))
+    ticketTypeId = Column(Integer, ForeignKey('ticket_type.id'))
+    ticketScreeningId = Column(Integer, ForeignKey('film_screening.id'))
     ticketDateBought = Column(DateTime)
+    seatReserves = relationship('SeatReserved', backref='seatResTicket')
 
     def __repr__(self):
         return 'Ticket %r>' % (self.id)
 
+
+class TicketType(db.Model):
+    """
+    Simple representation of a ticket type i.e. standard, student,
+    OAP, child, etc.
+
+    OAPs will be 'oap' in table
+    Adults will be 'adult' in table
+    Students will be 'stud' in table
+    Children will be 'child' in table
+    """
+    __tablename__ = 'ticket_type'
+
+    id = Column(Integer, primary_key=True)
+    ticketType = Column(String(5), unique=True)
+    ticketTypeTickets = relationship("Ticket", backref="ticket_type")
+
+    def __repr__(self):
+        return '<Ticket Type %r>' % (self.ticketType)
+
+
+class SeatReserved(db.Model):
+    """
+    Representation of the reserved seats.
+    """
+    __tablename__ = 'seat_reserved'
+
+    id = Column(Integer, primary_key=True)
+    seatId = Column(Integer, ForeignKey('seat.id'))
+    ticketId = Column(Integer, ForeignKey('ticket.id'))
+    filmScreeningId = Column(Integer, ForeignKey('film_screening.id'))
+
+    def __repr__(self):
+        return '<Ticket Type %r>' % (self.id)
+
+
+class Seat(db.Model):
+    """
+    Simple representation of the seats for one of the theatres.
+    """
+    __tablename__ = 'seat'
+
+    id = Column(Integer, primary_key=True)
+    seatPos = Column(Integer)
+    theatreId = Column(Integer, ForeignKey('theatre.id'))
+    seatSeatReserves = relationship('SeatReserved', backref="seat")
+
+    def __repr__(self):
+        return '<Ticket Type %r>' % (self.id)
+
+
+class Theatre(db.Model):
+    """
+    Simple representation of the different theatres at the cinema.
+    """
+    __tablename__ = 'theatre'
+
+    id = Column(Integer, primary_key=True)
+    theatreName = Column(String, unique=True)
+    theatreScreening = relationship('FilmScreening', backref='theatre')
+    theatreSeat = relationship('Seat', backref='theatre_seat')
+
+    def __repr__(self):
+        return '<Ticket Type %r>' % (self.theatreName)
+
+
 class Sales(db.Model):
     """
     A table containing details for the sales info for a film
+    """
+    __tablename__ = 'sales'
+
+    id = Column(Integer, primary_key=True)
+
+    def __repr__(self):
+        return '<Sales %r>' % (self.id)
