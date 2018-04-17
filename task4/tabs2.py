@@ -82,9 +82,7 @@ class Takings(QScrollArea):
         print('rows',rows)
         #self.colum1 = self.tableWidget.horizontalHeaderItem(1)
         self.dailyTOT = [0,0,0,0,0,0,0]
-        # QObject.connect(colum1,SIGNAL("clicked()"),on_click)
-        # self.tableWidget.connect(self.tableWidget.verticalHeader(),SIGNAL("sectionClicked(int)"),self.on_click)
-        # self.tableWidget.connect(self.tableWidget.horizontalHeader(),SIGNAL("sectionClicked(int)"),self.on_click)
+
         for i in range(num_of_row-1):
             for j in range(num_of_col-1):
                 self.tableWidget.setItem(i,j, QTableWidgetItem(weekTakings[i][j]))
@@ -108,35 +106,20 @@ class Takings(QScrollArea):
         self.date = QLabel()
         self.date.setText(now.strftime("%d-%m-%Y"))
         self.date.setStyleSheet('font-size: 80px;')
-        #
-        # self.topLayer = QHBoxLayout()
-        # self.topLayer.addLayout(self.layout)
-        # self.topLayer.addLayout(self.rankingLayout)
-        #
-        # self.layout = QVBoxLayout()
-        # self.midSection = QHBoxLayout()
-        #
-        #
-        # self.midSection.addWidget(self.tableWidget)
+
         self.rankingLayout = QVBoxLayout()
         self.num1 = QPushButton('#1')
         self.rankingLayout.addWidget(self.num1)
-        # self.midSection.addLayout(self.rankingLayout)
-        # self.layout.addWidget(self.date)
-        # self.layout.addLayout(self.midSection)
+
         self.buttLayout = QHBoxLayout()
         self.previous = QPushButton('Previous')
-        # #self.previous.clicked.connect(lambda:)
-        #
+
         self.next = QPushButton('Next')
-        # #self.next.clicked.connect(lambda:)
-        #
+
         self.next.setEnabled(False)
         self.buttLayout.addWidget(self.previous)
         self.buttLayout.addWidget(self.next)
-        #
 
-        # self.setLayout(self.layout)
 
         self.layout = QHBoxLayout()
         self.weekTable = QVBoxLayout()
@@ -148,27 +131,23 @@ class Takings(QScrollArea):
         self.rankingLayout = QVBoxLayout()
         self.num1 = QPushButton('#1')
         self.rankingLayout.addWidget(self.num1)
+        self.rankingLayout.addStretch()
 
         self.layout.addLayout(self.weekTable)
         self.layout.addLayout(self.rankingLayout)
         self.setLayout(self.layout)
 
 class Compare(QScrollArea):
-    # def random_color(self):
-    #     levels = range(32,256,32)
-    #     return tuple(random.choice(levels) for _ in range(3))
+
 
     def removeBuffer(self, button):
         print(button)
         print('Layout',self.bufferScrollLayout)
-        #self.bufferScrollLayout.removeWidget(button)
-        #button.setParent(None)
+
         button.setVisible(False)
         print( button.text())
         movieBuffer.remove(button.text())
-        #color_buffer.remove()
-        # def __str__(self):
-        #     return "name"
+
         print(movieBuffer)
 
     def movie2Buffer(self,button):
@@ -217,12 +196,6 @@ class Compare(QScrollArea):
 
         #self.layout.update()
 
-
-        #pie_plot_week(movieBuffer,bufferTakings)
-        #color_buffer = []
-        #self.img.setPixmap(QPixmap("takings.png"))
-
-        #pie_plot_week(movieBuffer,takings)
     def table(self):
         print('table')
     def __init__(self):
