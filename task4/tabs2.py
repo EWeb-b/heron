@@ -124,24 +124,25 @@ class Takings(QScrollArea):
         # self.midSection.addLayout(self.rankingLayout)
         # self.layout.addWidget(self.date)
         # self.layout.addLayout(self.midSection)
-        # self.buttLayout = QHBoxLayout()
-        # self.previous = QPushButton('Previous')
+        self.buttLayout = QHBoxLayout()
+        self.previous = QPushButton('Previous')
         # #self.previous.clicked.connect(lambda:)
         #
-        # self.next = QPushButton('Next')
+        self.next = QPushButton('Next')
         # #self.next.clicked.connect(lambda:)
         #
-        # self.next.setEnabled(False)
-        # self.buttLayout.addWidget(self.previous)
-        # self.buttLayout.addWidget(self.next)
+        self.next.setEnabled(False)
+        self.buttLayout.addWidget(self.previous)
+        self.buttLayout.addWidget(self.next)
         #
-        # self.layout.addLayout(self.buttLayout)
+
         # self.setLayout(self.layout)
 
         self.layout = QHBoxLayout()
         self.weekTable = QVBoxLayout()
         self.weekTable.addWidget(self.date)
         self.weekTable.addWidget(self.tableWidget)
+        self.weekTable.addLayout(self.buttLayout)
 
 
         self.rankingLayout = QVBoxLayout()
