@@ -5,24 +5,23 @@
 
 
 <style>
-
-
-    aa {
-      display:inline;
-    }
-    bb {
-      display:inline;
-    }
-    cc {
-      display:inline;
-    }
     .checkbox-grid li {
     display: block;
     float: left;
     width: 5%;
 }
-
 </style>
+
+<script>
+    submitTicket = function(){
+        document.forms["ticket"].submit();
+        return true;
+    }
+    // submitSeat = function(){
+    //     document.forms["seat"].submit();
+    //     return true;
+    // }
+</script>
 
 <html lang="en">
   <head>
@@ -43,10 +42,11 @@
            <p style="color: #ff7214">&#x25CF; VIP</p>
 
            <div>
+             <form id="seat" method='POST'>
              <ul class="checkbox-grid">
-             <li><input type='radio' name="check[]" value="a1" class="custom-control-input" required/><label for="A1">A1</label></li>
-             <li><input type='radio' name="check[]" value="a2" class="custom-control-input" required/><label for="A2">A2</label></li>
-             <li><input type='radio' name="check[]" value="a3" class="custom-control-input" required/><label for="A3">A3</label></li>
+             <li><input type='radio' name="check" value="a1" class="custom-control-input" required/><label for="A1">A1</label></li>
+             <li><input type='radio' name="check" value="a2" class="custom-control-input" required/><label for="A2">A2</label></li>
+             <li><input type='radio' name="check" value="a3" class="custom-control-input" required/><label for="A3">A3</label></li>
              <li><input type='radio' name="check" value="a4" class="custom-control-input" required/><label for="A4">A4</label></li>
              <li><input type='radio' name="check" value="a5" class="custom-control-input" required/><label for="A5">A5</label></li>
              <li><input type='radio' name="check" value="a6" class="custom-control-input" required/><label for="A6">A6</label></li>
@@ -104,19 +104,22 @@
              <li><input type='radio' name="check" value="c18" class="custom-control-input" required/><label for="C18">C18</label></li>
              <li><input type='radio' name="check" value="c19" class="custom-control-input" required/><label for="C19">C19</label></li>
              <li><input type='radio' name="check" value="c20" class="custom-control-input" required/><label for="C20">C20</label></li>
-
+           </form>
+           </div>
+           <div>
+             <button class="btn btn-danger" onclick='submitSeat()' value="Order Ticket" style="margin-top: 15px">Reserve a Seat</button>
            </div>
 
            <label style="margin-top: 20px">Ticket Type</label>
-           <form method = 'POST'>
+           <form id="ticket" method = 'POST'>
              {{ form.csrf_token }}
              <fieldset>
                <p>{{form.ticketType}}<br>
              </p>
-             <div>
-              <button class="btn btn-danger"  name="buy" value="Order Tickets" style="margin-top: 15px">Order Ticket</button>
-              </div>
            </form>
+           <div>
+            <p><input class="btn btn-danger" type="submit" onclick='submitTicket()' value="Add to Cart" style="margin-top: 15px"></p>
+           </div>
        </div>
     </center>
   </body>

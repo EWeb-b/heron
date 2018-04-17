@@ -6,7 +6,8 @@ from wtforms.validators import (
 from wtforms.fields.html5 import EmailField
 from wtforms.fields import (
     TextField, TextAreaField, PasswordField,
-    StringField, SubmitField, DateField, IntegerField, SelectField)
+    StringField, SubmitField, DateField, IntegerField,
+    BooleanField, SelectField)
 
 
 class LogInForm(Form):

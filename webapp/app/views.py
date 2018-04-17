@@ -224,11 +224,11 @@ def basket():
     film_title = session.get('film_title', None)
     film_time = session.get('film_time', None)
     ticket_type = session.get('ticket_type', None)
+
     if ticket_type == 'standard':
         ticket_value = 5
     else:
         ticket_value = 4
-    #seat_number = session.get('seat_number', None)
 
     return render_template(
         'basket.html', title='Checkout', ticket_example=film_title,
@@ -241,6 +241,8 @@ def order_ticket():
     form = OrderTicket()
     film_title = session.get('film_title', None)
     film = models.FilmDetails.query.filter_by(filmName=film_title).first_or_404()
+    check_list = request.form.getlist('check')
+    print(check_list)
 
     if request.method == 'GET':
         return render_template(
@@ -248,16 +250,14 @@ def order_ticket():
 
     elif request.method == 'POST':
         print('posting')
-        flash_errors(form)
         if form.validate() == True:
             print('validation successful')
+            print(check_list)
             session['ticket_type'] = form.ticketType.data
-            value = request.form.getlist('check[]')
-            print(value)
-            #session['seat_number'] = form.seatNumber.data
             return redirect('/basket')
         else:
             print('Fail')
+            flash_errors(form)
             return redirect('/order_ticket')
 
 
