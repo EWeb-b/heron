@@ -85,7 +85,12 @@ class Card(db.Model):
 
 class Certificate(db.Model):
     """
-    Simple table to store film certificates
+    Simple table to store film certificates.
+
+    OAPs will be 'oap' in table
+    Adults will be 'adul' in table
+    Students will be 'stud' in table
+    Children will be 'chil' in table
     """
     __tablename__ = "certificate"
 
@@ -151,19 +156,19 @@ class TicketType(db.Model):
 
 class Ticket(db.Model):
     """
-    A table containing details for a ticket, including reference to its owner, 
+    A table containing details for a ticket, including reference to its owner,
     screening, Ticket Type, and seat number
-    
-    TODO: check backrefs (they're in the Profile, TicketType, and 
+
+    TODO: check backrefs (they're in the Profile, TicketType, and
     FilmScreening tables) work
     """
     __tablename__ = 'ticket'
-    
+
     id = Column(Integer, primary_key=True)
     owner = Column(Integer, ForeignKey('profile.id'))
     ticketType = Column(Integer, ForeignKey('ticket_type.id'))
     ticketScreening = Column(Integer, ForeignKey('film_screening.id'))
     ticketSeatNumber = Column(Integer)
-    
+
     def __repr__(self):
         return 'Ticket %r>' % (self.id)
