@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 import sys
 from movieDetails import *
+from weeklyBreakDown import *
+import datetime
 #from pie import *
 
 from matplotlib.backends.qt_compat import QtCore, QtWidgets, is_pyqt5
@@ -14,9 +16,15 @@ else:
         FigureCanvas, NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.figure import Figure
 
-listOfMovieNames = ['Black Panther', 'The Sound of Water', 'The Greatest Showman'] # To be changed to work with DB
+listOfMovieNames = ['Black Panther', 'The Shape of Water', 'The Greatest Showman'] # To be changed to work with DB
+directorNames = ['Ryan Coogler','Guilermo del Toro']
+BPdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
 BPtakings = ['120','120','300','200','180','240','150']
+
+SWdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
 SWtakings = ['170','120','180','240','150','300','200']
+
+GSdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
 GStakings = ['180','240','150','300','160','120','200']
 
 weekTakings = [BPtakings,SWtakings,GStakings]
@@ -51,6 +59,7 @@ class Takings(QScrollArea):
                 self.dialog.show()
             elif row == 3 and col != 7: # needs to be changed to take len(rows)
                 print('daily total!')
+                weeklyBAR('06/04/2018')
 
         # detapp = QApplication(sys.argv)
         # ex = Example()
@@ -95,9 +104,54 @@ class Takings(QScrollArea):
         self.daysWeek = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','Total']
         self.createTable(listOfMovieNames,self.daysWeek)
 
-        self.layout = QVBoxLayout()
-        self.layout.addWidget(self.tableWidget)
+        now = datetime.datetime.now()
+        self.date = QLabel()
+        self.date.setText(now.strftime("%d-%m-%Y"))
+        self.date.setStyleSheet('font-size: 80px;')
+        #
+        # self.topLayer = QHBoxLayout()
+        # self.topLayer.addLayout(self.layout)
+        # self.topLayer.addLayout(self.rankingLayout)
+        #
+        # self.layout = QVBoxLayout()
+        # self.midSection = QHBoxLayout()
+        #
+        #
+        # self.midSection.addWidget(self.tableWidget)
+        self.rankingLayout = QVBoxLayout()
+        self.num1 = QPushButton('#1')
+        self.rankingLayout.addWidget(self.num1)
+        # self.midSection.addLayout(self.rankingLayout)
+        # self.layout.addWidget(self.date)
+        # self.layout.addLayout(self.midSection)
+        # self.buttLayout = QHBoxLayout()
+        # self.previous = QPushButton('Previous')
+        # #self.previous.clicked.connect(lambda:)
+        #
+        # self.next = QPushButton('Next')
+        # #self.next.clicked.connect(lambda:)
+        #
+        # self.next.setEnabled(False)
+        # self.buttLayout.addWidget(self.previous)
+        # self.buttLayout.addWidget(self.next)
+        #
+        # self.layout.addLayout(self.buttLayout)
+        # self.setLayout(self.layout)
+
+        self.layout = QHBoxLayout()
+        self.weekTable = QVBoxLayout()
+        self.weekTable.addWidget(self.date)
+        self.weekTable.addWidget(self.tableWidget)
+
+
+        self.rankingLayout = QVBoxLayout()
+        self.num1 = QPushButton('#1')
+        self.rankingLayout.addWidget(self.num1)
+
+        self.layout.addLayout(self.weekTable)
+        self.layout.addLayout(self.rankingLayout)
         self.setLayout(self.layout)
+
 class Compare(QScrollArea):
     # def random_color(self):
     #     levels = range(32,256,32)
@@ -159,6 +213,10 @@ class Compare(QScrollArea):
         print(color_buffer)
         self._dynamic_ax.clear()
         self._dynamic_ax.pie(bufferTakings,labels = movieBuffer, autopct='%1.1f%%', shadow=False)
+
+        #self.layout.update()
+
+
         #pie_plot_week(movieBuffer,bufferTakings)
         #color_buffer = []
         #self.img.setPixmap(QPixmap("takings.png"))
