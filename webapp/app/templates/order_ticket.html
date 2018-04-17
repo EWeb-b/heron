@@ -16,6 +16,11 @@
     cc {
       display:inline;
     }
+    .checkbox-grid li {
+    display: block;
+    float: left;
+    width: 5%;
+}
 
 </style>
 
@@ -29,76 +34,91 @@
       <div class="container">
         <center>
           <div>
-            <h3>Buy Tickets</h3>
-            <h4>Film:</h4>
+            <h3>Buy Ticket</h3>
            <div>
              {{film.filmName}}
+           </div>
+
+           <h3> Select Seat</h3>
+           <p style="color: #ff7214">&#x25CF; VIP</p>
+
+           <div>
+             <ul class="checkbox-grid">
+             <li><input type='radio' name="check[]" value="a1" class="custom-control-input" required/><label for="A1">A1</label></li>
+             <li><input type='radio' name="check[]" value="a2" class="custom-control-input" required/><label for="A2">A2</label></li>
+             <li><input type='radio' name="check[]" value="a3" class="custom-control-input" required/><label for="A3">A3</label></li>
+             <li><input type='radio' name="check" value="a4" class="custom-control-input" required/><label for="A4">A4</label></li>
+             <li><input type='radio' name="check" value="a5" class="custom-control-input" required/><label for="A5">A5</label></li>
+             <li><input type='radio' name="check" value="a6" class="custom-control-input" required/><label for="A6">A6</label></li>
+             <li><input type='radio' name="check" value="a7" class="custom-control-input" required/><label for="A7">A7</label></li>
+             <li><input type='radio' name="check" value="a8" class="custom-control-input" required/><label for="A8">A8</label></li>
+             <li><input type='radio' name="check" value="a9" class="custom-control-input" required/><label for="A9">A9</label></li>
+             <li><input type='radio' name="check" value="a10" class="custom-control-input" required/><label for="A10">A10</label></li>
+             <li><input type='radio' name="check" value="a11" class="custom-control-input" required/><label for="A11">A11</label></li>
+             <li><input type='radio' name="check" value="a12" class="custom-control-input" required/><label for="A12">A12</label></li>
+             <li><input type='radio' name="check" value="a13" class="custom-control-input" required/><label for="A13">A13</label></li>
+             <li><input type='radio' name="check" value="a14" class="custom-control-input" required/><label for="A14">A14</label></li>
+             <li><input type='radio' name="check" value="a15" class="custom-control-input" required/><label for="A15">A15</label></li>
+             <li><input type='radio' name="check" value="a16" class="custom-control-input" required/><label for="A16">A16</label></li>
+             <li><input type='radio' name="check" value="a17" class="custom-control-input" required/><label for="A17">A17</label></li>
+             <li><input type='radio' name="check" value="a18" class="custom-control-input" required/><label for="A18">A18</label></li>
+             <li><input type='radio' name="check" value="a19" class="custom-control-input" required/><label for="A19">A19</label></li>
+             <li><input type='radio' name="check" value="a20" class="custom-control-input" required/><label for="A20">A20</label></li>
+             <li><input type='radio' name="check" value="b1" class="custom-control-input" required/><label style="color: #ff7214" for="B1">B1</label></li>
+             <li><input type='radio' name="check" value="b2" class="custom-control-input" required/><label style="color: #ff7214" for="B2">B2</label></li>
+             <li><input type='radio' name="check" value="b3" class="custom-control-input" required/><label style="color: #ff7214" for="B3">B3</label></li>
+             <li><input type='radio' name="check" value="b4" class="custom-control-input" required/><label style="color: #ff7214" for="B4">B4</label></li>
+             <li><input type='radio' name="check" value="b5" class="custom-control-input" required/><label style="color: #ff7214" for="B5">B5</label></li>
+             <li><input type='radio' name="check" value="b6" class="custom-control-input" required/><label style="color: #ff7214" for="B6">B6</label></li>
+             <li><input type='radio' name="check" value="b7" class="custom-control-input" required/><label style="color: #ff7214" for="B7">B7</label></li>
+             <li><input type='radio' name="check" value="b8" class="custom-control-input" required/><label style="color: #ff7214" for="B8">B8</label></li>
+             <li><input type='radio' name="check" value="b9" class="custom-control-input" required/><label style="color: #ff7214" for="B9">B9</label></li>
+             <li><input type='radio' name="check" value="b10" class="custom-control-input" required/><label style="color: #ff7214" for="B10">B10</label></li>
+             <li><input type='radio' name="check" value="b11" class="custom-control-input" required/><label style="color: #ff7214" for="B11">B11</label></li>
+             <li><input type='radio' name="check" value="b12" class="custom-control-input" required/><label style="color: #ff7214" for="B12">B12</label></li>
+             <li><input type='radio' name="check" value="b13" class="custom-control-input" required/><label style="color: #ff7214" for="B13">B13</label></li>
+             <li><input type='radio' name="check" value="b14" class="custom-control-input" required/><label style="color: #ff7214" for="B14">B14</label></li>
+             <li><input type='radio' name="check" value="b15" class="custom-control-input" required/><label style="color: #ff7214" for="B15">B15</label></li>
+             <li><input type='radio' name="check" value="b16" class="custom-control-input" required/><label style="color: #ff7214" for="B16">B16</label></li>
+             <li><input type='radio' name="check" value="b17" class="custom-control-input" required/><label style="color: #ff7214" for="B17">B17</label></li>
+             <li><input type='radio' name="check" value="b18" class="custom-control-input" required/><label style="color: #ff7214" for="B18">B18</label></li>
+             <li><input type='radio' name="check" value="b19" class="custom-control-input" required/><label style="color: #ff7214" for="B19">B19</label></li>
+             <li><input type='radio' name="check" value="b20" class="custom-control-input" required/><label style="color: #ff7214" for="B20">B20</label></li>
+             <li><input type='radio' name="check" value="c1" class="custom-control-input" required/><label for="C1">C1</label></li>
+             <li><input type='radio' name="check" value="c2" class="custom-control-input" required/><label for="C2">C2</label></li>
+             <li><input type='radio' name="check" value="c3" class="custom-control-input" required/><label for="C3">C3</label></li>
+             <li><input type='radio' name="check" value="c4" class="custom-control-input" required/><label for="C4">C4</label></li>
+             <li><input type='radio' name="check" value="c5" class="custom-control-input" required/><label for="C5">C5</label></li>
+             <li><input type='radio' name="check" value="c6" class="custom-control-input" required/><label for="C6">C6</label></li>
+             <li><input type='radio' name="check" value="c7" class="custom-control-input" required/><label for="C7">C7</label></li>
+             <li><input type='radio' name="check" value="c8" class="custom-control-input" required/><label for="C8">C8</label></li>
+             <li><input type='radio' name="check" value="c9" class="custom-control-input" required/><label for="C9">C9</label></li>
+             <li><input type='radio' name="check" value="c10" class="custom-control-input" required/><label for="C10">C10</label></li>
+             <li><input type='radio' name="check" value="c11" class="custom-control-input" required/><label for="C11">C11</label></li>
+             <li><input type='radio' name="check" value="c12" class="custom-control-input" required/><label for="C12">C12</label></li>
+             <li><input type='radio' name="check" value="c13" class="custom-control-input" required/><label for="C13">C13</label></li>
+             <li><input type='radio' name="check" value="c14" class="custom-control-input" required/><label for="C14">C14</label></li>
+             <li><input type='radio' name="check" value="c15" class="custom-control-input" required/><label for="C15">C15</label></li>
+             <li><input type='radio' name="check" value="c16" class="custom-control-input" required/><label for="C16">C16</label></li>
+             <li><input type='radio' name="check" value="c17" class="custom-control-input" required/><label for="C17">C17</label></li>
+             <li><input type='radio' name="check" value="c18" class="custom-control-input" required/><label for="C18">C18</label></li>
+             <li><input type='radio' name="check" value="c19" class="custom-control-input" required/><label for="C19">C19</label></li>
+             <li><input type='radio' name="check" value="c20" class="custom-control-input" required/><label for="C20">C20</label></li>
+
            </div>
 
            <label style="margin-top: 20px">Ticket Type</label>
            <form method = 'POST'>
              {{ form.csrf_token }}
              <fieldset>
-             <p>{{form.ticketType}}<br>
+               <p>{{form.ticketType}}<br>
              </p>
-
-             <p><input class ="btn btn-danger" type="submit" value="Order Ticket" style="margin-top: 5px"></p>
-           </fieldset>
+             <div>
+              <button class="btn btn-danger"  name="buy" value="Order Tickets" style="margin-top: 15px">Order Ticket</button>
+              </div>
            </form>
-
-           <h3> Select Seat</h3>
-           <div>
-             <aa>
-              STANDARD
-            </aa>
-              <aa class=""><input type="checkbox">a1</aa>
-              <aa class=""><input type="checkbox">a2</aa>
-              <aa class=""><input type="checkbox">a3</aa>
-              <aa class=""><input type="checkbox">a4</aa>
-              <aa class=""><input type="checkbox">a5</aa>
-              <aa class=""><input type="checkbox">a6</aa>
-              <aa class=""><input type="checkbox">a7</aa>
-              <aa class=""><input type="checkbox">a8</aa>
-              <aa class=""><input type="checkbox">a9</aa>
-            </div>
-            <div>
-              <bb>
-               VIP
-             </bb>
-              <bb class=""><input type="checkbox">b1</bb>
-              <bb class=""><input type="checkbox">b2</bb>
-              <bb class=""><input type="checkbox">b3</bb>
-              <bb class=""><input type="checkbox">b4</bb>
-              <bb class=""><input type="checkbox">b5</bb>
-              <bb class=""><input type="checkbox">b6</bb>
-              <bb class=""><input type="checkbox">b7</bb>
-              <bb class=""><input type="checkbox">b8</bb>
-              <bb class=""><input type="checkbox">b9</bb>
-            </div>
-            <div>
-              <cc>
-               STANDARD
-             </cc>
-              <cc class=""><input type="checkbox">c1</cc>
-              <cc class=""><input type="checkbox">c2</cc>
-              <cc class=""><input type="checkbox">c3</cc>
-              <cc class=""><input type="checkbox">c4</cc>
-              <cc class=""><input type="checkbox">c5</cc>
-              <cc class=""><input type="checkbox">c6</cc>
-              <cc class=""><input type="checkbox">c7</cc>
-              <cc class=""><input type="checkbox">c8</cc>
-              <cc class=""><input type="checkbox">c9</cc>
-            </div>
-
-        <div>
-          <center>
-
-            <button class="btn btn-danger"  name="buy" value="Order Tickets" style="margin-top: 15px">Order Ticket</button>
-
-          </center>
-        </div>
-      </center>
-    </div>
+       </div>
+    </center>
   </body>
 
 </html>
