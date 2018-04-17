@@ -37,6 +37,7 @@
 
            <label style="margin-top: 20px">Ticket Type</label>
            <form method = 'POST'>
+             {{ form.csrf_token }}
              <fieldset>
              <p>{{form.ticketType}}<br>
              </p>

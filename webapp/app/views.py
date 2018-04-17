@@ -221,14 +221,18 @@ def add_card():
 @app.route('/basket', methods=['GET'])
 @login_required
 def basket():
-    #film_title = session.get('film_title', None)
-    #film_time = session.get('film_title', None)
-    #ticket_type = session.get('ticket_type', None)
+    film_title = session.get('film_title', None)
+    film_time = session.get('film_title', None)
+    ticket_type = session.get('ticket_type', None)
+    if ticket_type == 'standard':
+        ticket_value = 5
+    else:
+        ticket_value = 4
     #seat_number = session.get('seat_number', None)
 
     return render_template(
-        'basket.html', title='Checkout', ticket_example='Interstellar 14:00',
-        ticket_value='5')
+        'basket.html', title='Checkout', ticket_example=film_title,
+        ticket_value=ticket_value)
 
 
 @app.route('/order_ticket', methods=['GET', 'POST'])
@@ -245,7 +249,7 @@ def order_ticket():
         print('posting')
         flash_errors(form)
         if form.validate() == True:
-            print('validated')
+            print('validation successful')
             session['ticket_type'] = form.ticketType.data
             #session['seat_number'] = form.seatNumber.data
             return redirect('/basket')
@@ -264,11 +268,15 @@ def film_details():
         return render_template(
             'filmInfo.html', title='Film Details', film=film, passed=passed, form=form)
     elif request.method == 'POST':
-        print('posting')
         if form.validate() == True:
+            print('validation successful')
             session['film_title'] = passed
             session['film_time'] = form.times.data
             return redirect('/order_ticket')
+        else:
+            flash_errors(form)
+            return render_template(
+                'filmInfo.html', title='Film Details', film=film, passed=passed, form=form)
 
 
 @app.route('/film_details', methods=['GET', 'POST'])

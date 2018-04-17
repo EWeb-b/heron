@@ -1,5 +1,4 @@
 import os
-
 # Default config for webapp
 
 
