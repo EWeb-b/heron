@@ -221,6 +221,7 @@ def add_card():
 @app.route('/basket', methods=['GET'])
 @login_required
 def basket():
+    cards = models.Card.query.filter_by(profile_id=current_user.id).all()
     film_title = session.get('film_title', None)
     film_time = session.get('film_time', None)
     ticket_type = session.get('ticket_type', None)
@@ -233,7 +234,7 @@ def basket():
     return render_template(
         'basket.html', title='Checkout', ticket_example=film_title,
         ticket_value=ticket_value, film_time=film_time,
-        ticket_type=ticket_type)
+        ticket_type=ticket_type, cards=cards)
 
 
 @app.route('/order_ticket', methods=['GET', 'POST'])

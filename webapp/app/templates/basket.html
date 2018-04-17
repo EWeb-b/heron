@@ -88,6 +88,17 @@
               </div>
             </div>
 
+            <h4 style="color: #ff7214" class="mb-3">Payment</h4>
+
+            <div class="d-block my-3">
+              {% for card in cards %}
+              <div class="custom-control custom-radio">
+                <input id={{card.card_number}} name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                <label class="custom-control-label" for="credit">Card Number: {{card.card_number}}</label>
+              </div>
+              {% endfor %}
+
+            </div>
 
             <hr class="mb-4">
             <button class="btn btn-danger btn-lg btn-block" type="submit">Continue to checkout</button>
