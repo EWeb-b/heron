@@ -126,12 +126,13 @@ class FilmScreening(db.Model):
     """
     A reperesentation of a film screening consisting of a datetime and film
     detail.
+    add cinema screen num
     """
     __tablename__ = 'film_screening'
 
     id = Column(Integer, primary_key=True)
-    screeningFilm = Column(Integer, ForeignKey(FilmDetails.id))
-    screeningTime = Column(DateTime)
+    filmScreeningFilmDetails = Column(Integer, ForeignKey(FilmDetails.id))
+    filmScreeningTime = Column(DateTime)
     filmScreeningTickets = relationship("Ticket", backref="film_screening")
 
     def __repr__(self):
@@ -168,7 +169,12 @@ class Ticket(db.Model):
     owner = Column(Integer, ForeignKey('profile.id'))
     ticketType = Column(Integer, ForeignKey('ticket_type.id'))
     ticketScreening = Column(Integer, ForeignKey('film_screening.id'))
-    ticketSeatNumber = Column(Integer)
+    ticketSeatNumber = Column(Integer, unique=True)
+    ticketDateBought = Column(DateTime)
 
     def __repr__(self):
         return 'Ticket %r>' % (self.id)
+
+class Sales(db.Model):
+    """
+    A table containing details for the sales info for a film
