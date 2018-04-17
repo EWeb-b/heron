@@ -222,7 +222,7 @@ def add_card():
 @login_required
 def basket():
     film_title = session.get('film_title', None)
-    film_time = session.get('film_title', None)
+    film_time = session.get('film_time', None)
     ticket_type = session.get('ticket_type', None)
     if ticket_type == 'standard':
         ticket_value = 5
@@ -232,7 +232,8 @@ def basket():
 
     return render_template(
         'basket.html', title='Checkout', ticket_example=film_title,
-        ticket_value=ticket_value)
+        ticket_value=ticket_value, film_time=film_time,
+        ticket_type=ticket_type)
 
 
 @app.route('/order_ticket', methods=['GET', 'POST'])
@@ -251,6 +252,8 @@ def order_ticket():
         if form.validate() == True:
             print('validation successful')
             session['ticket_type'] = form.ticketType.data
+            value = request.form.getlist('check[]')
+            print(value)
             #session['seat_number'] = form.seatNumber.data
             return redirect('/basket')
         else:
