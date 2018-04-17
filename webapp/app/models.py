@@ -87,15 +87,15 @@ class Certificate(db.Model):
     """
     Simple table to store film certificates.
 
-    OAPs will be 'oap' in table
-    Adults will be 'adul' in table
-    Students will be 'stud' in table
-    Children will be 'chil' in table
+    OAPs will be '3' in table
+    Adults will be '2' in table
+    Students will be '1' in table
+    Children will be '0' in table
     """
     __tablename__ = "certificate"
 
     id = Column(Integer, primary_key=True)
-    cert = Column(String(4), unique=True)
+    cert = Column(Integer(4), unique=True)
 
     def __repr__(self):
         return '<Certificate: %r>' % (self.cert)
