@@ -6,7 +6,8 @@ from wtforms.validators import (
 from wtforms.fields.html5 import EmailField
 from wtforms.fields import (
     TextField, TextAreaField, PasswordField,
-    StringField, SubmitField, DateField, IntegerField, SelectField)
+    StringField, SubmitField, DateField, IntegerField,
+    BooleanField, SelectField)
 
 
 class LogInForm(Form):
@@ -50,6 +51,18 @@ class ChangePasswordForm(Form):
         validators=[DataRequired(), EqualTo(
             'new_password', message='Passwords need to match')])
     submit = SubmitField('Change Password')
+
+
+class Basket(Form):
+    first_name = StringField(
+        'First Name', validators=[DataRequired()])
+    last_name = StringField(
+        'Last Name', validators=[DataRequired()])
+    address = StringField(
+        'Address', validators=[DataRequired()])
+    postcode = StringField(
+        'Postcode', validators=[DataRequired()])
+    submit = SubmitField('Order Ticket')
 
 
 class Search(Form):

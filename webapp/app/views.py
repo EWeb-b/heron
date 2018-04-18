@@ -4,8 +4,9 @@ from flask import (
 from flask_bootstrap import Bootstrap
 from app import app, db, models
 from .forms import (CreateAccountForm, ChangePasswordForm, LogInForm,
-                    CardDetails, OrderTicket, ShowTimes)
-from .models import Account, Profile, Certificate, FilmDetails, FilmScreening, TicketType, Card
+                    CardDetails, OrderTicket, ShowTimes, Basket)
+from .models import (Account, Profile, Certificate, FilmDetails, FilmScreening,
+                     TicketType, Card)
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
 import datetime
@@ -64,6 +65,7 @@ def logout():
     # need the name variable otherwise logging does not work
     name_email = current_user.email
     logout_user()
+    session.clear()
     logging.info('User %s logged out', name_email)
     flash("Logged out successfully")
     logging.info('%s logged out successfully', name_email)
@@ -214,6 +216,7 @@ def add_card():
                 print("passwords didn't match")
                 return redirect('/add_card')
         else:
+            flash_errors(form)
             flash('form did not validate on submit')
             print('form didnt validate on submit')
             return redirect('/add_card')
@@ -222,19 +225,35 @@ def add_card():
 @app.route('/basket', methods=['GET'])
 @login_required
 def basket():
+    form = Basket()
+    cards = models.Card.query.filter_by(profile_id=current_user.id).all()
     film_title = session.get('film_title', None)
     film_time = session.get('film_time', None)
     ticket_type = session.get('ticket_type', None)
-    if ticket_type == 'standard':
-        ticket_value = 5
-    else:
-        ticket_value = 4
-    #seat_number = session.get('seat_number', None)
+    print(film_title)
 
-    return render_template(
-        'basket.html', title='Checkout', ticket_example=film_title,
-        ticket_value=ticket_value, film_time=film_time,
-        ticket_type=ticket_type)
+    if film_title == None:
+        ticket_value = 0
+    else:
+        if ticket_type == 'standard':
+            ticket_value = 5
+            #ticket_value = 6
+        else:
+            ticket_value = 4
+
+    if request.method == 'GET':
+        return render_template(
+            'basket.html', title='Checkout', ticket_film=film_title,
+            ticket_value=ticket_value, film_time=film_time,
+            ticket_type=ticket_type, cards=cards, form=form)
+    elif request.method == 'POST':
+        print(posting)
+        if form.validate() == True:
+            print('validation successful')
+            # newTicket =
+        else:
+            print('fail')
+            return redirect('/basket')
 
 
 @app.route('/order_ticket', methods=['GET', 'POST'])
@@ -242,6 +261,8 @@ def order_ticket():
     form = OrderTicket()
     film_title = session.get('film_title', None)
     film = models.FilmDetails.query.filter_by(filmName=film_title).first_or_404()
+    check_list = request.form.getlist('check')
+    print(check_list)
 
     if request.method == 'GET':
         return render_template(
@@ -249,16 +270,14 @@ def order_ticket():
 
     elif request.method == 'POST':
         print('posting')
-        flash_errors(form)
         if form.validate() == True:
             print('validation successful')
+            print(check_list)
             session['ticket_type'] = form.ticketType.data
-            value = request.form.getlist('check[]')
-            print(value)
-            #session['seat_number'] = form.seatNumber.data
             return redirect('/basket')
         else:
             print('Fail')
+            flash_errors(form)
             return redirect('/order_ticket')
 
 
@@ -293,6 +312,7 @@ def list_films():
 
 
 @app.route('/profile', methods=['GET'])
+@login_required
 def profile():
 
     return render_template(
