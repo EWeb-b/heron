@@ -317,3 +317,9 @@ def profile():
 
     return render_template(
         'profile.html', title='User Profile')
+
+@app.route('/screenings', methods=['GET'])
+def profile():
+
+    return render_template(
+        'screenings.html', title='Screenings')
