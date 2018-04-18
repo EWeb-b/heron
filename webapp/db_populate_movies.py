@@ -47,7 +47,7 @@ filmData = [
     {
         "id": 6,
         "filmCertificateId": 12,
-        "filmBlurb": "",
+        "filmBlurb": "superhero movie",
         "filmDirector": "Ryan Coogler",
         "filmName": "Black Panther",
         "filmActor": "Chadwick Boseman"
