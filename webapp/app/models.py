@@ -88,19 +88,19 @@ class Certificate(db.Model):
     """
     Simple table to store film certificates.
 
-    OAPs will be '0' in table
-    Adults will be '1' in table
-    Students will be '2' in table
-    Children will be '3' in table
+    OAPs will be '1' in table
+    Adults will be '2' in table
+    Students will be '3' in table
+    Children will be '4' in table
     """
     __tablename__ = "certificate"
 
     id = db.Column(db.Integer, primary_key=True)
-    cert = db.Column(db.Integer(5))
+    cert = db.Column(db.Integer)
     certFilmDets = db.relationship('FilmDetails', backref='filmDetCertificate')
 
     def __repr__(self):
-        return '<Certificate: %r>' % (self.cert)
+        return '<Certificate: %r>' % (self.id)
 
 
 class FilmDetails(db.Model):
@@ -169,15 +169,15 @@ class TicketType(db.Model):
     Simple representation of a ticket type i.e. standard, student,
     OAP, child, etc.
 
-    OAPs will be '0' in table
-    Adults will be '1' in table
-    Students will be '2' in table
-    Children will be '3' in table
+    OAPs will be '1' in table
+    Adults will be '2' in table
+    Students will be '3' in table
+    Children will be '4' in table
     """
     __tablename__ = 'ticket_type'
 
     id = db.Column(db.Integer, primary_key=True)
-    ticketType = db.Column(db.Integer(5), unique=True)
+    ticketType = db.Column(db.Integer)
     ticketTypeTickets = db.relationship("Ticket", backref="ticket_type")
 
     def __repr__(self):
@@ -227,15 +227,3 @@ class Theatre(db.Model):
 
     def __repr__(self):
         return '<Ticket Type %r>' % (self.theatreName)
-
-
-class Sales(db.Model):
-    """
-    A table containing details for the sales info for a film
-    """
-    __tablename__ = 'sales'
-
-    id = db.Column(db.Integer, primary_key=True)
-
-    def __repr__(self):
-        return '<Sales %r>' % (self.id)
