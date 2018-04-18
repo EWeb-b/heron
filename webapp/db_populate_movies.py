@@ -90,7 +90,7 @@ ticketData = [
         "ownerProfileId": 1,
         "ticketTypeId": 1,
         "ticketScreeningId": 1,
-        "ticketDateBought": 2018 - 14 - 01 15: 01: 10,
+        "ticketDateBought": 2018 - 04 - 01 15: 01: 10,
 
     },
     {
@@ -98,7 +98,7 @@ ticketData = [
         "ownerProfileId": 1,
         "ticketTypeId": 1,
         "ticketScreeningId": 1,
-        "ticketDateBought": 2018 - 14 - 01 15: 01: 10,
+        "ticketDateBought": 2018 - 04 - 01 15: 01: 10,
 
     },
     {
@@ -106,7 +106,7 @@ ticketData = [
         "ownerProfileId": 1,
         "ticketTypeId": 1,
         "ticketScreeningId": 1,
-        "ticketDateBought": 2018 - 14 - 01 15: 01: 10,
+        "ticketDateBought": 2018 - 04 - 01 15: 01: 10,
 
     },
     {
@@ -114,7 +114,7 @@ ticketData = [
         "ownerProfileId": 2,
         "ticketTypeId": 2,
         "ticketScreeningId": 1,
-        "ticketDateBought": 2018 - 14 - 01 16: 01: 10,
+        "ticketDateBought": 2018 - 04 - 01 16: 01: 10,
 
     },
     {
@@ -122,7 +122,7 @@ ticketData = [
         "ownerProfileId": 2,
         "ticketTypeId": 2,
         "ticketScreeningId": 1,
-        "ticketDateBought": 2018 - 14 - 01 16: 01: 10,
+        "ticketDateBought": 2018 - 04 - 01 16: 01: 10,
 
     },
     {
@@ -130,7 +130,7 @@ ticketData = [
         "ownerProfileId": 3,
         "ticketTypeId": 1,
         "ticketScreeningId": 1,
-        "ticketDateBought": 2018 - 14 - 01 17: 01: 10,
+        "ticketDateBought": 2018 - 04 - 01 17: 01: 10,
 
     },
     {
@@ -138,7 +138,7 @@ ticketData = [
         "ownerProfileId": 3,
         "ticketTypeId": 1,
         "ticketScreeningId": 1,
-        "ticketDateBought": 2018 - 14 - 01 17: 01: 10,
+        "ticketDateBought": 2018 - 04 - 01 17: 01: 10,
 
     },
     {
@@ -146,7 +146,71 @@ ticketData = [
         "ownerProfileId": 3,
         "ticketTypeId": 1,
         "ticketScreeningId": 1,
-        "ticketDateBought": 2018 - 14 - 01 17: 01: 10,
+        "ticketDateBought": 2018 - 04 - 01 17: 01: 10,
+
+    },
+    {
+        "id": 9,
+        "ownerProfileId": 1,
+        "ticketTypeId": 1,
+        "ticketScreeningId": 11,
+        "ticketDateBought": 2018 - 04 - 12 15: 01: 10,
+
+    },
+    {
+        "id": 10,
+        "ownerProfileId": 1,
+        "ticketTypeId": 1,
+        "ticketScreeningId": 11,
+        "ticketDateBought": 2018 - 04 - 12 15: 01: 10,
+
+    },
+    {
+        "id": 11,
+        "ownerProfileId": 1,
+        "ticketTypeId": 1,
+        "ticketScreeningId": 11,
+        "ticketDateBought": 2018 - 04 - 12 15: 01: 10,
+
+    },
+    {
+        "id": 12,
+        "ownerProfileId": 2,
+        "ticketTypeId": 2,
+        "ticketScreeningId": 11,
+        "ticketDateBought": 2018 - 04 - 12 16: 01: 10,
+
+    },
+    {
+        "id": 13,
+        "ownerProfileId": 2,
+        "ticketTypeId": 2,
+        "ticketScreeningId": 11,
+        "ticketDateBought": 2018 - 04 - 12 16: 01: 10,
+
+    },
+    {
+        "id": 14,
+        "ownerProfileId": 3,
+        "ticketTypeId": 1,
+        "ticketScreeningId": 11,
+        "ticketDateBought": 2018 - 04 - 12 17: 01: 10,
+
+    },
+    {
+        "id": 15,
+        "ownerProfileId": 3,
+        "ticketTypeId": 1,
+        "ticketScreeningId": 11,
+        "ticketDateBought": 2018 - 04 - 12 17: 01: 10,
+
+    },
+    {
+        "id": 16,
+        "ownerProfileId": 3,
+        "ticketTypeId": 1,
+        "ticketScreeningId": 11,
+        "ticketDateBought": 2018 - 04 - 12 17: 01: 10,
 
     }
 ]
