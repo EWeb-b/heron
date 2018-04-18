@@ -1,6 +1,7 @@
 from flask import Flask
-from app.models import FilmDetails
+from app.models import FilmDetails, Ticket
 from app import app, db, models
+from datetime import datetime
 import json
 
 filmData = [
@@ -90,7 +91,7 @@ ticketData = [
         "ownerProfileId": 1,
         "ticketTypeId": 1,
         "ticketScreeningId": 1,
-        "ticketDateBought": 2018 - 04 - 01 15: 01: 10,
+        "ticketDateBought": datetime(2018, 4, 1, 15, 1, 10)
 
     },
     {
@@ -98,7 +99,7 @@ ticketData = [
         "ownerProfileId": 1,
         "ticketTypeId": 1,
         "ticketScreeningId": 1,
-        "ticketDateBought": 2018 - 04 - 01 15: 01: 10,
+        "ticketDateBought": datetime(2018, 4, 1, 15, 1, 10)
 
     },
     {
@@ -106,7 +107,7 @@ ticketData = [
         "ownerProfileId": 1,
         "ticketTypeId": 1,
         "ticketScreeningId": 1,
-        "ticketDateBought": 2018 - 04 - 01 15: 01: 10,
+        "ticketDateBought": datetime(2018, 4, 1, 15, 1, 10)
 
     },
     {
@@ -114,7 +115,7 @@ ticketData = [
         "ownerProfileId": 2,
         "ticketTypeId": 2,
         "ticketScreeningId": 1,
-        "ticketDateBought": 2018 - 04 - 01 16: 01: 10,
+        "ticketDateBought": datetime(2018, 4, 1, 15, 1, 10)
 
     },
     {
@@ -122,7 +123,7 @@ ticketData = [
         "ownerProfileId": 2,
         "ticketTypeId": 2,
         "ticketScreeningId": 1,
-        "ticketDateBought": 2018 - 04 - 01 16: 01: 10,
+        "ticketDateBought": datetime(2018, 4, 1, 15, 1, 10)
 
     },
     {
@@ -130,7 +131,7 @@ ticketData = [
         "ownerProfileId": 3,
         "ticketTypeId": 1,
         "ticketScreeningId": 1,
-        "ticketDateBought": 2018 - 04 - 01 17: 01: 10,
+        "ticketDateBought": datetime(2018, 4, 1, 17, 1, 10)
 
     },
     {
@@ -138,7 +139,7 @@ ticketData = [
         "ownerProfileId": 3,
         "ticketTypeId": 1,
         "ticketScreeningId": 1,
-        "ticketDateBought": 2018 - 04 - 01 17: 01: 10,
+        "ticketDateBought": datetime(2018, 4, 1, 17, 1, 10)
 
     },
     {
@@ -146,7 +147,7 @@ ticketData = [
         "ownerProfileId": 3,
         "ticketTypeId": 1,
         "ticketScreeningId": 1,
-        "ticketDateBought": 2018 - 04 - 01 17: 01: 10,
+        "ticketDateBought": datetime(2018, 4, 1, 17, 1, 10)
 
     },
     {
@@ -154,7 +155,7 @@ ticketData = [
         "ownerProfileId": 1,
         "ticketTypeId": 1,
         "ticketScreeningId": 11,
-        "ticketDateBought": 2018 - 04 - 12 15: 01: 10,
+        "ticketDateBought": datetime(2018, 4, 12, 15, 1, 10)
 
     },
     {
@@ -162,7 +163,7 @@ ticketData = [
         "ownerProfileId": 1,
         "ticketTypeId": 1,
         "ticketScreeningId": 11,
-        "ticketDateBought": 2018 - 04 - 12 15: 01: 10,
+        "ticketDateBought": datetime(2018, 4, 12, 15, 1, 10)
 
     },
     {
@@ -170,7 +171,7 @@ ticketData = [
         "ownerProfileId": 1,
         "ticketTypeId": 1,
         "ticketScreeningId": 11,
-        "ticketDateBought": 2018 - 04 - 12 15: 01: 10,
+        "ticketDateBought": datetime(2018, 4, 12, 15, 1, 10)
 
     },
     {
@@ -178,7 +179,7 @@ ticketData = [
         "ownerProfileId": 2,
         "ticketTypeId": 2,
         "ticketScreeningId": 11,
-        "ticketDateBought": 2018 - 04 - 12 16: 01: 10,
+        "ticketDateBought": datetime(2018, 4, 12, 16, 1, 10)
 
     },
     {
@@ -186,7 +187,7 @@ ticketData = [
         "ownerProfileId": 2,
         "ticketTypeId": 2,
         "ticketScreeningId": 11,
-        "ticketDateBought": 2018 - 04 - 12 16: 01: 10,
+        "ticketDateBought": datetime(2018, 4, 12, 16, 1, 10)
 
     },
     {
@@ -194,7 +195,7 @@ ticketData = [
         "ownerProfileId": 3,
         "ticketTypeId": 1,
         "ticketScreeningId": 11,
-        "ticketDateBought": 2018 - 04 - 12 17: 01: 10,
+        "ticketDateBought": datetime(2018, 4, 12, 17, 1, 10)
 
     },
     {
@@ -202,7 +203,7 @@ ticketData = [
         "ownerProfileId": 3,
         "ticketTypeId": 1,
         "ticketScreeningId": 11,
-        "ticketDateBought": 2018 - 04 - 12 17: 01: 10,
+        "ticketDateBought": datetime(2018, 4, 12, 17, 1, 10)
 
     },
     {
@@ -210,7 +211,7 @@ ticketData = [
         "ownerProfileId": 3,
         "ticketTypeId": 1,
         "ticketScreeningId": 11,
-        "ticketDateBought": 2018 - 04 - 12 17: 01: 10,
+        "ticketDateBought": datetime(2018, 4, 12, 17, 1, 10)
 
     }
 ]

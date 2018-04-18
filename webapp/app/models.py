@@ -14,11 +14,11 @@ class Account(db.Model):
     """
     __tablename__ = 'account'
 
-    id = Column(Integer, primary_key=True)
-    email = Column(String(254), unique=True)
-    password = Column(String(255))
-    staff = Column(Boolean)
-    profile = relationship("Profile", uselist=False, back_populates="account")
+    id = db.Column(Integer, primary_key=True)
+    email = db.Column(db.String(254), unique=True)
+    password = db.Column(db.String(255))
+    staff = db.Column(db.Boolean)
+    profile = db.relationship("Profile", uselist=False, back_populates="account")
 
     def __repr__(self):
         return '<User: %r>' % (self.email)
@@ -27,10 +27,10 @@ class Account(db.Model):
         return True
 
     def is_active(self):
-        return true
+        return True
 
     def is_anonymous(self):
-        return false
+        return False
 
     def get_id(self):
         return str(self.id)
@@ -44,16 +44,16 @@ class Profile(db.Model):
     """
     __tablename__ = 'profile'
 
-    id = Column(Integer, primary_key=True)
-    forename = Column(String(255))
-    surname = Column(String(255))
-    accountId = Column(Integer, ForeignKey('account.id'))
-    account = relationship("Account", back_populates="profile")
-    cards = relationship("Card", backref="profile")
-    profileTickets = relationship("Ticket", backref="profile")
+    id = db.Column(db.Integer, primary_key=True)
+    forename = db.Column(db.String(255))
+    surname = db.Column(db.String(255))
+    accountId = db.Column(db.Integer, db.ForeignKey('account.id'))
+    account = db.relationship("Account", back_populates="profile")
+    cards = db.relationship("Card", backref="profile")
+    profileTickets = db.relationship("Ticket", backref="profile")
 
     def __repr__(self):
-        return '<Profile: %r>' % (self.name)
+        return '<Profile: %r>' % (self.surname)
 
 
 class Card(db.Model):
@@ -64,17 +64,17 @@ class Card(db.Model):
     """
     __tablename__= 'card'
 
-    id = Column(Integer, primary_key=True)
-    nameOnCard = Column(String(250))
-    billingAddress = Column(String(250))
-    cardNumber = Column(Integer)
-    cvc = Column(Integer)
-    expiryDateMonth = Column(Integer)
-    expiryDateYear = Column(Integer)
-    profileId = Column(Integer, ForeignKey('profile.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    nameOnCard = db.Column(db.String(250))
+    billingAddress = db.Column(db.String(250))
+    cardNumber = db.Column(db.Integer)
+    cvc = db.Column(db.Integer)
+    expiryDateMonth = db.Column(db.Integer)
+    expiryDateYear = db.Column(db.Integer)
+    profileId = db.Column(db.Integer, db.ForeignKey('profile.id'))
 
     def __repr__(self):
-        return '<Card %r>' % (self.id,
+        return '<Card %r %r %r %r %r %r %r >' % (self.id,
                         self.nameOnCard,
                         self.billingAddress,
                         self.cardNumber,
@@ -95,9 +95,9 @@ class Certificate(db.Model):
     """
     __tablename__ = "certificate"
 
-    id = Column(Integer, primary_key=True)
-    cert = Column(String(5), unique=True)
-    certFilmDets = relationship('Ticket', backref='filmDetCertificate')
+    id = db.Column(db.Integer, primary_key=True)
+    cert = db.Column(db.String(5))
+    certFilmDets = db.relationship('FilmDetails', backref='filmDetCertificate')
 
     def __repr__(self):
         return '<Certificate: %r>' % (self.cert)
@@ -112,16 +112,16 @@ class FilmDetails(db.Model):
     """
     __tablename__ = 'film_details'
 
-    id = Column(Integer, primary_key=True)
-    filmName = Column(String(255))
-    filmBlurb = Column(String(512))
-    filmDirector = Column(String(255))
-    filmActor = Column(String(255))
-    filmCertificateId = Column(Integer, ForeignKey(Certificate.id))
-    screening = relationship('FilmScreening', backref='filmDetScreening')
+    id = db.Column(db.Integer, primary_key=True)
+    filmName = db.Column(db.String(255))
+    filmBlurb = db.Column(db.String(512))
+    filmDirector = db.Column(db.String(255))
+    filmActor = db.Column(db.String(255))
+    filmCertificateId = db.Column(db.Integer, db.ForeignKey('certificate.id'))
+    screening = db.relationship('FilmScreening', backref='filmDetScreening')
 
     def __repr__(self):
-        return '<Film Name: %r>' % (self.filmName)
+        return '<Film Name: %r>' % (self.id)
 
 
 class FilmScreening(db.Model):
@@ -132,14 +132,15 @@ class FilmScreening(db.Model):
     """
     __tablename__ = 'film_screening'
 
-    id = Column(Integer, primary_key=True)
-    filmScreeningFilmDet = Column(Integer, ForeignKey(FilmDetails.id))
-    filmScreeningTime = Column(DateTime)
-    filmScreeningTickets = relationship("Ticket", backref="film_screening")
+    id = db.Column(db.Integer, primary_key=True)
+    filmScreeningFilmDet = db.Column(db.Integer, db.ForeignKey(FilmDetails.id))
+    filmScreeningTime = db.Column(DateTime)
+    filmScreeningTickets = db.relationship("Ticket", backref="film_screening")
+    theatreId = db.Column(db.Integer, db.ForeignKey('theatre.id'))
 
     def __repr__(self):
         return '<Film: %r\nScreening: %r>' % (
-            self.film.filmName, self.screeningTime)
+            self.filmScreeningTickets.filmName, self.screeningTime)
 
 
 class Ticket(db.Model):
@@ -152,15 +153,15 @@ class Ticket(db.Model):
     """
     __tablename__ = 'ticket'
 
-    id = Column(Integer, primary_key=True)
-    ownerProfileId = Column(Integer, ForeignKey('profile.id'))
-    ticketTypeId = Column(Integer, ForeignKey('ticket_type.id'))
-    ticketScreeningId = Column(Integer, ForeignKey('film_screening.id'))
-    ticketDateBought = Column(DateTime)
-    seatReserves = relationship('SeatReserved', backref='seatResTicket')
+    id = db.Column(db.Integer, primary_key=True)
+    ownerProfileId = db.Column(db.Integer, db.ForeignKey('profile.id'))
+    ticketTypeId = db.Column(db.Integer, db.ForeignKey('ticket_type.id'))
+    ticketScreeningId = db.Column(db.Integer, db.ForeignKey('film_screening.id'))
+    ticketDateBought = db.Column(DateTime)
+    seatReserves = db.relationship('SeatReserved', backref='seatResTicket')
 
     def __repr__(self):
-        return 'Ticket %r>' % (self.id)
+        return '<Ticket %r %r>' % (self.id, self.ticketDateBought)
 
 
 class TicketType(db.Model):
@@ -175,12 +176,12 @@ class TicketType(db.Model):
     """
     __tablename__ = 'ticket_type'
 
-    id = Column(Integer, primary_key=True)
-    ticketType = Column(String(5), unique=True)
-    ticketTypeTickets = relationship("Ticket", backref="ticket_type")
+    id = db.Column(db.Integer, primary_key=True)
+    ticketType = db.Column(db.String(5), unique=True)
+    ticketTypeTickets = db.relationship("Ticket", backref="ticket_type")
 
     def __repr__(self):
-        return '<Ticket Type %r>' % (self.ticketType)
+        return '<Ticket Type %r>' % (self.id)
 
 
 class SeatReserved(db.Model):
@@ -189,10 +190,10 @@ class SeatReserved(db.Model):
     """
     __tablename__ = 'seat_reserved'
 
-    id = Column(Integer, primary_key=True)
-    seatId = Column(Integer, ForeignKey('seat.id'))
-    ticketId = Column(Integer, ForeignKey('ticket.id'))
-    filmScreeningId = Column(Integer, ForeignKey('film_screening.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    seatId = db.Column(db.Integer, db.ForeignKey('seat.id'))
+    ticketId = db.Column(db.Integer, db.ForeignKey('ticket.id'))
+    filmScreeningId = db.Column(db.Integer, db.ForeignKey('film_screening.id'))
 
     def __repr__(self):
         return '<Ticket Type %r>' % (self.id)
@@ -204,10 +205,10 @@ class Seat(db.Model):
     """
     __tablename__ = 'seat'
 
-    id = Column(Integer, primary_key=True)
-    seatPos = Column(Integer)
-    theatreId = Column(Integer, ForeignKey('theatre.id'))
-    seatSeatReserves = relationship('SeatReserved', backref="seat")
+    id = db.Column(db.Integer, primary_key=True)
+    seatPos = db.Column(db.Integer)
+    theatreId = db.Column(db.Integer, db.ForeignKey('theatre.id'))
+    seatSeatReserves = db.relationship('SeatReserved', backref="seat")
 
     def __repr__(self):
         return '<Ticket Type %r>' % (self.id)
@@ -219,10 +220,10 @@ class Theatre(db.Model):
     """
     __tablename__ = 'theatre'
 
-    id = Column(Integer, primary_key=True)
-    theatreName = Column(String, unique=True)
-    theatreScreening = relationship('FilmScreening', backref='theatre')
-    theatreSeat = relationship('Seat', backref='theatre_seat')
+    id = db.Column(db.Integer, primary_key=True)
+    theatreName = db.Column(db.String, unique=True)
+    theatreScreening = db.relationship('FilmScreening', backref='theatre')
+    theatreSeat = db.relationship('Seat', backref='theatre_seat')
 
     def __repr__(self):
         return '<Ticket Type %r>' % (self.theatreName)
@@ -234,7 +235,7 @@ class Sales(db.Model):
     """
     __tablename__ = 'sales'
 
-    id = Column(Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
 
     def __repr__(self):
         return '<Sales %r>' % (self.id)
