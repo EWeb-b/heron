@@ -53,6 +53,18 @@ class ChangePasswordForm(Form):
     submit = SubmitField('Change Password')
 
 
+class Basket(Form):
+    first_name = StringField(
+        'First Name', validators=[DataRequired()])
+    last_name = StringField(
+        'Last Name', validators=[DataRequired()])
+    address = StringField(
+        'Address', validators=[DataRequired()])
+    postcode = StringField(
+        'Postcode', validators=[DataRequired()])
+    submit = SubmitField('Order Ticket')
+
+
 class Search(Form):
     film = StringField('Search Film', validators=[DataRequired()])
     submit = SubmitField('Search')
