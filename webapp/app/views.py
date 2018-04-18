@@ -298,7 +298,7 @@ def profile():
         'profile.html', title='User Profile')
 
 @app.route('/screenings', methods=['GET'])
-def profile():
+def screenings():
 
     return render_template(
         'screenings.html', title='Screenings')
