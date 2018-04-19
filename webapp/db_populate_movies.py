@@ -231,7 +231,7 @@ def random_date():
     return randomDate
 
 # Populate the database with ticket data.
-for x in xrange(1, 1000):
+for x in range(1, 1000):
     sampleTicket = Ticket()
     sampleTicket.owner_profile_id = random.randint(1, 100)
     sampleTicket.ticket_type_id = random.randint(1, 5)
