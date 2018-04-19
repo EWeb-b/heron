@@ -311,12 +311,12 @@ class Settings(QScrollArea):
         super(Settings, self).__init__()
 
         # Layout initail info to be displayed in the settings tab
-        self.layout = QVBoxLayout()
+        self.settingsLayout = QVBoxLayout()
 
         self.info = QLabel()
         self.info.setText('System Information')
-        layout.addWidget(self.info)
-        self.setLayout(self.layout)
+        self.settingsLayout.addWidget(self.info)
+        self.setLayout(self.settingsLayout)
 
 
 def main():
@@ -341,6 +341,11 @@ def main():
     vBoxlayout2 = QVBoxLayout()
     vBoxlayout2.addWidget(ex)
     tab2.setLayout(vBoxlayout2)
+
+    info = Settings()
+    vBoxSettings = QVBoxLayout()
+    vBoxSettings.addWidget(info)
+    tab2.setLayout(vBoxSettings)
 
     # Add tabs
     tabs.addTab(tab1, "Takings")
