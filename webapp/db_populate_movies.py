@@ -3,6 +3,7 @@ from app.models import FilmDetails, Ticket
 from app import app, db, models
 from datetime import datetime
 import json
+import random
 
 filmData = [
     {
@@ -219,4 +220,23 @@ ticketData = [
 for aTicket in ticketData:
     newTicket = Ticket(**aTicket)
     db.session.add(newTicket)
+    db.session.commit()
+
+
+# Function to create random dates in the past month
+def random_date():
+    month = random.randint(3, 4)
+    day = random.randint(1, 20)
+    randomDate = datetime(2018, month, day)
+
+    return randomDate
+
+# Populate the database with ticket data.
+for x in xrange(1, 1000):
+    sampleTicket = Ticket()
+    sampleTicket.ownerProfileId = random.randint(1, 100)
+    sampleTicket.ticketTypeId = random.randint(1, 5)
+    sampleTicket.ticketScreeningId = random.randint(1, 9)
+    sampleTicket.ticketDateBought = random_date()
+    db.session.add(sampleTicket)
     db.session.commit()
