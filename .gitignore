@@ -7,3 +7,4 @@ migrations/
 db_repository/
 .idea/
 *.pyc
+.DS_Store/

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+  {% extends "base.html" %}
+  {% block title %}Film Info{% endblock %}
+   {% block content %}
+<style>
+
+aa {
+  display:inline;
+}
+
+   .image {
+     margin-left:2%;
+     float:left;
+     height:450px;
+     width:300px;
+   }
+   }
+   .container {
+    color: #4582EC;
+    background-color: #4582EC;
+   	width:100%;
+   	height:auto;
+   	padding:1%;
+   }
+
+</style>
+
+<html lang="en">
+  <head>
+    <link href = "style.css" rel = "stylesheet">
+    <link href="form-validation.css" rel="stylesheet">
+  </head>
+
+  <body>
+      <div class="container">
+        <div>
+            <img src="/static/portraits/{{film.filmName}}.jpg" alt="Film Image" class="image"></a>
+        </div>
+
+        <div>
+          <h3>Film Name</h3>
+         <div>
+           {{film.filmName}}
+         </div>
+         <h3>Blurb</h3>
+         <div>
+           {{film.filmBlurb}}
+         </div>
+         <h3>Film Certificate</h3>
+         <div>
+           {{film.filmCertificate}}
+         </div>
+         <h3>Director</h3>
+         <div>
+           {{film.filmDirector}}
+         </div>
+         <h3>Lead Actor</h3>
+         <div>
+           {{film.filmActor}}
+         </div>
+
+      </div>
+
+      <h3> Show Times Today</h3>
+      <form method="POST">
+        {{ form.csrf_token }}
+        <fieldset>
+        <p>{{form.times}}<br>
+        </p>
+
+        <p><input class="btn btn-danger" type="submit" value="Order Ticket" style="margin-top: 10px"></p>
+      </fieldset>
+      </form>
+  </div>
+  </div>
+   </body>
+</html>
+{% endblock %}
