@@ -6,3 +6,4 @@ app.db
 migrations/
 db_repository/
 .idea/
+*.pyc

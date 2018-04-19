@@ -93,9 +93,10 @@ class FilmDetails(db.Model, Serializer):
     def __repr__(self):
         return '<Film: %r>' % (self.film_name)
 
-    def serialize(self):
-        item = Serializer.serialize(self)
-        return item
+    def __json__(self):
+        return [
+            'id', 'film_name', 'blurb',
+            'age_certificate', 'director', 'lead_actor']
 
 
 class FilmScreenings(db.Model):
