@@ -1,6 +1,7 @@
 from flask import (
     render_template, flash, redirect, request, Flask, url_for,
     make_response, session)
+from flask_mail import Mail, Message
 from flask_bootstrap import Bootstrap
 from app import app, db, models
 from .forms import (CreateAccountForm, ChangePasswordForm, LogInForm,
@@ -25,12 +26,28 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 # Uses Knuth's Multiplicative Method to hash numbers
-
-
 def hashNumber(numberToBeHashed):
     string = str(numberToBeHashed)
     hashedNumber = print(hashlib.md5(string.encode('utf-8')).hexdigest())
     return hashedNumber
+
+
+def qrStringEncoder(string):
+    # takes a string to encode
+    # returns QR code image (version 1)
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(string)
+    qr.make(fit=True)
+
+    img = qr.make_image()
+    img.show()
+    return img
+#qrStringEncoder('jamesdean@gmail.com/student/The Martian/18:00')
 
 
 @login_manager.user_loader
