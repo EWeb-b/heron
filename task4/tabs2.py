@@ -80,6 +80,7 @@ class Takings(QScrollArea):
         if takingsDate < datetime.date(2018,4,1):
             self.previous.setEnabled(False)
         print('week: ',takingsDate.isocalendar()[1])
+        self.week.setText('Week: '+str(takingsDate.isocalendar()[1]))
         print(takingsDate)
 
     def nextweek(self):
@@ -96,6 +97,7 @@ class Takings(QScrollArea):
             self.next.setEnabled(False)
 
         print('week: ',takingsDate.isocalendar()[1])
+        self.week.setText('Week: '+str(takingsDate.isocalendar()[1]))
         print(takingsDate)
 
 
