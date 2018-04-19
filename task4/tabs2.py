@@ -5,6 +5,7 @@ import sys
 from movieDetails import *
 from weeklyBreakDown import *
 import datetime
+import dayDates
 
 
 from matplotlib.backends.qt_compat import QtCore, QtWidgets, is_pyqt5
@@ -29,6 +30,9 @@ weekTakings = [BPtakings,SWtakings,GStakings]
 takings = ['1320', '1222', '950']
 movieBuffer = []
 timeSpan = 'daily'
+
+
+takingsDate = datetime.date.today() #used to keep track of the week in
 
 color_buffer = []
 class Takings(QScrollArea):
@@ -65,9 +69,37 @@ class Takings(QScrollArea):
         # ex = Example()
         # ex.show()
         # sys.exit(detapp.exec_())
+
+    # these next two functions connect to the next and previous buttons
     def previousweek(self):
+        print('previous')
+        global takingsDate
+        self.next.setEnabled(True)
+        takingsDate = takingsDate - datetime.timedelta(weeks = 1)
+        self.date.setText(str(takingsDate))
+        if takingsDate < datetime.date(2018,4,1):
+            self.previous.setEnabled(False)
+        print('week: ',takingsDate.isocalendar()[1])
+        print(takingsDate)
 
     def nextweek(self):
+
+        print('next')
+        global takingsDate
+        takingsDate = takingsDate + datetime.timedelta(weeks = 1)
+        self.date.setText(str(takingsDate))
+        if self.previous.isEnabled():
+            print('')
+        else:
+            self.previous.setEnabled(True)
+        if takingsDate == datetime.date.today():
+            self.next.setEnabled(False)
+
+        print('week: ',takingsDate.isocalendar()[1])
+        print(takingsDate)
+
+
+    # change to take takingsDate as an argument
 
 
     def createTable(self,rows,colums):
@@ -92,7 +124,7 @@ class Takings(QScrollArea):
             self.tableWidget.setItem(i,7, QTableWidgetItem(str(sum(map(int,weekTakings[i])))))
 
         #map(str,self.dailyTOT)
-        print('TOT:',self.dailyTOT)
+        #print('TOT:',self.dailyTOT)
         for i in range(7):
             self.tableWidget.setItem(3,i, QTableWidgetItem(str(self.dailyTOT[i])))
         # print('0,0:',self.mondayTot)
@@ -108,6 +140,10 @@ class Takings(QScrollArea):
         self.date = QLabel()
         self.date.setText(now.strftime("%d-%m-%Y"))
         self.date.setStyleSheet('font-size: 80px;')
+
+        self.week = QLabel()
+        self.week.setText('Week: '+str(now.isocalendar()[1]))
+        self.week.setStyleSheet('font-size: 40px;')
 
         self.rankingLayout = QVBoxLayout()
         self.num1 = QPushButton('#1')
@@ -128,6 +164,7 @@ class Takings(QScrollArea):
         self.layout = QHBoxLayout()
         self.weekTable = QVBoxLayout()
         self.weekTable.addWidget(self.date)
+        self.weekTable.addWidget(self.week)
         self.weekTable.addWidget(self.tableWidget)
         self.weekTable.addLayout(self.buttLayout)
 
@@ -310,22 +347,10 @@ class Settings(QScrollArea):
     def __init__(self):
         super(Settings, self).__init__()
 
-<<<<<<< HEAD
-        # Layout initail info to be displayed in the settings tab
-        self.settingsLayout = QVBoxLayout()
-
-        self.info = QLabel()
-        self.info.setText('System Information')
-        self.settingsLayout.addWidget(self.info)
-        self.setLayout(self.settingsLayout)
-
-
-=======
 
         self.layout = QVBoxLayout()
 
         self.setLayout(self.layout)
->>>>>>> 089f5a54e48850f5d8d4f542a4fc3e49757d9278
 def main():
 
     app 	= QApplication(sys.argv)
@@ -348,14 +373,7 @@ def main():
     vBoxlayout2.addWidget(ex)
     tab2.setLayout(vBoxlayout2)
 
-<<<<<<< HEAD
-    info = Settings()
-    vBoxSettings = QVBoxLayout()
-    vBoxSettings.addWidget(info)
-    tab2.setLayout(vBoxSettings)
-=======
 
->>>>>>> 089f5a54e48850f5d8d4f542a4fc3e49757d9278
 
     # Add tabs
     tabs.addTab(tab1,"Takings")
