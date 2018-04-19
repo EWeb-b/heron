@@ -260,7 +260,7 @@ def basket():
 def order_ticket():
     form = OrderTicket()
     film_title = session.get('film_title', None)
-    film = models.FilmDetails.query.filter_by(filmName=film_title).first_or_404()
+    film = models.FilmDetails.query.filter_by(film_name=film_title).first_or_404()
     check_list = request.form.getlist('check')
     print(check_list)
 
@@ -285,7 +285,7 @@ def order_ticket():
 def film_details():
     form = ShowTimes()
     passed = request.args.get('passed', None)
-    film = models.FilmDetails.query.filter_by(filmName=passed).first_or_404()
+    film = models.FilmDetails.query.filter_by(film_name=passed).first_or_404()
 
     if request.method == 'GET':
         return render_template(
