@@ -3,7 +3,7 @@ from flask import (
     make_response, session)
 from flask_mail import Mail, Message
 from flask_bootstrap import Bootstrap
-from app import app, db, models
+from app import app, db, models, mail
 from .forms import (CreateAccountForm, ChangePasswordForm, LogInForm,
                     CardDetails, OrderTicket, ShowTimes, Basket)
 from .models import (Account, Profile, Certificate, FilmDetails, FilmScreening,
@@ -13,10 +13,15 @@ from flask_login import (
 import datetime
 import hashlib
 import logging
+import pyqrcode
 from werkzeug.security import generate_password_hash, check_password_hash
 
-# Ignore this comment
 
+# For sending emails
+mail.init_app(app)
+
+
+# For logging to website.log file
 logging.basicConfig(
     filename='website.log', format='%(asctime)s%(levelname)s:%(message)s',
     datefmt='%d/%m/%Y|%I:%M:%S', filemode='w', level=logging.DEBUG)
@@ -24,6 +29,7 @@ logging.basicConfig(
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
 
 # Uses Knuth's Multiplicative Method to hash numbers
 def hashNumber(numberToBeHashed):
@@ -33,21 +39,10 @@ def hashNumber(numberToBeHashed):
 
 
 def qrStringEncoder(string):
-    # takes a string to encode
-    # returns QR code image (version 1)
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-    )
-    qr.add_data(string)
-    qr.make(fit=True)
 
-    img = qr.make_image()
-    img.show()
-    return img
-#qrStringEncoder('jamesdean@gmail.com/student/The Martian/18:00')
+    qrcode = pyqrcode.create(string)
+    qrcode.svg('qrcodeExample.svg', scale=8)
+    print(qrcode.terminal(quiet_zone=1))
 
 
 @login_manager.user_loader
@@ -62,6 +57,24 @@ def flash_errors(form):
                 getattr(form, field).label.text,
                 error
             ))
+
+
+@app.route('/send-mail')
+def email_ticket():
+    try:
+        qrStringEncoder('hello')
+        msg = Message("Your Heron Cinema Ticket(s)",
+            sender="movies.heron@gmail.com",
+            recipients=["edhp@msn.com"])
+        msg.body ="Your ticket is attached"
+        # with app("qrcodeExample.svg") as fp:
+        #     msg.attach("qrcodeExample", "qrcodeExample/svg", fp.read())
+        mail.send(msg)
+        return 'Mail sent'
+
+
+    except Exception as e:
+        return str(e) + ' | email_ticket function error.'
 
 
 @app.route('/')
