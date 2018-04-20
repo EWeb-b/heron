@@ -41,7 +41,7 @@ def hashNumber(numberToBeHashed):
 def qrStringEncoder(string):
 
     qrcode = pyqrcode.create(string)
-    qrcode.svg('qrcodeExample.svg', scale=8)
+    qrcode.png('ticketQrCode.png', scale=8)
     print(qrcode.terminal(quiet_zone=1))
 
 
@@ -66,9 +66,10 @@ def email_ticket():
         msg = Message("Your Heron Cinema Ticket(s)",
             sender="movies.heron@gmail.com",
             recipients=["edhp@msn.com"])
-        msg.body ="Your ticket is attached"
-        # with app("qrcodeExample.svg") as fp:
-        #     msg.attach("qrcodeExample", "qrcodeExample/svg", fp.read())
+        msg.body ="""Hi, your ticket's QR code is attached.\nPlease show this
+                     image for entry into the theatre."""
+        with app.open_resource("ticketQrCode.png") as fp:
+            msg.attach("ticketQrCode", "ticketQrCode/png", fp.read())
         mail.send(msg)
         return 'Mail sent'
 
