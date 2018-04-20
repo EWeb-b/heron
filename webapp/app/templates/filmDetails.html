@@ -88,16 +88,21 @@ body {
 
   </div>
   <div class="column">
-    <a href="{{ url_for('film_details', passed='The Martian') }}">
+    <a href="{{ url_for('film_details', passed='Paddington 2') }}">
     <img src="/static/portraits/Paddington2.jpg" style="width:100%"></a>
-    <img src="/static/portraits/shapeofwater.jpg" style="width:100%">
-    <img src="/static/portraits/blackpanther.jpg" style="width:100%">
+    <a href="{{ url_for('film_details', passed='The Shape of Water') }}">
+    <img src="/static/portraits/shapeofwater.jpg" style="width:100%"></a>
+    <a href="{{ url_for('film_details', passed='Black Panther') }}">
+    <img src="/static/portraits/blackpanther.jpg" style="width:100%"></a>
 
   </div>
   <div class="column">
-    <img src="/static/portraits/thegreatestshowman.jpg" style="width:100%">
-    <img src="/static/portraits/jumanji.jpg" style="width:100%">
-    <img src="/static/portraits/coco.jpg" style="width:100%">
+    <a href="{{ url_for('film_details', passed='The Greatest Showman') }}">
+    <img src="/static/portraits/thegreatestshowman.jpg" style="width:100%"></a>
+    <a href="{{ url_for('film_details', passed='Jumanji') }}">
+    <img src="/static/portraits/jumanji.jpg" style="width:100%"></a>
+    <a href="{{ url_for('film_details', passed='Coco') }}">
+    <img src="/static/portraits/coco.jpg" style="width:100%"></a>
 
   </div>
 
