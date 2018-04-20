@@ -5,7 +5,7 @@ from flask_bootstrap import Bootstrap
 from app import app, db, models
 from .forms import (CreateAccountForm, ChangePasswordForm, LogInForm,
                     CardDetails, OrderTicket, ShowTimes, Basket)
-from .models import (Account, Profile, Certificate, FilmDetails, FilmScreening,
+from .models import (Account, Certificate, FilmDetails, FilmScreening,
                      TicketType, Card)
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
