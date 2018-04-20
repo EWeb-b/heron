@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Checkout{% endblock %}
+{% block title %}Basket{% endblock %}
 {% block content %}
 
 
@@ -32,7 +32,12 @@
             <div>
               <small class="text-muted">{{film_time}}</small>
             </div>
+            <div>
               <small class="text-muted">{{ticket_type}}: £{{ticket_value}}</small>
+            </div>
+            <div>
+              <small class="text-muted">Seat Number: {{seat_number}}</small>
+            </div>
             </li>
             <li class="list-group-item d-flex justify-content-between">
               <span>Total</span>
@@ -41,6 +46,9 @@
           </ul>
 
         </div>
+
+        <form method="POST">
+          {{ form.csrf_token }}
         <div class="col-md-8 order-md-1">
           <h4 style="color: #ff7214">Billing address</h4>
           <form class="needs-validation" novalidate>
@@ -88,7 +96,7 @@
             <div class="d-block my-3">
               {% for card in cards %}
               <div class="custom-control custom-radio">
-                <input id={{card.card_number}} name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                <input name="paymentMethod" value="{{card.card_number}}" type="radio" class="custom-control-input" checked required>
                 <label class="custom-control-label" for="credit">Card Number: {{card.card_number}}</label>
               </div>
               {% endfor %}
@@ -99,6 +107,7 @@
             <button class="btn btn-danger btn-lg btn-block" type="submit">Continue to checkout</button>
           </form>
         </div>
+      </form>
       </div>
 
       <footer style="margin-top: 10px" class="my-5 pt-5 text-muted text-center text-small">

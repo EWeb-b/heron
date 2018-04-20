@@ -222,14 +222,16 @@ def add_card():
             return redirect('/add_card')
 
 
-@app.route('/basket', methods=['GET'])
+@app.route('/basket', methods=['GET', 'POST'])
 @login_required
 def basket():
     form = Basket()
-    cards = models.Card.query.filter_by(profile_id=current_user.id).all()
+    cards = models.Card.query.all()
+    print(cards)
     film_title = session.get('film_title', None)
     film_time = session.get('film_time', None)
     ticket_type = session.get('ticket_type', None)
+    seat_number = session.get('seat_number', None)
     print(film_title)
 
     if film_title == None:
@@ -245,14 +247,17 @@ def basket():
         return render_template(
             'basket.html', title='Checkout', ticket_film=film_title,
             ticket_value=ticket_value, film_time=film_time,
-            ticket_type=ticket_type, cards=cards, form=form)
+            ticket_type=ticket_type, seat_number=seat_number, cards=cards,
+            form=form)
     elif request.method == 'POST':
-        print(posting)
+        print('posting')
         if form.validate() == True:
             print('validation successful')
+            return redirect('/basket')
             # newTicket =
         else:
             print('fail')
+            flash_errors(form)
             return redirect('/basket')
 
 
@@ -273,7 +278,8 @@ def order_ticket():
         if form.validate() == True:
             print('validation successful')
             print(check_list)
-            session['ticket_type'] = form.ticketType.data
+            session['seat_number'] = form.seat_number.data
+            session['ticket_type'] = form.ticket_type.data
             return redirect('/basket')
         else:
             print('Fail')
