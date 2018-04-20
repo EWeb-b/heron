@@ -43,7 +43,7 @@ class Card(db.Model):
     All integer rows are now hashed, but cannot be unhashed. This seems
     stupid but backlog asks for user security?
     """
-    __tablename__= 'card'
+    __tablename__ = 'card'
 
     id = db.Column(db.Integer, primary_key=True)
     name_on_card = db.Column(db.String(250))
@@ -56,13 +56,13 @@ class Card(db.Model):
 
     def __repr__(self):
         return '<Card %r %r %r %r %r %r %r >' % (self.id,
-                        self.name_on_card,
-                        self.billing_address,
-                        self.card_number,
-                        self.cvc,
-                        self.expiry_date_month,
-                        self.expiry_date_year
-                    )
+                                                 self.name_on_card,
+                                                 self.billing_address,
+                                                 self.card_number,
+                                                 self.cvc,
+                                                 self.expiry_date_month,
+                                                 self.expiry_date_year
+                                                 )
 
 
 class Certificate(db.Model):
@@ -115,7 +115,7 @@ class FilmScreening(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     film_screening_film_det = db.Column(db.Integer,
-                                            db.ForeignKey('film_details.id'))
+                                        db.ForeignKey('film_details.id'))
     film_screening_time = db.Column(DateTime)
     film_screening_tickets = db.relationship("Ticket", backref="film_screening")
     theatre_id = db.Column(db.Integer, db.ForeignKey('theatre.id'))

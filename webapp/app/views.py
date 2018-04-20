@@ -204,7 +204,8 @@ def add_card():
                     card_number=hashNumber(form.card_number.data),
                     cvc=hashNumber(form.cvc.data),
                     expiry_date_month=hashNumber(form.expiry_date_month.data),
-                    expiry_date_year=hashNumber(form.expiry_date_year.data)
+                    expiry_date_year=hashNumber(form.expiry_date_year.data),
+                    account_id=current_user.id
                 )
                 print('card created not added')
                 db.session.add(newCard)
@@ -226,13 +227,15 @@ def add_card():
 @login_required
 def basket():
     form = Basket()
+    cards = models.Card.query.with_entities(
+        Card.name_on_card).filter_by(account_id=current_user.id).all()
     cards = models.Card.query.all()
     print(cards)
+    form.card.choices = cards
     film_title = session.get('film_title', None)
     film_time = session.get('film_time', None)
     ticket_type = session.get('ticket_type', None)
     seat_number = session.get('seat_number', None)
-    print(film_title)
 
     if film_title == None:
         ticket_value = 0
