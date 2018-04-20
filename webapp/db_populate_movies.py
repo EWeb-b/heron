@@ -1,12 +1,17 @@
 from flask import Flask
-from app.models import FilmDetails, Ticket
+from app.models import (FilmDetails, Ticket, Seat, Theatre, Certificate,
+                        TicketType)
 from app import app, db, models
 from datetime import datetime
 import json
 import random
 
 
-#Certificates 1=U , 2=PG, 3=12, 4=15, 5=18.
+
+################################################################################
+
+# Populates the FilmDetails table with films.
+# Certificates 1=U , 2=PG, 3=12, 4=15, 5=18.
 
 filmData = [
     {
@@ -28,7 +33,8 @@ filmData = [
     {
         "id": 3,
         "film_certificate_id": 3,
-        "film_blurb": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival",
+        "film_blurb": """A team of explorers travel through a wormhole in space
+                            in an attempt to ensure humanity's survival""",
         "film_director": "Christopher Nolan",
         "film_name": "Interstellar",
         "film_actor": "Matthew McConaughey"
@@ -60,7 +66,11 @@ filmData = [
     {
         "id": 7,
         "film_certificate_id": 2,
-        "film_blurb": "P. T. Barnum is a man with little more than ambition to his name. When the company he works for goes bust, he decides to leave his mediocre life behind, and takes his family on a journey that would lead to establishing the foundations of showbusiness.",
+        "film_blurb": """P. T. Barnum is a man with little more than ambition to
+                        his name. When the company he works for goes bust, he
+                        decides to leave his mediocre life behind, and takes his
+                        family on a journey that would lead to establishing the
+                        foundations of showbusiness.""",
         "film_director": "Michael Gracey",
         "film_name": "The Greatest  Showman",
         "film_actor": "Hugh Jackman"
@@ -88,6 +98,122 @@ for movie in filmData:
     db.session.add(newMovie)
     db.session.commit()
 
+################################################################################
+
+# Creates the TicketType table which remains unchanged and is used by the
+# Ticket table.
+
+ticketTypeData = [
+    {
+        "id": 1,
+        "ticket_type": 1
+    },
+    {
+        "id": 2,
+        "ticket_type": 2
+    },
+    {
+        "id": 3,
+        "ticket_type": 3
+    },
+    {
+        "id": 4,
+        "ticket_type": 4
+    },
+    {
+        "id": 5,
+        "ticket_type": 5
+    }
+]
+
+for ticketType in ticketTypeData:
+    newTicketType = TicketType(**ticketType)
+    db.session.add(newTicketType)
+    db.session.commit()
+
+################################################################################
+
+# Creates the Certificate table which remains unchanged and is used by the
+# FilmDetails table.
+# Certificates: 1=U , 2=PG, 3=12, 4=15, 5=18.
+
+certificateData = [
+    {
+        "id": 1,
+        "cert": 1
+    },
+    {
+        "id": 2,
+        "cert": 2
+    },
+    {
+        "id": 3,
+        "cert": 3
+    },
+    {
+        "id": 4,
+        "cert": 4
+    },
+    {
+        "id": 5,
+        "cert": 5
+    }
+]
+
+for certificate in certificateData:
+    newCertificate = Certificate(**certificate)
+    db.session.add(newCertificate)
+    db.session.commit()
+
+################################################################################
+
+# Creates the Theatre table.
+
+theatreData = [
+    {
+        "id": 1,
+        "theatre_name": "Screen 1"
+    },
+    {
+        "id": 2,
+        "theatre_name": "Screen 2"
+    },
+    {
+        "id": 3,
+        "theatre_name": "Screen 3"
+    },
+    {
+        "id": 4,
+        "theatre_name": "Screen 4"
+    },
+    {
+        "id": 5,
+        "theatre_name": "Screen 5"
+    },
+    {
+        "id": 6,
+        "theatre_name": "Screen 6"
+    },
+    {
+        "id": 7,
+        "theatre_name": "Screen 7"
+    },
+    {
+        "id": 8,
+        "theatre_name": "Screen 8"
+    },
+    {
+        "id": 9,
+        "theatre_name": "Screen 9"
+    }
+]
+
+for screen in theatreData:
+    newScreen = Theatre(**screen)
+    db.session.add(newScreen)
+    db.session.commit()
+
+################################################################################
 
 # Function to create random dates in the past month
 def random_date():
@@ -98,7 +224,7 @@ def random_date():
     return randomDate
 
 # Populate the database with ticket data.
-for x in range(1, 1000):
+for x in range(1, 500):
     sampleTicket = Ticket()
     sampleTicket.owner_profile_id = random.randint(1, 100)
     sampleTicket.ticket_type_id = random.randint(1, 5)
@@ -106,3 +232,12 @@ for x in range(1, 1000):
     sampleTicket.ticket_date_bought = random_date()
     db.session.add(sampleTicket)
     db.session.commit()
+
+# Populate the Seat table. This is constant - do not remove.
+for x in range(1,9):
+    for y in range(1,60):
+        newSeat = Seat()
+        newSeat.seat_pos = y
+        newSeat.theatre_id = x
+        db.session.add(newSeat)
+        db.session.commit()
