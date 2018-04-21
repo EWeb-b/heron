@@ -62,7 +62,7 @@ filmData = [
         "film_certificate_id": 2,
         "film_blurb": "P. T. Barnum is a man with little more than ambition to his name. When the company he works for goes bust, he decides to leave his mediocre life behind, and takes his family on a journey that would lead to establishing the foundations of showbusiness.",
         "film_director": "Michael Gracey",
-        "film_name": "The Greatest  Showman",
+        "film_name": "The Greatest Showman",
         "film_actor": "Hugh Jackman"
     },
     {
