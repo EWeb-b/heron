@@ -81,6 +81,7 @@ class Takings(QScrollArea):
             self.previous.setEnabled(False)
         print('week: ',takingsDate.isocalendar()[1])
         self.week.setText('Week: '+str(takingsDate.isocalendar()[1]))
+        self.tableWidget.setHorizontalHeaderLabels(dayDates.dayDates(takingsDate))
         print(takingsDate)
 
     def nextweek(self):
@@ -98,6 +99,8 @@ class Takings(QScrollArea):
 
         print('week: ',takingsDate.isocalendar()[1])
         self.week.setText('Week: '+str(takingsDate.isocalendar()[1]))
+        self.tableWidget.setHorizontalHeaderLabels(dayDates.dayDates(takingsDate))
+
         print(takingsDate)
 
 
@@ -136,9 +139,10 @@ class Takings(QScrollArea):
     def __init__(self):
         super(Takings, self).__init__()
         self.daysWeek = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','Total']
-        self.createTable(listOfMovieNames,self.daysWeek)
+
 
         now = datetime.datetime.now()
+        self.createTable(listOfMovieNames,dayDates.dayDates(now))
         self.date = QLabel()
         self.date.setText(now.strftime("%d-%m-%Y"))
         self.date.setStyleSheet('font-size: 80px;')
@@ -250,7 +254,7 @@ class Compare(QScrollArea):
         print(bufferTakings)
         print(movieBuffer)
         print(color_buffer)
-        self._dynamic_ax.clear()
+        #self._dynamic_ax.update()
         self._dynamic_ax.pie(bufferTakings,labels = movieBuffer, autopct='%1.1f%%', shadow=False)
 
         #self.layout.update()
@@ -326,6 +330,7 @@ class Compare(QScrollArea):
             self.movie.setStyleSheet('background-color: green; color: white')
             self.make_movie_button(self.movie)
             self.movieScrollLayout.addWidget(self.movie)
+        self.movieScrollLayout.addStretch()
 
         self.compareButton = QPushButton('Compare (graphically)')
         self.compareButton.clicked.connect(lambda:self.compare())
