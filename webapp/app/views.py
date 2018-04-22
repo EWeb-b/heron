@@ -1,8 +1,9 @@
 from flask import (
     render_template, flash, redirect, request, Flask, url_for,
     make_response, session)
+from flask_mail import Mail, Message
 from flask_bootstrap import Bootstrap
-from app import app, db, models
+from app import app, db, models, mail
 from .forms import (CreateAccountForm, ChangePasswordForm, LogInForm,
                     CardDetails, OrderTicket, ShowTimes, Basket)
 from .models import (Account, Certificate, FilmDetails, FilmScreening,
@@ -12,10 +13,15 @@ from flask_login import (
 import datetime
 import hashlib
 import logging
+import pyqrcode
 from werkzeug.security import generate_password_hash, check_password_hash
 
-# Ignore this comment
 
+# For sending emails
+mail.init_app(app)
+
+
+# For logging to website.log file
 logging.basicConfig(
     filename='website.log', format='%(asctime)s%(levelname)s:%(message)s',
     datefmt='%d/%m/%Y|%I:%M:%S', filemode='w', level=logging.DEBUG)
@@ -24,13 +30,19 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
 # Uses Knuth's Multiplicative Method to hash numbers
-
-
 def hashNumber(numberToBeHashed):
     string = str(numberToBeHashed)
     hashedNumber = print(hashlib.md5(string.encode('utf-8')).hexdigest())
     return hashedNumber
+
+
+def qrStringEncoder(string):
+
+    qrcode = pyqrcode.create(string)
+    qrcode.png('ticketQrCode.png', scale=8)
+    print(qrcode.terminal(quiet_zone=1))
 
 
 @login_manager.user_loader
@@ -45,6 +57,32 @@ def flash_errors(form):
                 getattr(form, field).label.text,
                 error
             ))
+
+
+@app.route('/send-mail')
+def email_ticket():
+    """
+    Each ticket needs to generate its own unique variable which will be passed
+    to the qrStringEncoder function. This will be a combination of the
+    screening, the theatre and seats and film name.
+    Email also needs to include these details.    
+    """
+    try:
+        qrStringEncoder('''explicit reference to account_id, screening_id,
+                            ticket_type_id so that QR code is unique''')
+        msg = Message("Your Heron Cinema Ticket(s)",
+            sender="movies.heron@gmail.com",
+            recipients=["edhp@msn.com"])
+        msg.body ="""Hi, your ticket's QR code is attached.\nPlease show this
+                     image for entry into the theatre."""
+        with app.open_resource("ticketQrCode.png") as fp:
+            msg.attach("ticketQrCode", "ticketQrCode/png", fp.read())
+        mail.send(msg)
+        return 'Mail sent'
+
+
+    except Exception as e:
+        return str(e) + ' | email_ticket function error.'
 
 
 @app.route('/')

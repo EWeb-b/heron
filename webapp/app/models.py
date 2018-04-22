@@ -156,7 +156,7 @@ class TicketType(db.Model):
     Adults will be '2' in table
     Students will be '3' in table
     Children will be '4' in table
-    VIP tickets will be '5' in table
+    VIP will be '5' in table
     """
     __tablename__ = 'ticket_type'
 
