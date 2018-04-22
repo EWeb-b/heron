@@ -70,7 +70,15 @@ class Takings(QScrollArea):
         return button.clicked.connect(lambda:self.display_info(button))
 
     def display_info(self,button):
-        print('INFO!!',button)
+        print('INFO!!',button.text()[2:])
+
+        global mov_det # global variable to be passed between Takings and Example classes
+        mov_det = button.text()[2:]
+        self.dialog = Example()
+        
+        self.dialog.show()
+
+
     trigger1 = pyqtSignal() # come back and delete this
 
     @pyqtSlot()
