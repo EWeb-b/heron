@@ -67,10 +67,10 @@ takingsDate = datetime.date.today() #used to keep track of the week in
 color_buffer = []
 class Takings(QScrollArea):
     def make_rank_button(self,button):
-        return button.clicked.connect(lambda:self.movie2Buffer(button))
+        return button.clicked.connect(lambda:self.display_info(button))
 
-    def display_info(self):
-        print('INFO!!')
+    def display_info(self,button):
+        print('INFO!!',button)
     trigger1 = pyqtSignal() # come back and delete this
 
     @pyqtSlot()
@@ -302,10 +302,20 @@ class Compare(QScrollArea):
         self.header.setText('Select Movies to compare takings')
         layout.addWidget(self.header)
 
+        self.movies_header = QLabel()
+        self.movies_header.setText('Movies')
+        self.movies_header.setStyleSheet('font-size: 40px;')
+
+        self.buffer_header = QLabel()
+        self.buffer_header.setText('Buffer')
+        self.buffer_header.setStyleSheet('font-size: 40px;')
+
         hbox1 = QHBoxLayout()
         hbox2 = QHBoxLayout()
 
         vbox2 = QVBoxLayout()
+
+        vbox2.addWidget(self.buffer_header)
         graphbox = QVBoxLayout()
 
         dynamic_canvas = FigureCanvas(Figure(figsize=(5, 5)))
