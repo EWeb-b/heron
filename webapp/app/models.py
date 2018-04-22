@@ -18,7 +18,8 @@ class Account(db.Model):
     email = db.Column(db.String(254), unique=True)
     password = db.Column(db.String(255))
     staff = db.Column(db.Boolean)
-    profile = db.relationship("Profile", uselist=False, back_populates="account")
+    cards = db.relationship("Card", backref="account")
+    account_tickets = db.relationship("Ticket", backref="account")
 
     def __repr__(self):
         return '<User: %r>' % (self.email)
@@ -36,26 +37,6 @@ class Account(db.Model):
         return str(self.id)
 
 
-class Profile(db.Model):
-    """
-    A representation of a customer profile.
-    Each customer Profile will be associated with an Account object.
-    # TODO: Check whick other columns are needed in this table
-    """
-    __tablename__ = 'profile'
-
-    id = db.Column(db.Integer, primary_key=True)
-    forename = db.Column(db.String(255))
-    surname = db.Column(db.String(255))
-    account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
-    account = db.relationship("Account", back_populates="profile")
-    cards = db.relationship("Card", backref="profile")
-    profile_tickets = db.relationship("Ticket", backref="profile")
-
-    def __repr__(self):
-        return '<Profile: %r>' % (self.surname)
-
-
 class Card(db.Model):
     """
     Representation of a debit/credit card.
@@ -71,7 +52,7 @@ class Card(db.Model):
     cvc = db.Column(db.Integer)
     expiry_date_month = db.Column(db.Integer)
     expiry_date_year = db.Column(db.Integer)
-    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
 
     def __repr__(self):
         return '<Card %r %r %r %r %r %r %r >' % (self.id,
@@ -155,7 +136,7 @@ class Ticket(db.Model):
     __tablename__ = 'ticket'
 
     id = db.Column(db.Integer, primary_key=True)
-    owner_profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
+    owner_account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     ticket_type_id = db.Column(db.Integer, db.ForeignKey('ticket_type.id'))
     ticket_screening_id = db.Column(db.Integer, db.ForeignKey('film_screening.id'))
     ticket_date_bought = db.Column(DateTime)
