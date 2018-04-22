@@ -152,11 +152,11 @@ class TicketType(db.Model):
     Simple representation of a ticket type i.e. standard, student,
     OAP, child, etc.
 
-    OAPs will be '1' in table
-    Adults will be '2' in table
-    Students will be '3' in table
-    Children will be '4' in table
-    VIP will be '5' in table
+    OAP ticket will be '1' in table
+    Standard ticket will be '2' in table
+    Student ticket will be '3' in table
+    Child ticket will be '4' in table
+    VIP ticket will be '5' in table
     """
     __tablename__ = 'ticket_type'
 
