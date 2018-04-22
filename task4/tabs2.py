@@ -27,7 +27,7 @@ from matplotlib.figure import Figure
 # GStakings = ['180','240','150','300','160','120','200']
 #
 # weekTakings = [BPtakings,SWtakings,GStakings]
-listOfMovieNames = ['Inception', 'The Martian', 'Interstellar','Paddington 2','Th Shape of Water','Black Panther','The Greatest Showman','Jumanji:Welcome to the jungle','CoCo'] # To be changed to work with DB
+listOfMovieNames = ['Inception', 'The Martian', 'Interstellar','Paddington 2','The Shape of Water','Black Panther','The Greatest Showman','Jumanji:Welcome to the jungle','CoCo'] # To be changed to work with DB
 
 INCdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
 INCtakings = ['120','120','300','200','180','240','150']
@@ -57,7 +57,7 @@ CCdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'
 CCtakings = ['180','240','150','300','160','120','200']
 
 weekTakings = [INCtakings,TMtakings,INTtakings,P2takings,SWtakings,BPtakings,GStakings,JWJtakings,CCtakings]
-takings = ['1320', '1222', '950']
+takings = ['1320', '1222', '950','4378','1320', '1222', '950','4378','46']
 movieBuffer = []
 timeSpan = 'daily'
 
@@ -75,7 +75,7 @@ class Takings(QScrollArea):
         global mov_det # global variable to be passed between Takings and Example classes
         mov_det = button.text()[2:]
         self.dialog = Example()
-        
+
         self.dialog.show()
 
 
@@ -146,7 +146,7 @@ class Takings(QScrollArea):
 
 
     def createTable(self,rows,colums):
-        rows.append('Total')
+        #rows.append('Total')
         num_of_row = len(rows)
         num_of_col = len(colums)
        # Create table
