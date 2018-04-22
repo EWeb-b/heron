@@ -10,7 +10,7 @@ from wtforms.fields import (
     BooleanField, SelectField)
 
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from app import db
+from app import db, models
 from .models import Card
 
 
@@ -58,7 +58,7 @@ class ChangePasswordForm(Form):
 
 
 def get_cards():
-    return db.session.query(Card).all()
+    return [('hello', 'hello')]
 
 
 class Basket(Form):
@@ -70,8 +70,7 @@ class Basket(Form):
         'Address', validators=[DataRequired()])
     postcode = StringField(
         'Postcode', validators=[DataRequired()])
-    card = QuerySelectField('Cards',
-                            validators=[DataRequired()], query_factory=get_cards)
+    card = SelectField('Cards', choices=[], validators=[DataRequired()])
     submit = SubmitField('Order Ticket')
 
 

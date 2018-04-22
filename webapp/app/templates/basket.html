@@ -54,7 +54,7 @@
           <form class="needs-validation" novalidate>
             <div class="row">
               <div class="col-md-6 text-">
-                <label for="firstName">First name</label>
+                <label for="first_name">First name</label>
                 <p>{{ form.first_name(size="40")}}<br>
                    {% for error in form.first_name.errors %}
                    <span style="color: white;">{{ error }}</span>
@@ -62,7 +62,7 @@
                 </p>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="lastName">Last name</label>
+                <label for="last_name">Last name</label>
                 <p>{{ form.last_name(size="42") }}<br>
                    {% for error in form.last_name.errors %}
                    <span style="color: white;">{{ error }}</span>
@@ -93,8 +93,8 @@
             <div style="margin-top: 20px">
             <h4 style="color: #ff7214" class="mb-3">Payment</h4>
           </div>
-
-              {{ form.card() }}
+          <label for="card_number">Select a Card:</label>
+              {{ form.card }}
             <hr class="mb-4">
             <button class="btn btn-danger btn-lg btn-block" type="submit">Continue to checkout</button>
           </form>

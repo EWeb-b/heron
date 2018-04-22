@@ -201,7 +201,7 @@ def add_card():
                 newCard = Card(
                     name_on_card=form.name_on_card.data,
                     billing_address=form.billing_address.data,
-                    card_number=hashNumber(form.card_number.data),
+                    card_number=form.card_number.data,
                     cvc=hashNumber(form.cvc.data),
                     expiry_date_month=hashNumber(form.expiry_date_month.data),
                     expiry_date_year=hashNumber(form.expiry_date_year.data),
@@ -228,14 +228,16 @@ def add_card():
 def basket():
     form = Basket()
     cards = models.Card.query.with_entities(
-        Card.name_on_card).filter_by(account_id=current_user.id).all()
-    cards = models.Card.query.all()
+        Card.card_number).filter_by(account_id=current_user.id).all()
     print(cards)
     form.card.choices = cards
     film_title = session.get('film_title', None)
     film_time = session.get('film_time', None)
     ticket_type = session.get('ticket_type', None)
     seat_number = session.get('seat_number', None)
+
+    choices = [(i.card_number, i.card_number) for i in cards]
+    form.card.choices = choices
 
     if film_title == None:
         ticket_value = 0
@@ -256,8 +258,8 @@ def basket():
         print('posting')
         if form.validate() == True:
             print('validation successful')
+            session['card_number'] = form.card.data
             return redirect('/basket')
-            # newTicket =
         else:
             print('fail')
             flash_errors(form)
