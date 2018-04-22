@@ -215,7 +215,7 @@ for screen in theatreData:
 
 ################################################################################
 
-# Function to create random dates in the past month
+# Function to create random dates in the past month.
 def random_date():
     month = random.randint(3, 4)
     day = random.randint(1, 20)
@@ -223,8 +223,8 @@ def random_date():
 
     return randomDate
 
-# Populate the database with ticket data.
-for x in range(1, 500):
+# Populate the database with ticket data for 500 tickets.
+for x in range(1, 501):
     sampleTicket = Ticket()
     sampleTicket.owner_profile_id = random.randint(1, 100)
     sampleTicket.ticket_type_id = random.randint(1, 5)
@@ -234,8 +234,8 @@ for x in range(1, 500):
     db.session.commit()
 
 # Populate the Seat table. This is constant - do not remove.
-for x in range(1,9):
-    for y in range(1,60):
+for x in range(1,10):
+    for y in range(1,25): # 24 seats in each theatre.
         newSeat = Seat()
         newSeat.seat_pos = y
         newSeat.theatre_id = x
