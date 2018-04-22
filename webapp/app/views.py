@@ -65,7 +65,7 @@ def email_ticket():
     Each ticket needs to generate its own unique variable which will be passed
     to the qrStringEncoder function. This will be a combination of the
     screening, the theatre and seats and film name.
-    Email also needs to include these details.    
+    Email also needs to include these details.
     """
     try:
         qrStringEncoder('''explicit reference to account_id, screening_id,
@@ -352,6 +352,8 @@ def list_films():
 @app.route('/profile', methods=['GET'])
 @login_required
 def profile():
+    # Return the tickets that the account owns.
+    ticketsOwned = models.Account.account_tickets.query.all()
 
     return render_template(
-        'profile.html', title='User Profile')
+        'profile.html', title='User Profile', ticketsOwned=ticketsOwned)
