@@ -239,10 +239,11 @@ def add_card():
                 newCard = Card(
                     name_on_card=form.name_on_card.data,
                     billing_address=form.billing_address.data,
-                    card_number=hashNumber(form.card_number.data),
+                    card_number=form.card_number.data,
                     cvc=hashNumber(form.cvc.data),
                     expiry_date_month=hashNumber(form.expiry_date_month.data),
-                    expiry_date_year=hashNumber(form.expiry_date_year.data)
+                    expiry_date_year=hashNumber(form.expiry_date_year.data),
+                    account_id=current_user.id
                 )
                 print('card created not added')
                 db.session.add(newCard)
@@ -260,15 +261,21 @@ def add_card():
             return redirect('/add_card')
 
 
-@app.route('/basket', methods=['GET'])
+@app.route('/basket', methods=['GET', 'POST'])
 @login_required
 def basket():
     form = Basket()
-    cards = models.Card.query.filter_by(profile_id=current_user.id).all()
+    cards = models.Card.query.with_entities(
+        Card.card_number).filter_by(account_id=current_user.id).all()
+    print(cards)
+    form.card.choices = cards
     film_title = session.get('film_title', None)
     film_time = session.get('film_time', None)
     ticket_type = session.get('ticket_type', None)
-    print(film_title)
+    seat_number = session.get('seat_number', None)
+
+    choices = [(i.card_number, i.card_number) for i in cards]
+    form.card.choices = choices
 
     if film_title == None:
         ticket_value = 0
@@ -283,14 +290,17 @@ def basket():
         return render_template(
             'basket.html', title='Checkout', ticket_film=film_title,
             ticket_value=ticket_value, film_time=film_time,
-            ticket_type=ticket_type, cards=cards, form=form)
+            ticket_type=ticket_type, seat_number=seat_number, cards=cards,
+            form=form)
     elif request.method == 'POST':
-        print(posting)
+        print('posting')
         if form.validate() == True:
             print('validation successful')
-            # newTicket =
+            session['card_number'] = form.card.data
+            return redirect('/basket')
         else:
             print('fail')
+            flash_errors(form)
             return redirect('/basket')
 
 
@@ -311,7 +321,8 @@ def order_ticket():
         if form.validate() == True:
             print('validation successful')
             print(check_list)
-            session['ticket_type'] = form.ticketType.data
+            session['seat_number'] = form.seat_number.data
+            session['ticket_type'] = form.ticket_type.data
             return redirect('/basket')
         else:
             print('Fail')

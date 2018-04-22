@@ -9,6 +9,10 @@ from wtforms.fields import (
     StringField, SubmitField, DateField, IntegerField,
     BooleanField, SelectField)
 
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from app import db, models
+from .models import Card
+
 
 class LogInForm(Form):
     email = StringField(
@@ -53,6 +57,10 @@ class ChangePasswordForm(Form):
     submit = SubmitField('Change Password')
 
 
+def get_cards():
+    return [('hello', 'hello')]
+
+
 class Basket(Form):
     first_name = StringField(
         'First Name', validators=[DataRequired()])
@@ -62,6 +70,7 @@ class Basket(Form):
         'Address', validators=[DataRequired()])
     postcode = StringField(
         'Postcode', validators=[DataRequired()])
+    card = SelectField('Cards', choices=[], validators=[DataRequired()])
     submit = SubmitField('Order Ticket')
 
 
@@ -79,10 +88,21 @@ class ShowTimes(Form):
 
 
 class OrderTicket(Form):
-    ticketType = SelectField('Ticket Type',
-                             choices=[('standard', 'Standard'), ('child', 'Child'),
-                                      ('student', 'Student'), ('oap', 'OAP')],
-                             validators=[DataRequired()])
+    ticket_type = SelectField('Ticket Type',
+                              choices=[('standard', 'Standard'), ('child', 'Child'),
+                                       ('student', 'Student'), ('oap', 'OAP')],
+                              validators=[DataRequired()])
+    seat_number = SelectField('Seat Number',
+                              choices=[('1', '1'), ('2', '2'), ('3', '3'),
+                                       ('4', '4'), ('5', '5'), ('6', '6'),
+                                       ('7', '7'), ('8', '8'), ('9', '9'),
+                                       ('10', '10'), ('11', '11'), ('12', '12'),
+                                       ('13', '13'), ('14', '14'), ('15', '15'),
+                                       ('16', '16'), ('17', '17'), ('18', '18'),
+                                       ('19', '19'), ('20', '20'), ('21', '21'),
+                                       ('22', '22'), ('23', '23'),
+                                       ('24', '24'), ],
+                              validators=[DataRequired()])
     # seatNumber = widgets.CheckboxInput()
 
     submit = SubmitField('Order Ticket')
