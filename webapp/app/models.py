@@ -69,10 +69,11 @@ class Certificate(db.Model):
     """
     Simple table to store film certificates.
 
-    OAPs will be '1' in table
-    Adults will be '2' in table
-    Students will be '3' in table
-    Children will be '4' in table
+    U will be '1' in table
+    PG will be '2' in table
+    12 will be '3' in table
+    15 will be '4' in table
+    18 will be '5' in table
     """
     __tablename__ = "certificate"
 
@@ -155,6 +156,7 @@ class TicketType(db.Model):
     Adults will be '2' in table
     Students will be '3' in table
     Children will be '4' in table
+    VIP tickets will be '5' in table
     """
     __tablename__ = 'ticket_type'
 
@@ -208,4 +210,4 @@ class Theatre(db.Model):
     theatre_seat = db.relationship('Seat', backref='theatre')
 
     def __repr__(self):
-        return '<Theatre name: %r>' % (self.theatreName)
+        return '<Theatre name: %r>' % (self.theatre_name)
