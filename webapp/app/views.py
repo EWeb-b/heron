@@ -61,8 +61,15 @@ def flash_errors(form):
 
 @app.route('/send-mail')
 def email_ticket():
+    """
+    Each ticket needs to generate its own unique variable which will be passed
+    to the qrStringEncoder function. This will be a combination of the
+    screening, the theatre and seats and film name.
+    Email also needs to include these details.    
+    """
     try:
-        qrStringEncoder('hello')
+        qrStringEncoder('''explicit reference to account_id, screening_id,
+                            ticket_type_id so that QR code is unique''')
         msg = Message("Your Heron Cinema Ticket(s)",
             sender="movies.heron@gmail.com",
             recipients=["edhp@msn.com"])
