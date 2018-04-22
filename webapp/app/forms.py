@@ -57,10 +57,6 @@ class ChangePasswordForm(Form):
     submit = SubmitField('Change Password')
 
 
-def get_cards():
-    return [('hello', 'hello')]
-
-
 class Basket(Form):
     first_name = StringField(
         'First Name', validators=[DataRequired()])

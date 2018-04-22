@@ -49,6 +49,7 @@
 
         <form method="POST">
           {{ form.csrf_token }}
+
         <div class="col-md-8 order-md-1">
           <h4 style="color: #ff7214">Billing address</h4>
           <form class="needs-validation" novalidate>
@@ -89,14 +90,16 @@
                 </p>
               </div>
             </div>
-
+              <fieldset>
             <div style="margin-top: 20px">
             <h4 style="color: #ff7214" class="mb-3">Payment</h4>
           </div>
           <label for="card_number">Select a Card:</label>
-              {{ form.card }}
+            <p>{{ form.card }}<br>
+            </p>
             <hr class="mb-4">
             <button class="btn btn-danger btn-lg btn-block" type="submit">Continue to checkout</button>
+          </fieldset>
           </form>
         </div>
       </form>

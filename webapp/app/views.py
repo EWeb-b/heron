@@ -67,19 +67,23 @@ def email_ticket():
     screening, the theatre and seats and film name.
     Email also needs to include these details.
     """
+    film_title = session.get('film_title', None)
+    film_time = session.get('film_time', None)
+    ticket_type = session.get('ticket_type', None)
+    seat_number = session.get('seat_number', None)
+    card_number = session.get('card_number', None)
     try:
-        qrStringEncoder('''explicit reference to account_id, screening_id,
-                            ticket_type_id so that QR code is unique''')
+        qrStringEncoder('''{film_title}{film_time}{ticket_type}
+                        {seat_number}{card_number}''')
         msg = Message("Your Heron Cinema Ticket(s)",
-            sender="movies.heron@gmail.com",
-            recipients=["edhp@msn.com"])
-        msg.body ="""Hi, your ticket's QR code is attached.\nPlease show this
+                      sender="movies.heron@gmail.com",
+                      recipients=["edhp@msn.com"])
+        msg.body = """Hi, your ticket's QR code is attached.\nPlease show this
                      image for entry into the theatre."""
         with app.open_resource("ticketQrCode.png") as fp:
             msg.attach("ticketQrCode", "ticketQrCode/png", fp.read())
         mail.send(msg)
         return 'Mail sent'
-
 
     except Exception as e:
         return str(e) + ' | email_ticket function error.'
@@ -265,8 +269,7 @@ def add_card():
 @login_required
 def basket():
     form = Basket()
-    cards = models.Card.query.with_entities(
-        Card.card_number).filter_by(account_id=current_user.id).all()
+    cards = models.Card.query.filter_by(account_id=current_user.id).all()
     print(cards)
     form.card.choices = cards
     film_title = session.get('film_title', None)
@@ -274,7 +277,7 @@ def basket():
     ticket_type = session.get('ticket_type', None)
     seat_number = session.get('seat_number', None)
 
-    choices = [(i.card_number, i.card_number) for i in cards]
+    choices = [(i.name_on_card, i.name_on_card) for i in cards]
     form.card.choices = choices
 
     if film_title == None:
@@ -297,7 +300,7 @@ def basket():
         if form.validate() == True:
             print('validation successful')
             session['card_number'] = form.card.data
-            return redirect('/basket')
+            return redirect('/send-mail')
         else:
             print('fail')
             flash_errors(form)
@@ -309,8 +312,6 @@ def order_ticket():
     form = OrderTicket()
     film_title = session.get('film_title', None)
     film = models.FilmDetails.query.filter_by(film_name=film_title).first_or_404()
-    check_list = request.form.getlist('check')
-    print(check_list)
 
     if request.method == 'GET':
         return render_template(
@@ -320,7 +321,6 @@ def order_ticket():
         print('posting')
         if form.validate() == True:
             print('validation successful')
-            print(check_list)
             session['seat_number'] = form.seat_number.data
             session['ticket_type'] = form.ticket_type.data
             return redirect('/basket')
