@@ -15,18 +15,48 @@ from matplotlib.backends.backend_qt5agg import (
 
 from matplotlib.figure import Figure
 
-listOfMovieNames = ['Black Panther', 'The Shape of Water', 'The Greatest Showman'] # To be changed to work with DB
-directorNames = ['Ryan Coogler','Guilermo del Toro']
-BPdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
-BPtakings = ['120','120','300','200','180','240','150']
+# listOfMovieNames = ['Black Panther', 'The Shape of Water', 'The Greatest Showman'] # To be changed to work with DB
+# directorNames = ['Ryan Coogler','Guilermo del Toro']
+# BPdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
+# BPtakings = ['120','120','300','200','180','240','150']
+#
+# SWdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
+# SWtakings = ['170','120','180','240','150','300','200']
+#
+# GSdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
+# GStakings = ['180','240','150','300','160','120','200']
+#
+# weekTakings = [BPtakings,SWtakings,GStakings]
+listOfMovieNames = ['Inception', 'The Martian', 'Interstellar','Paddington 2','Th Shape of Water','Black Panther','The Greatest Showman','Jumanji:Welcome to the jungle','CoCo'] # To be changed to work with DB
+
+INCdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
+INCtakings = ['120','120','300','200','180','240','150']
+
+TMdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
+TMtakings = ['170','120','180','240','150','300','200']
+
+INTdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
+INTtakings = ['180','240','150','300','160','120','200']
+
+P2daily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
+P2takings = ['180','240','150','300','160','120','200']
 
 SWdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
-SWtakings = ['170','120','180','240','150','300','200']
+SWtakings = ['180','240','150','300','160','120','200']
+
+BPdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
+BPtakings = ['180','240','150','300','160','120','200']
 
 GSdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
 GStakings = ['180','240','150','300','160','120','200']
 
-weekTakings = [BPtakings,SWtakings,GStakings]
+JWJdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
+JWJtakings = ['180','240','150','300','160','120','200']
+
+CCdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
+CCtakings = ['180','240','150','300','160','120','200']
+
+weekTakings = [INCtakings,TMtakings,INTtakings,P2takings,SWtakings,BPtakings,GStakings,JWJtakings,CCtakings]
 takings = ['1320', '1222', '950']
 movieBuffer = []
 timeSpan = 'daily'
@@ -142,7 +172,7 @@ class Takings(QScrollArea):
 
 
         now = datetime.datetime.now()
-        self.createTable(listOfMovieNames,dayDates.dayDates(now))
+        self.createTable(listOfMovieNames,dayDates.dayDates(takingsDate))
         self.date = QLabel()
         self.date.setText(now.strftime("%d-%m-%Y"))
         self.date.setStyleSheet('font-size: 80px;')
