@@ -1,3 +1,4 @@
+import os
 from flask import (
     render_template, flash, redirect, request, Flask, url_for,
     make_response, session)
@@ -39,9 +40,10 @@ def hashNumber(numberToBeHashed):
 
 
 def qrStringEncoder(string):
-
+    cwd = os.getcwd()
+    print(cwd)
     qrcode = pyqrcode.create(string)
-    qrcode.png('ticketQrCode.png', scale=8)
+    qrcode.png(cwd+'/ticketQrCode.png', scale=8)
     print(qrcode.terminal(quiet_zone=1))
 
 
@@ -61,6 +63,7 @@ def flash_errors(form):
 
 @app.route('/send-mail')
 def email_ticket():
+    cwd = os.getcwd()
     """
     Each ticket needs to generate its own unique variable which will be passed
     to the qrStringEncoder function. This will be a combination of the
@@ -80,7 +83,7 @@ def email_ticket():
                       recipients=["edhp@msn.com"])
         msg.body = """Hi, your ticket's QR code is attached.\nPlease show this
                      image for entry into the theatre."""
-        with app.open_resource("ticketQrCode.png") as fp:
+        with app.open_resource(cwd+"/ticketQrCode.png") as fp:
             msg.attach("ticketQrCode", "ticketQrCode/png", fp.read())
         mail.send(msg)
         return 'Mail sent'
