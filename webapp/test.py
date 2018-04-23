@@ -62,9 +62,13 @@ class FlaskTestCase(BaseTestCase):
         response = self.client.get('/login', content_type='html/text')
         self.assertTrue(b'Log into Your Account' in response.data)
 
+    # ensure sign_up page loads
+    def test_sign_up_page_loads(self):
+        response = self.client.get('/create_account', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
+
     #ensure profile requires login.
     def test_profile_requires_login(self):
-        #tester = app.test_client(self)
         response = self.client.get('/profile', follow_redirects=True)
         self.assertTrue(b'Please log in to access this page.', response.data)
 
@@ -115,12 +119,14 @@ class FlaskTestCase(BaseTestCase):
     #Test adding a card to an account
     def test_add_payment_method(self):
         self.register("bob@gmail.com", "bob", 'bob')
-        response = self.client.post('/profile'
-                data=dict( name_on_card='bob', billing_address='house',
+        response = self.client.post('/add_card',
+                data=dict( password='bob', name_on_card='bob', billing_address='house',
                 card_number=1234123412341234,cvc=123,expiry_date_month=12,
-                expiry_date_year=2018)
+                expiry_date_year=2018
                 ), follow_redirects=True)
-        self.assertIn('successfully added card', response.data)
+        self.assertIn(b'successfully added card', response.data)
+
+
 
 
 
