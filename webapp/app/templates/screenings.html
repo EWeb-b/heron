@@ -1,9 +1,11 @@
+<!DOCTYPE html>
 {% extends "base.html" %}
+{% block title %}Screenings{% endblock %}}
    {% block content %}
 
    <html lang="en">
      <head>
-       <link href = "style.css" rel = "stylesheet">
+       <link rel = "stylesheet" href = "static/style.css" >
        <link href="form-validation.css" rel="stylesheet">
      </head>
 
@@ -11,7 +13,7 @@
 
 
 
-
+<body>
 
        <div class="container">
          <div class="jumbotron">
@@ -24,48 +26,26 @@
          </div>
        </div>
 
-       <!-- <div class="container">
-         <div class="py-5 text-info">
-  <h6>Screenings</h6>
-</div>
 
-  <div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Movie</th>
-        <th>Showings</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>Anna</td>
-        <td>Pitt</td>
-
-      </tr>
-    </tbody>
-  </table>
-  </div>
-</div> -->
 
 <table class="table table-hover table-sm table-dark table-responsive ">
 
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Movie</th>
-      <th scope="col">Time</th>
-      <th scope="col">Blurb</th>
+
+      <th scope="col"><font color = "orange">#</font></th>
+      <th scope="col"><font color = "orange">Movie</font></th>
+      <th scope="col"><font color = "orange">Time</font></th>
+      <th scope="col"><font color = "orange">Blurb</font></th>
+
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>Paddington 2</td>
-      <td>10:00/ 14:00 / 20:00</td>
-      <td> The blurb for paddington 2 goes here</td>
+      <td><font color = "red">Paddington 2</font></td>
+      <td><font color = "red">10:00/ 14:00 / 20:00</font></td>
+      <td> <font1>The blurb for paddington 2 goes here</font1></td>
     </tr>
     <tr>
       <th scope="row">2</th>
@@ -81,6 +61,8 @@
     </tr>
   </tbody>
 </table>
+</body>
+</html>
 
 
 

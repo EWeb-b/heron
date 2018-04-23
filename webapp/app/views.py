@@ -200,7 +200,7 @@ def create_account():
                     return redirect('/create_account')
 
         else:  # when there's an error validating
-            flash("Error creating your account, please try again")
+            flash("Error creating your account. Invalid email.")
             # logging.info()
             return redirect('/create_account')
 
@@ -350,7 +350,7 @@ def basket():
             flash('No film in basket')
             return redirect('/basket')
 
-    film_title = session.get('film_title', None)
+
 @app.route('/order_ticket', methods=['GET', 'POST'])
 def order_ticket():
     form = OrderTicket()
@@ -408,13 +408,16 @@ def list_films():
 @login_required
 def profile():
     # Return the tickets that the account owns.
-    # ticketsOwned = models.Account.account_tickets.query.all()
+    #ticketsOwned = models.Account.account_tickets.query.all()
 
     return render_template(
         'profile.html', title='User Profile')
 
 @app.route('/screenings', methods=['GET'])
+@login_required
 def screenings():
+    # Return the tickets that the account owns.
+    #ticketsOwned = models.Account.account_tickets.query.all()
 
     return render_template(
         'screenings.html', title='Screenings')
