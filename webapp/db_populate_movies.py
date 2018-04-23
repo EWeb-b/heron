@@ -184,30 +184,6 @@ theatreData = [
     {
         "id": 3,
         "theatre_name": "Screen 3"
-    },
-    {
-        "id": 4,
-        "theatre_name": "Screen 4"
-    },
-    {
-        "id": 5,
-        "theatre_name": "Screen 5"
-    },
-    {
-        "id": 6,
-        "theatre_name": "Screen 6"
-    },
-    {
-        "id": 7,
-        "theatre_name": "Screen 7"
-    },
-    {
-        "id": 8,
-        "theatre_name": "Screen 8"
-    },
-    {
-        "id": 9,
-        "theatre_name": "Screen 9"
     }
 ]
 
@@ -249,12 +225,22 @@ for x in range(1,10): # 9 theatres
         db.session.add(newSeat)
         db.session.commit()
 
+def screening_date(x, y):
+
+    month = y
+    day = ((x % 30) + 1)
+    screeningDate = datetime(2018, month, day)
+
+    return screeningDate
+
+
 # Populate the FilmScreening table.
 print("populating film screenings")
-for x in range(1, 101):
+for x in range(1, 41):
+    if x >
     sampleScreening = FilmScreening()
     sampleScreening.film_screening_film_det = randint(1, 9)
-    sampleScreening.film_screening_time = random_date()
-    sampleScreening.theatre_id = randint(1, 9)
+    sampleScreening.film_screening_time = screening_date(x, y)
+    sampleScreening.theatre_id = randint(1, 3)
     db.session.add(sampleScreening)
     db.session.commit()
