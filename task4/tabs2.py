@@ -169,7 +169,7 @@ class Takings(QScrollArea):
         #map(str,self.dailyTOT)
         #print('TOT:',self.dailyTOT)
         for i in range(7):
-            self.tableWidget.setItem(3,i, QTableWidgetItem(str(self.dailyTOT[i])))
+            self.tableWidget.setItem(9,i, QTableWidgetItem(str(self.dailyTOT[i])))
         # print('0,0:',self.mondayTot)
         #self.mondayTot.doubleClicked.connect(self.on_click)
         # table selection change
@@ -180,7 +180,14 @@ class Takings(QScrollArea):
 
 
         now = datetime.datetime.now()
-        self.createTable(listOfMovieNames,dayDates.dayDates(takingsDate))
+        horizontal_headers = dayDates.dayDates(takingsDate)
+        horizontal_headers.append('Total')
+
+        vertical_headers = listOfMovieNames
+        vertical_headers.append('Total')
+
+        print('HORIZONTAL HEADERS!!!!',horizontal_headers)
+        self.createTable(listOfMovieNames,horizontal_headers)
         self.date = QLabel()
         self.date.setText(now.strftime("%d-%m-%Y"))
         self.date.setStyleSheet('font-size: 80px;')
