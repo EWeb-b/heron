@@ -8,7 +8,7 @@ from app import app, db, models, mail
 from .forms import (CreateAccountForm, ChangePasswordForm, LogInForm,
                     CardDetails, OrderTicket, ShowTimes, Basket)
 from .models import (Account, Certificate, FilmDetails, FilmScreening, Ticket,
-                     TicketType, Card)
+                     TicketType, Card, SeatReserved)
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
 import datetime
@@ -290,21 +290,22 @@ def basket():
     film_time = session.get('film_time', 'N/A')
     ticket_type = session.get('ticket_type', 'N/A')
     seat_number = session.get('seat_number', None)
-    print(int(seat_number))
 
-    if (int(seat_number) == 9 or int(seat_number) == 10 or
-            int(seat_number) == 11 or int(seat_number) == 12 or
-            int(seat_number) == 13 or int(seat_number) == 14 or
-            int(seat_number) == 15 or int(seat_number) == 16):
-        ticket_type_number = 5
-    elif ticket_type == 'oap':
-        ticket_type_number = 1
-    elif ticket_type == 'standard':
-        ticket_type_number = 2
-    elif ticket_type == 'student':
-        ticket_type_number = 3
-    elif ticket_type == 'child':
-        ticket_type_number = 4
+
+    if seat_number is not None:
+        if (int(seat_number) == 9 or int(seat_number) == 10 or
+                int(seat_number) == 11 or int(seat_number) == 12 or
+                int(seat_number) == 13 or int(seat_number) == 14 or
+                int(seat_number) == 15 or int(seat_number) == 16):
+            ticket_type_number = 5
+        elif ticket_type == 'oap':
+            ticket_type_number = 1
+        elif ticket_type == 'standard':
+            ticket_type_number = 2
+        elif ticket_type == 'student':
+            ticket_type_number = 3
+        elif ticket_type == 'child':
+            ticket_type_number = 4
 
     choices = [(str(i.card_number), str(i.card_number)) for i in cards]
     form.card.choices = choices
@@ -312,15 +313,16 @@ def basket():
     if film_title == None:
         ticket_value = 0
     else:
-        if (int(seat_number) == 9 or int(seat_number) == 10 or
-                int(seat_number) == 11 or int(seat_number) == 12 or
-                int(seat_number) == 13 or int(seat_number) == 14 or
-                int(seat_number) == 15 or int(seat_number) == 16):
-            ticket_value = 6
-        elif ticket_type == 'standard':
-            ticket_value = 5
-        else:
-            ticket_value = 4
+        if seat_number is not None:
+            if (int(seat_number) == 9 or int(seat_number) == 10 or
+                    int(seat_number) == 11 or int(seat_number) == 12 or
+                    int(seat_number) == 13 or int(seat_number) == 14 or
+                    int(seat_number) == 15 or int(seat_number) == 16):
+                ticket_value = 6
+            elif ticket_type == 'standard':
+                ticket_value = 5
+            else:
+                ticket_value = 4
 
     if request.method == 'GET':
         return render_template(
@@ -339,6 +341,14 @@ def basket():
                     ticket_type_id=ticket_type_number,
                     ticket_date_bought=date,
                 )
+                db.session.add(newTicket)
+                db.session.commit()
+                newReserveSeat = SeatReserved(
+                    seat_id=seat_number,
+                    ticket_id=newTicket.id,
+                )
+                db.session.add(newReserveSeat)
+                db.session.commit()
                 ticket = models.Ticket.query.all()
                 print(ticket)
                 return redirect('/send-mail')

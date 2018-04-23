@@ -224,14 +224,14 @@ def random_date():
     return randomDate
 
 # Populate the database with ticket data for 500 tickets.
-for x in range(1, 501):
-    sampleTicket = Ticket()
-    sampleTicket.owner_profile_id = random.randint(1, 100)
-    sampleTicket.ticket_type_id = random.randint(1, 5)
-    sampleTicket.ticket_screening_id = random.randint(1, 9)
-    sampleTicket.ticket_date_bought = random_date()
-    db.session.add(sampleTicket)
-    db.session.commit()
+# for x in range(1, 501):
+#     sampleTicket = Ticket()
+#     sampleTicket.owner_profile_id = random.randint(1, 100)
+#     sampleTicket.ticket_type_id = random.randint(1, 5)
+#     sampleTicket.ticket_screening_id = random.randint(1, 9)
+#     sampleTicket.ticket_date_bought = random_date()
+#     db.session.add(sampleTicket)
+#     db.session.commit()
 
 # Populate the Seat table. This is constant - do not remove.
 for x in range(1,10):
