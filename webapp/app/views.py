@@ -282,9 +282,7 @@ def add_card():
 def basket():
     form = Basket()
     date = datetime.datetime.now()
-    print(date)
     cards = models.Card.query.filter_by(account_id=current_user.id).all()
-    print(cards)
     form.card.choices = cards
     film_title = session.get('film_title', None)
     film_time = session.get('film_time', 'N/A')
@@ -322,6 +320,8 @@ def basket():
                 ticket_value = 5
             else:
                 ticket_value = 4
+        else:
+            ticket_value = 0
 
     if request.method == 'GET':
         return render_template(
