@@ -291,7 +291,6 @@ def basket():
     ticket_type = session.get('ticket_type', 'N/A')
     seat_number = session.get('seat_number', None)
 
-
     if seat_number is not None:
         if (int(seat_number) == 9 or int(seat_number) == 10 or
                 int(seat_number) == 11 or int(seat_number) == 12 or

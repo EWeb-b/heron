@@ -7,7 +7,6 @@ import json
 import random
 
 
-
 ################################################################################
 
 # Populates the FilmDetails table with films.
@@ -80,7 +79,7 @@ filmData = [
         "film_certificate_id": 3,
         "film_blurb": "Horrible remake",
         "film_director": "Jake Kasden",
-        "film_name": "Jumanji: Welcome to the jungle",
+        "film_name": "Jumanji: Welcome to the Jungle",
         "film_actor": "Dwayne Johnson"
     },
     {
@@ -216,6 +215,8 @@ for screen in theatreData:
 ################################################################################
 
 # Function to create random dates in the past month.
+
+
 def random_date():
     month = random.randint(3, 4)
     day = random.randint(1, 20)
@@ -233,9 +234,10 @@ def random_date():
 #     db.session.add(sampleTicket)
 #     db.session.commit()
 
+
 # Populate the Seat table. This is constant - do not remove.
-for x in range(1,10):
-    for y in range(1,25): # 24 seats in each theatre.
+for x in range(1, 10):
+    for y in range(1, 25):  # 24 seats in each theatre.
         newSeat = Seat()
         newSeat.seat_pos = y
         newSeat.theatre_id = x
