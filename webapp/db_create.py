@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 from migrate.versioning import api
 from config import Config
+=======
+>>>>>>> f70b7f723edaaf6d8d5a1fa398e7beb37d1e0f23
 from app import db
+from migrate.versioning import api
+# from config import Config.SQLALCHEMY_DATABASE_URI
+from config import Config
 import os.path
 
 
