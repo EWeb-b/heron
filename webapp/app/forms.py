@@ -15,7 +15,7 @@ from .models import Card
 
 
 class LogInForm(Form):
-    email = StringField(
+    email = EmailField(
         'Email', [validators.DataRequired(), validators.Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Log In')
@@ -35,13 +35,21 @@ class Profile(Form):
 
 
 class CardDetails(Form):
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', [validators.DataRequired()])
     name_on_card = StringField('Name on Card', validators=[DataRequired()])
-    billing_address = StringField('Billing Address', validators=[DataRequired()])
-    card_number = IntegerField('Card Number', validators=[DataRequired()])
-    cvc = IntegerField('CVC', validators=[DataRequired()])
-    expiry_date_month = IntegerField('Expiry Date Month', validators=[DataRequired()])
-    expiry_date_year = IntegerField('Expiry Date Year', validators=[DataRequired()])
+    billing_address = StringField('Billing Address',
+                                  validators=[DataRequired()])
+    card_number = IntegerField('Card Number', [validators.DataRequired(),
+                                               validators.Regexp(
+                                               r'[0-9]{16}$')])
+    cvc = IntegerField('CVC', [validators.DataRequired(),
+                               validators.Regexp(r'[0-9]{3}$')])
+    expiry_date_month = IntegerField('Expiry Date Month',
+                                     [validators.DataRequired(),
+                                      validators.NumberRange(min=1, max=12)])
+    expiry_date_year = IntegerField(
+        'Expiry Date Year', [validators.DataRequired(),
+                             validators.NumberRange(min=2018)])
     submit = SubmitField('Add Card')
 
 
@@ -91,14 +99,17 @@ class OrderTicket(Form):
     seat_number = SelectField('Seat Number',
                               choices=[('1', '1'), ('2', '2'), ('3', '3'),
                                        ('4', '4'), ('5', '5'), ('6', '6'),
-                                       ('7', '7'), ('8', '8'), ('9', '9'),
-                                       ('10', '10'), ('11', '11'), ('12', '12'),
-                                       ('13', '13'), ('14', '14'), ('15', '15'),
-                                       ('16', '16'), ('17', '17'), ('18', '18'),
-                                       ('19', '19'), ('20', '20'), ('21', '21'),
-                                       ('22', '22'), ('23', '23'),
-                                       ('24', '24'), ],
+                                       ('7', '7'), ('8', '8'),
+                                       ('9', '9 (VIP)'),
+                                       ('10', '10 (VIP)'),
+                                       ('11', '11 (VIP)'),
+                                       ('12', '12 (VIP)'),
+                                       ('13', '13 (VIP)'),
+                                       ('14', '14 (VIP)'),
+                                       ('15', '15 (VIP)'),
+                                       ('16', '16 (VIP)'),
+                                       ('17', '17'), ('18', '18'), ('19', '19'),
+                                       ('20', '20'), ('21', '21'), ('22', '22'),
+                                       ('23', '23'), ('24', '24')],
                               validators=[DataRequired()])
-    # seatNumber = widgets.CheckboxInput()
-
     submit = SubmitField('Order Ticket')

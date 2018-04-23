@@ -1,3 +1,4 @@
+import os
 from flask import (
     render_template, flash, redirect, request, Flask, url_for,
     make_response, session)
@@ -6,7 +7,7 @@ from flask_bootstrap import Bootstrap
 from app import app, db, models, mail
 from .forms import (CreateAccountForm, ChangePasswordForm, LogInForm,
                     CardDetails, OrderTicket, ShowTimes, Basket)
-from .models import (Account, Certificate, FilmDetails, FilmScreening,
+from .models import (Account, Certificate, FilmDetails, FilmScreening, Ticket,
                      TicketType, Card)
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
@@ -39,9 +40,10 @@ def hashNumber(numberToBeHashed):
 
 
 def qrStringEncoder(string):
-
+    cwd = os.getcwd()
+    print(cwd)
     qrcode = pyqrcode.create(string)
-    qrcode.png('ticketQrCode.png', scale=8)
+    qrcode.png(cwd+'/ticketQrCode.png', scale=8)
     print(qrcode.terminal(quiet_zone=1))
 
 
@@ -61,6 +63,7 @@ def flash_errors(form):
 
 @app.route('/send-mail')
 def email_ticket():
+    cwd = os.getcwd()
     """
     Each ticket needs to generate its own unique variable which will be passed
     to the qrStringEncoder function. This will be a combination of the
@@ -73,17 +76,28 @@ def email_ticket():
     seat_number = session.get('seat_number', None)
     card_number = session.get('card_number', None)
     try:
-        qrStringEncoder('''{film_title}{film_time}{ticket_type}
-                        {seat_number}{card_number}''')
-        msg = Message("Your Heron Cinema Ticket(s)",
+        qrStringEncoder(film_title+film_time+ticket_type +
+                        seat_number+card_number)
+        msg = Message("Heron Cinema Ticket",
                       sender="movies.heron@gmail.com",
-                      recipients=["edhp@msn.com"])
-        msg.body = """Hi, your ticket's QR code is attached.\nPlease show this
-                     image for entry into the theatre."""
-        with app.open_resource("ticketQrCode.png") as fp:
+                      recipients=[current_user.email])
+        msg.body = ("Thank you for your purchase, your ticket is attached to this email.\n\n"
+                    "Ticket details: \n"
+                    + film_title + "\n"
+                    + "Screening Time:  " + film_time + "\n"
+                    + "Ticket Type:  " + ticket_type + "\n"
+                    + "Seat Number:  " + seat_number + "\n")
+
+        with app.open_resource(cwd+"/ticketQrCode.png") as fp:
             msg.attach("ticketQrCode", "ticketQrCode/png", fp.read())
         mail.send(msg)
-        return 'Mail sent'
+        session.pop('film_title')
+        session.pop('film_time')
+        session.pop('ticket_type')
+        session.pop('seat_number')
+        session.pop('card_number')
+        flash("Order successfully registered")
+        return redirect('/profile')
 
     except Exception as e:
         return str(e) + ' | email_ticket function error.'
@@ -162,11 +176,9 @@ def create_account():
             storedUser = Account.query.filter_by(email=form.email.data).first()
             print(storedUser)
             if storedUser is not None:
-                print("foo")
-                flash("That email has already been used, try a different one")
+                flash("An account has already been registered with that email")
                 return redirect('/create_account')
             else:
-                print("bar")
                 if form.password.data == form.passwordCheck.data:
                     print("password matched")
                     newuser = Account(
@@ -252,7 +264,7 @@ def add_card():
                 print('card created not added')
                 db.session.add(newCard)
                 db.session.commit()
-                print('successfully added card(?)')
+                flash('successfully added card')
                 return redirect('/profile')
             else:
                 flash("passwords didn't match")
@@ -269,23 +281,44 @@ def add_card():
 @login_required
 def basket():
     form = Basket()
+    date = datetime.datetime.now()
+    print(date)
     cards = models.Card.query.filter_by(account_id=current_user.id).all()
     print(cards)
     form.card.choices = cards
     film_title = session.get('film_title', None)
-    film_time = session.get('film_time', None)
-    ticket_type = session.get('ticket_type', None)
+    film_time = session.get('film_time', 'N/A')
+    ticket_type = session.get('ticket_type', 'N/A')
     seat_number = session.get('seat_number', None)
+    print(int(seat_number))
 
-    choices = [(i.name_on_card, i.name_on_card) for i in cards]
+    if (int(seat_number) == 9 or int(seat_number) == 10 or
+            int(seat_number) == 11 or int(seat_number) == 12 or
+            int(seat_number) == 13 or int(seat_number) == 14 or
+            int(seat_number) == 15 or int(seat_number) == 16):
+        ticket_type_number = 5
+    elif ticket_type == 'oap':
+        ticket_type_number = 1
+    elif ticket_type == 'standard':
+        ticket_type_number = 2
+    elif ticket_type == 'student':
+        ticket_type_number = 3
+    elif ticket_type == 'child':
+        ticket_type_number = 4
+
+    choices = [(str(i.card_number), str(i.card_number)) for i in cards]
     form.card.choices = choices
 
     if film_title == None:
         ticket_value = 0
     else:
-        if ticket_type == 'standard':
+        if (int(seat_number) == 9 or int(seat_number) == 10 or
+                int(seat_number) == 11 or int(seat_number) == 12 or
+                int(seat_number) == 13 or int(seat_number) == 14 or
+                int(seat_number) == 15 or int(seat_number) == 16):
+            ticket_value = 6
+        elif ticket_type == 'standard':
             ticket_value = 5
-            #ticket_value = 6
         else:
             ticket_value = 4
 
@@ -297,13 +330,24 @@ def basket():
             form=form)
     elif request.method == 'POST':
         print('posting')
-        if form.validate() == True:
-            print('validation successful')
-            session['card_number'] = form.card.data
-            return redirect('/send-mail')
+        if film_title != None:
+            if form.validate() == True:
+                print('validation successful')
+                session['card_number'] = form.card.data
+                newTicket = Ticket(
+                    owner_account_id=current_user.id,
+                    ticket_type_id=ticket_type_number,
+                    ticket_date_bought=date,
+                )
+                ticket = models.Ticket.query.all()
+                print(ticket)
+                return redirect('/send-mail')
+            else:
+                print('fail')
+                flash_errors(form)
+                return redirect('/basket')
         else:
-            print('fail')
-            flash_errors(form)
+            flash('No film in basket')
             return redirect('/basket')
 
 
