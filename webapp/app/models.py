@@ -105,6 +105,10 @@ class FilmDetails(db.Model):
     def __repr__(self):
         return '<Film Name: %r>' % (self.film_name)
 
+    def __json__(self):
+        return ['id', 'film_name', 'film_blurb', 'film_director',
+                'film_actor', 'film_certificate_id', 'screening']
+
 
 class FilmScreening(db.Model):
     """
@@ -146,6 +150,9 @@ class Ticket(db.Model):
     def __repr__(self):
         return '<Ticket %r %r>' % (self.id, self.ticket_date_bought)
 
+    def __json__(self):
+        return ['id', 'owner_account_id', 'ticket_type_id', 'ticket_screening_id',
+                'ticket_date_bought', 'seat_reserves']
 
 class TicketType(db.Model):
     """
