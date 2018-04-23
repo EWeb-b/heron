@@ -58,6 +58,7 @@ CCdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'
 CCtakings = ['180','240','150','300','160','120','200']
 
 weekTakings = [INCtakings,TMtakings,INTtakings,P2takings,SWtakings,BPtakings,GStakings,JWJtakings,CCtakings]
+
 takings = ['1320', '1222', '950','4378','1320', '1222', '950','4378','46']
 movieBuffer = []
 timeSpan = 'daily'
@@ -67,6 +68,15 @@ takingsDate = datetime.date.today() #used to keep track of the week in
 
 color_buffer = []
 class Takings(QScrollArea):
+    def update_takings_tabe(self):
+        print('update table!!!!')
+        global dailyTOT
+        for i in range(num_of_row-1):
+            for j in range(num_of_col-1):
+                self.tableWidget.setItem(i,j, QTableWidgetItem(weekTakings[i][j]))
+                dailyTOT[j] += int(weekTakings[i][j])
+            self.tableWidget.setItem(i,7, QTableWidgetItem(str(sum(map(int,weekTakings[i])))))
+
     def make_rank_button(self,button):
         return button.clicked.connect(lambda:self.display_info(button))
 
@@ -123,6 +133,10 @@ class Takings(QScrollArea):
         self.tableWidget.setHorizontalHeaderLabels(dayDates.dayDates(takingsDate))
         print(takingsDate)
 
+        self.update_takings_tabe()
+
+
+
     def nextweek(self):
 
         print('next')
@@ -142,12 +156,16 @@ class Takings(QScrollArea):
 
         print(takingsDate)
 
+        self.update_takings_tabe()
+
 
     # change to take takingsDate as an argument
 
 
     def createTable(self,rows,colums):
         #rows.append('Total')
+        global num_of_col
+        global num_of_row
         num_of_row = len(rows)
         num_of_col = len(colums)
        # Create table
@@ -159,18 +177,19 @@ class Takings(QScrollArea):
         rows = rows[:-1]
         print('rows',rows)
         #self.colum1 = self.tableWidget.horizontalHeaderItem(1)
-        self.dailyTOT = [0,0,0,0,0,0,0]
+        global dailyTOT
+        dailyTOT = [0,0,0,0,0,0,0]
 
         for i in range(num_of_row-1):
             for j in range(num_of_col-1):
                 self.tableWidget.setItem(i,j, QTableWidgetItem(weekTakings[i][j]))
-                self.dailyTOT[j] += int(weekTakings[i][j])
+                dailyTOT[j] += int(weekTakings[i][j])
             self.tableWidget.setItem(i,7, QTableWidgetItem(str(sum(map(int,weekTakings[i])))))
 
         #map(str,self.dailyTOT)
         #print('TOT:',self.dailyTOT)
         for i in range(7):
-            self.tableWidget.setItem(9,i, QTableWidgetItem(str(self.dailyTOT[i])))
+            self.tableWidget.setItem(9,i, QTableWidgetItem(str(dailyTOT[i])))
         # print('0,0:',self.mondayTot)
         #self.mondayTot.doubleClicked.connect(self.on_click)
         # table selection change
