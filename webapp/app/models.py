@@ -148,7 +148,10 @@ class Ticket(db.Model):
     seat_reserves = db.relationship('SeatReserved', backref='ticket')
 
     def __repr__(self):
-        return '<Ticket %r %r>' % (self.id, self.ticket_date_bought)
+        return '''<ticket_id: %r, owner_account_id: %r, ticket_type_id: %r,
+         ticket_screening_id: %r, ticket_date_bought: %r>''' % (self.id,
+         self.owner_account_id, self.ticket_type_id, self.ticket_screening_id,
+         self.ticket_date_bought)
 
     def __json__(self):
         return ['id', 'owner_account_id', 'ticket_type_id', 'ticket_screening_id',

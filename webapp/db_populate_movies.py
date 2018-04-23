@@ -93,7 +93,7 @@ filmData = [
         "film_actor": "Anthony Gonzalez"
     }
 ]
-print("populating movies")
+print("populating movies (the FilmDetails table)")
 for movie in filmData:
     newMovie = FilmDetails(**movie)
     db.session.add(newMovie)
@@ -127,7 +127,7 @@ ticketTypeData = [
     }
 ]
 
-print("populating tickets")
+print("populating TicketType table")
 for ticketType in ticketTypeData:
     newTicketType = TicketType(**ticketType)
     db.session.add(newTicketType)
@@ -211,7 +211,7 @@ theatreData = [
     }
 ]
 
-print("populating screens")
+print("populating theatre screens")
 for screen in theatreData:
     newScreen = Theatre(**screen)
     db.session.add(newScreen)
@@ -241,7 +241,7 @@ for x in range(1, 501):
 
 # Populate the Seat table. This is constant - do not remove.
 print("populating seats")
-for x in range(1,10):
+for x in range(1,10): # 9 theatres
     for y in range(1,25): # 24 seats in each theatre.
         newSeat = Seat()
         newSeat.seat_pos = y
