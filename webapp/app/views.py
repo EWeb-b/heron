@@ -364,7 +364,7 @@ def list_films():
 @login_required
 def profile():
     # Return the tickets that the account owns.
-    ticketsOwned = models.Account.account_tickets.query.all()
+    #ticketsOwned = models.Account.account_tickets.query.all()
 
     return render_template(
-        'profile.html', title='User Profile', ticketsOwned=ticketsOwned)
+        'profile.html', title='User Profile')
