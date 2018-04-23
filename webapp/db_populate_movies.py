@@ -9,238 +9,257 @@ import json
 
 
 
-################################################################################
+# ################################################################################
+#
+# # Populates the FilmDetails table with films.
+# # Certificates 1=U , 2=PG, 3=12, 4=15, 5=18.
+#
+# filmData = [
+#     {
+#         "id": 1,
+#         "film_certificate_id": 3,
+#         "film_blurb": "Entering dreams.",
+#         "film_director": "Christopher Nolan",
+#         "film_name": "Inception",
+#         "film_actor": "Leonardo DiCaprio"
+#     },
+#     {
+#         "id": 2,
+#         "film_certificate_id": 3,
+#         "film_blurb": "Home alone, but on mars.",
+#         "film_director": "Ridley Scott",
+#         "film_name": "The Martian",
+#         "film_actor": "Matt Damon"
+#     },
+#     {
+#         "id": 3,
+#         "film_certificate_id": 3,
+#         "film_blurb": """A team of explorers travel through a wormhole in space
+#                             in an attempt to ensure humanity's survival""",
+#         "film_director": "Christopher Nolan",
+#         "film_name": "Interstellar",
+#         "film_actor": "Matthew McConaughey"
+#     },
+#     {
+#         "id": 4,
+#         "film_certificate_id": 2,
+#         "film_blurb": "Peruvain Bear up to no good",
+#         "film_director": "Paul King",
+#         "film_name": "Paddington 2",
+#         "film_actor": "Ben Wishaw"
+#     },
+#     {
+#         "id": 5,
+#         "film_certificate_id": 4,
+#         "film_blurb": "Fishman seduces silent woman",
+#         "film_director": "Guillermo del Toro",
+#         "film_name": "The Shape of Water",
+#         "film_actor": "Sally Hawkins"
+#     },
+#     {
+#         "id": 6,
+#         "film_certificate_id": 3,
+#         "film_blurb": "superhero movie",
+#         "film_director": "Ryan Coogler",
+#         "film_name": "Black Panther",
+#         "film_actor": "Chadwick Boseman"
+#     },
+#     {
+#         "id": 7,
+#         "film_certificate_id": 2,
+#         "film_blurb": """P. T. Barnum is a man with little more than ambition to
+#                         his name. When the company he works for goes bust, he
+#                         decides to leave his mediocre life behind, and takes his
+#                         family on a journey that would lead to establishing the
+#                         foundations of showbusiness.""",
+#         "film_director": "Michael Gracey",
+#         "film_name": "The Greatest  Showman",
+#         "film_actor": "Hugh Jackman"
+#     },
+#     {
+#         "id": 8,
+#         "film_certificate_id": 3,
+#         "film_blurb": "Horrible remake",
+#         "film_director": "Jake Kasden",
+#         "film_name": "Jumanji: Welcome to the jungle",
+#         "film_actor": "Dwayne Johnson"
+#     },
+#     {
+#         "id": 9,
+#         "film_certificate_id": 1,
+#         "film_blurb": "Undead reconcilliation",
+#         "film_director": "Lee Unkrich",
+#         "film_name": "CoCo",
+#         "film_actor": "Anthony Gonzalez"
+#     }
+# ]
+# print("populating movies (the FilmDetails table)")
+# for movie in filmData:
+#     newMovie = FilmDetails(**movie)
+#     db.session.add(newMovie)
+#     db.session.commit()
+#
+# ################################################################################
+#
+# # Creates the TicketType table which remains unchanged and is used by the
+# # Ticket table.
+#
+# ticketTypeData = [
+#     {
+#         "id": 1,
+#         "ticket_type": 1
+#     },
+#     {
+#         "id": 2,
+#         "ticket_type": 2
+#     },
+#     {
+#         "id": 3,
+#         "ticket_type": 3
+#     },
+#     {
+#         "id": 4,
+#         "ticket_type": 4
+#     },
+#     {
+#         "id": 5,
+#         "ticket_type": 5
+#     }
+# ]
+#
+# print("populating TicketType table")
+# for ticketType in ticketTypeData:
+#     newTicketType = TicketType(**ticketType)
+#     db.session.add(newTicketType)
+#     db.session.commit()
+#
+# ################################################################################
+#
+# # Creates the Certificate table which remains unchanged and is used by the
+# # FilmDetails table.
+# # Certificates: 1=U , 2=PG, 3=12, 4=15, 5=18.
+#
+# certificateData = [
+#     {
+#         "id": 1,
+#         "cert": 1
+#     },
+#     {
+#         "id": 2,
+#         "cert": 2
+#     },
+#     {
+#         "id": 3,
+#         "cert": 3
+#     },
+#     {
+#         "id": 4,
+#         "cert": 4
+#     },
+#     {
+#         "id": 5,
+#         "cert": 5
+#     }
+# ]
+#
+# print("populating certificates")
+# for certificate in certificateData:
+#     newCertificate = Certificate(**certificate)
+#     db.session.add(newCertificate)
+#     db.session.commit()
+#
+# ################################################################################
+#
+# # Creates the Theatre table.
+#
+# theatreData = [
+#     {
+#         "id": 1,
+#         "theatre_name": "Screen 1"
+#     },
+#     {
+#         "id": 2,
+#         "theatre_name": "Screen 2"
+#     },
+#     {
+#         "id": 3,
+#         "theatre_name": "Screen 3"
+#     }
+# ]
+#
+# print("populating theatre screens")
+# for screen in theatreData:
+#     newScreen = Theatre(**screen)
+#     db.session.add(newScreen)
+#     db.session.commit()
+#
+# ################################################################################
+#
+# # Function to create random dates in the past month.
+# def random_date():
+#     year = datetime.now().year
+#     month = datetime.now().month -1
+#     day = randint(1, monthrange(year, month)[1])
+#     randomDate = datetime(2018, month, day)
+#
+#     return randomDate
+#
+# # Populate the database with ticket data for 500 tickets.
+# print("generating random tickets")
+# for x in range(1, 501):
+#     sampleTicket = Ticket()
+#     sampleTicket.owner_account_id = randint(1, 100)
+#     sampleTicket.ticket_type_id = randint(1, 5)
+#     sampleTicket.ticket_screening_id = randint(1, 100)
+#     sampleTicket.ticket_date_bought = random_date()
+#     db.session.add(sampleTicket)
+#     db.session.commit()
+#
+# # Populate the Seat table. This is constant - do not remove.
+# print("populating seats")
+# for x in range(1,10): # 9 theatres
+#     for y in range(1,25): # 24 seats in each theatre.
+#         newSeat = Seat()
+#         newSeat.seat_pos = y
+#         newSeat.theatre_id = x
+#         db.session.add(newSeat)
+#         db.session.commit()
 
-# Populates the FilmDetails table with films.
-# Certificates 1=U , 2=PG, 3=12, 4=15, 5=18.
+def screening_date(x, z):
 
-filmData = [
-    {
-        "id": 1,
-        "film_certificate_id": 3,
-        "film_blurb": "Entering dreams.",
-        "film_director": "Christopher Nolan",
-        "film_name": "Inception",
-        "film_actor": "Leonardo DiCaprio"
-    },
-    {
-        "id": 2,
-        "film_certificate_id": 3,
-        "film_blurb": "Home alone, but on mars.",
-        "film_director": "Ridley Scott",
-        "film_name": "The Martian",
-        "film_actor": "Matt Damon"
-    },
-    {
-        "id": 3,
-        "film_certificate_id": 3,
-        "film_blurb": """A team of explorers travel through a wormhole in space
-                            in an attempt to ensure humanity's survival""",
-        "film_director": "Christopher Nolan",
-        "film_name": "Interstellar",
-        "film_actor": "Matthew McConaughey"
-    },
-    {
-        "id": 4,
-        "film_certificate_id": 2,
-        "film_blurb": "Peruvain Bear up to no good",
-        "film_director": "Paul King",
-        "film_name": "Paddington 2",
-        "film_actor": "Ben Wishaw"
-    },
-    {
-        "id": 5,
-        "film_certificate_id": 4,
-        "film_blurb": "Fishman seduces silent woman",
-        "film_director": "Guillermo del Toro",
-        "film_name": "The Shape of Water",
-        "film_actor": "Sally Hawkins"
-    },
-    {
-        "id": 6,
-        "film_certificate_id": 3,
-        "film_blurb": "superhero movie",
-        "film_director": "Ryan Coogler",
-        "film_name": "Black Panther",
-        "film_actor": "Chadwick Boseman"
-    },
-    {
-        "id": 7,
-        "film_certificate_id": 2,
-        "film_blurb": """P. T. Barnum is a man with little more than ambition to
-                        his name. When the company he works for goes bust, he
-                        decides to leave his mediocre life behind, and takes his
-                        family on a journey that would lead to establishing the
-                        foundations of showbusiness.""",
-        "film_director": "Michael Gracey",
-        "film_name": "The Greatest  Showman",
-        "film_actor": "Hugh Jackman"
-    },
-    {
-        "id": 8,
-        "film_certificate_id": 3,
-        "film_blurb": "Horrible remake",
-        "film_director": "Jake Kasden",
-        "film_name": "Jumanji: Welcome to the jungle",
-        "film_actor": "Dwayne Johnson"
-    },
-    {
-        "id": 9,
-        "film_certificate_id": 1,
-        "film_blurb": "Undead reconcilliation",
-        "film_director": "Lee Unkrich",
-        "film_name": "CoCo",
-        "film_actor": "Anthony Gonzalez"
-    }
-]
-print("populating movies (the FilmDetails table)")
-for movie in filmData:
-    newMovie = FilmDetails(**movie)
-    db.session.add(newMovie)
-    db.session.commit()
+    if x > 30:
+        month = 4
+    elif x > 60:
+        month = 5
+    elif x <= 30:
+        month = 3
 
-################################################################################
-
-# Creates the TicketType table which remains unchanged and is used by the
-# Ticket table.
-
-ticketTypeData = [
-    {
-        "id": 1,
-        "ticket_type": 1
-    },
-    {
-        "id": 2,
-        "ticket_type": 2
-    },
-    {
-        "id": 3,
-        "ticket_type": 3
-    },
-    {
-        "id": 4,
-        "ticket_type": 4
-    },
-    {
-        "id": 5,
-        "ticket_type": 5
-    }
-]
-
-print("populating TicketType table")
-for ticketType in ticketTypeData:
-    newTicketType = TicketType(**ticketType)
-    db.session.add(newTicketType)
-    db.session.commit()
-
-################################################################################
-
-# Creates the Certificate table which remains unchanged and is used by the
-# FilmDetails table.
-# Certificates: 1=U , 2=PG, 3=12, 4=15, 5=18.
-
-certificateData = [
-    {
-        "id": 1,
-        "cert": 1
-    },
-    {
-        "id": 2,
-        "cert": 2
-    },
-    {
-        "id": 3,
-        "cert": 3
-    },
-    {
-        "id": 4,
-        "cert": 4
-    },
-    {
-        "id": 5,
-        "cert": 5
-    }
-]
-
-print("populating certificates")
-for certificate in certificateData:
-    newCertificate = Certificate(**certificate)
-    db.session.add(newCertificate)
-    db.session.commit()
-
-################################################################################
-
-# Creates the Theatre table.
-
-theatreData = [
-    {
-        "id": 1,
-        "theatre_name": "Screen 1"
-    },
-    {
-        "id": 2,
-        "theatre_name": "Screen 2"
-    },
-    {
-        "id": 3,
-        "theatre_name": "Screen 3"
-    }
-]
-
-print("populating theatre screens")
-for screen in theatreData:
-    newScreen = Theatre(**screen)
-    db.session.add(newScreen)
-    db.session.commit()
-
-################################################################################
-
-# Function to create random dates in the past month.
-def random_date():
-    year = datetime.now().year
-    month = datetime.now().month -1
-    day = randint(1, monthrange(year, month)[1])
-    randomDate = datetime(2018, month, day)
-
-    return randomDate
-
-# Populate the database with ticket data for 500 tickets.
-print("generating random tickets")
-for x in range(1, 501):
-    sampleTicket = Ticket()
-    sampleTicket.owner_account_id = randint(1, 100)
-    sampleTicket.ticket_type_id = randint(1, 5)
-    sampleTicket.ticket_screening_id = randint(1, 100)
-    sampleTicket.ticket_date_bought = random_date()
-    db.session.add(sampleTicket)
-    db.session.commit()
-
-# Populate the Seat table. This is constant - do not remove.
-print("populating seats")
-for x in range(1,10): # 9 theatres
-    for y in range(1,25): # 24 seats in each theatre.
-        newSeat = Seat()
-        newSeat.seat_pos = y
-        newSeat.theatre_id = x
-        db.session.add(newSeat)
-        db.session.commit()
-
-def screening_date(x, y):
-
-    month = y
     day = ((x % 30) + 1)
-    screeningDate = datetime(2018, month, day)
+    if day == 0:
+        day = 1
+
+    if z == 0:
+        hours = 10
+    elif z == 1:
+        hours = 14
+    elif z == 2:
+        hours = 20
+    screeningDate = datetime(2018, month, day, hours, 0, 0)
 
     return screeningDate
 
 
 # Populate the FilmScreening table.
 print("populating film screenings")
-for x in range(1, 41):
-    if x >
-    sampleScreening = FilmScreening()
-    sampleScreening.film_screening_film_det = randint(1, 9)
-    sampleScreening.film_screening_time = screening_date(x, y)
-    sampleScreening.theatre_id = randint(1, 3)
-    db.session.add(sampleScreening)
-    db.session.commit()
+for x in range(23, 68): # One week of March, all of April and
+
+    f = 1
+    for z in range(0, 3): # 3 different screening times per day
+        for q in range(1, 4): # 3 different cinema screens
+            sampleScreening = FilmScreening()
+            sampleScreening.film_screening_time = screening_date(x, z)
+            sampleScreening.theatre_id = q
+            sampleScreening.film_screening_film_det = f
+            db.session.add(sampleScreening)
+            db.session.commit()
+            f = f + 1 # f is incremented to cycle through each film
