@@ -1,4 +1,5 @@
 import os
+from flask_mail import Mail, Message
 # Default config for webapp
 
 
@@ -11,6 +12,11 @@ class Config(object):
     SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    MAIL_SERVER='smtp.gmail.com'
+    MAIL_PORT=465
+    MAIL_USE_SSL=True
+    MAIL_USERNAME='movies.heron@gmail.com'
+    MAIL_PASSWORD='Heron111'
 
 # Setup config for testing
 class TestConfig(Config):

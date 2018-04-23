@@ -4,7 +4,6 @@
    {% block content %}
 
 
-<<<<<<< HEAD
    <style>
    * {
        box-sizing: border-box;
@@ -20,9 +19,9 @@
 
    /* Create four equal columns that sits next to each other */
    .column {
-       -ms-flex: 25%; /* IE10 */
-       flex: 25%;
-       max-width: 25%;
+       -ms-flex: 12.5%; /* IE10 */
+       flex: 12.5%;
+       max-width: 12.5%;
        padding: 0 4px;
    }
 
@@ -30,10 +29,6 @@
        margin-top: 8px;
        vertical-align: middle;
    }
-=======
-<style>
-
->>>>>>> f70b7f723edaaf6d8d5a1fa398e7beb37d1e0f23
 
    /* Responsive layout - makes a two column-layout instead of four columns */
    @media screen and (max-width: 800px) {
@@ -60,10 +55,13 @@
         return true;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     // submitSeat = function(){
     //     document.forms["seat"].submit();
     //     return true;
     // }
+=======
+>>>>>>> master
 </script>
 
 <html lang="en">
@@ -76,57 +74,60 @@
       <div class="container">
         <center>
           <div>
-            <h3>Buy Ticket</h3>
-           <div>
-             {{film.film_name}}
-           </div>
-
-           <label style="margin-top: 20px">Ticket Type</label>
+           <h3 style="margin-top: 20px">Ticket Type</h3>
            <form id="ticket" method = 'POST'>
              {{ form.csrf_token }}
              <fieldset>
-               <p>{{form.ticket_type}}<br>
+             <p>{{form.ticket_type}}<br>
              </p>
 
-             <h3> Select Seat</h3>
-             <p style="color: #ff7214">&#x25CF; VIP</p>
+             <h3>Choose Your Seat</h3>
+            <!-- <p style="color: #ff7214">&#x25CF; VIP</p> -->
 
              <div class="row">
                <div class="column">
-                 <img src="/static/cinema_seat.png" style="width:100%">
-                 <img src="/static/cinema_seat.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat1.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat_vip9.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat17.png" style="width:100%">
                </div>
-
-  <div class="column">
-    <img src="/w3images/wedding.jpg" style="width:100%">
-    <img src="/w3images/rocks.jpg" style="width:100%">
-    <img src="/w3images/falls2.jpg" style="width:100%">
-    <img src="/w3images/paris.jpg" style="width:100%">
-    <img src="/w3images/nature.jpg" style="width:100%">
-    <img src="/w3images/mist.jpg" style="width:100%">
-    <img src="/w3images/paris.jpg" style="width:100%">
-  </div>
-  <div class="column">
-    <img src="/w3images/underwater.jpg" style="width:100%">
-    <img src="/w3images/ocean.jpg" style="width:100%">
-    <img src="/w3images/wedding.jpg" style="width:100%">
-    <img src="/w3images/mountainskies.jpg" style="width:100%">
-    <img src="/w3images/rocks.jpg" style="width:100%">
-    <img src="/w3images/underwater.jpg" style="width:100%">
-  </div>
-  <div class="column">
-    <img src="/static/cinema_seat.png" style="width:100%">
-    <img src="/static/cinema_seat.png" style="width:100%">
-  </div>
-  <div class="column">
-    <img src="/w3images/underwater.jpg" style="width:100%">
-    <img src="/w3images/ocean.jpg" style="width:100%">
-    <img src="/w3images/wedding.jpg" style="width:100%">
-    <img src="/w3images/mountainskies.jpg" style="width:100%">
-    <img src="/w3images/rocks.jpg" style="width:100%">
-    <img src="/w3images/underwater.jpg" style="width:100%">
-  </div>
-</div>
+               <div class="column">
+                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
+               </div>
+               <div class="column">
+                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
+               </div>
+               <div class="column">
+                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
+               </div>
+               <div class="column">
+                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
+               </div>
+               <div class="column">
+                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
+               </div>
+               <div class="column">
+                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
+               </div>
+               <div class="column">
+                 <img src="/static/Seats/cinema_seat8.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat_vip16.png" style="width:100%">
+                 <img src="/static/Seats/cinema_seat24.png" style="width:100%">
+               </div>
+             </div>
+             <p style="margin-top: 10px">Select Seat: {{form.seat_number}}<br>
+             </p>
 
            </form>
            <div>

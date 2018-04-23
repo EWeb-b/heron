@@ -43,7 +43,7 @@ class Card(db.Model):
     All integer rows are now hashed, but cannot be unhashed. This seems
     stupid but backlog asks for user security?
     """
-    __tablename__= 'card'
+    __tablename__ = 'card'
 
     id = db.Column(db.Integer, primary_key=True)
     name_on_card = db.Column(db.String(250))
@@ -56,23 +56,24 @@ class Card(db.Model):
 
     def __repr__(self):
         return '<Card %r %r %r %r %r %r %r >' % (self.id,
-                        self.name_on_card,
-                        self.billing_address,
-                        self.card_number,
-                        self.cvc,
-                        self.expiry_date_month,
-                        self.expiry_date_year
-                    )
+                                                 self.name_on_card,
+                                                 self.billing_address,
+                                                 self.card_number,
+                                                 self.cvc,
+                                                 self.expiry_date_month,
+                                                 self.expiry_date_year
+                                                 )
 
 
 class Certificate(db.Model):
     """
     Simple table to store film certificates.
 
-    OAPs will be '1' in table
-    Adults will be '2' in table
-    Students will be '3' in table
-    Children will be '4' in table
+    U will be '1' in table
+    PG will be '2' in table
+    12 will be '3' in table
+    15 will be '4' in table
+    18 will be '5' in table
     """
     __tablename__ = "certificate"
 
@@ -115,7 +116,7 @@ class FilmScreening(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     film_screening_film_det = db.Column(db.Integer,
-                                            db.ForeignKey('film_details.id'))
+                                        db.ForeignKey('film_details.id'))
     film_screening_time = db.Column(DateTime)
     film_screening_tickets = db.relationship("Ticket", backref="film_screening")
     theatre_id = db.Column(db.Integer, db.ForeignKey('theatre.id'))
@@ -151,10 +152,11 @@ class TicketType(db.Model):
     Simple representation of a ticket type i.e. standard, student,
     OAP, child, etc.
 
-    OAPs will be '1' in table
-    Adults will be '2' in table
-    Students will be '3' in table
-    Children will be '4' in table
+    OAP ticket will be '1' in table
+    Standard ticket will be '2' in table
+    Student ticket will be '3' in table
+    Child ticket will be '4' in table
+    VIP ticket will be '5' in table
     """
     __tablename__ = 'ticket_type'
 
@@ -208,4 +210,4 @@ class Theatre(db.Model):
     theatre_seat = db.relationship('Seat', backref='theatre')
 
     def __repr__(self):
-        return '<Theatre name: %r>' % (self.theatreName)
+        return '<Theatre name: %r>' % (self.theatre_name)
