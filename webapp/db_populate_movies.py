@@ -1,6 +1,6 @@
 from flask import Flask
 from app.models import (FilmDetails, Ticket, Seat, Theatre, Certificate,
-                        TicketType)
+                        TicketType, FilmScreening)
 from app import app, db, models
 from datetime import datetime
 from calendar import monthrange
@@ -234,7 +234,7 @@ for x in range(1, 501):
     sampleTicket = Ticket()
     sampleTicket.owner_account_id = randint(1, 100)
     sampleTicket.ticket_type_id = randint(1, 5)
-    sampleTicket.ticket_screening_id = randint(1, 9)
+    sampleTicket.ticket_screening_id = randint(1, 100)
     sampleTicket.ticket_date_bought = random_date()
     db.session.add(sampleTicket)
     db.session.commit()
@@ -248,3 +248,13 @@ for x in range(1,10): # 9 theatres
         newSeat.theatre_id = x
         db.session.add(newSeat)
         db.session.commit()
+
+# Populate the FilmScreening table.
+print("populating film screenings")
+for x in range(1, 101):
+    sampleScreening = FilmScreening()
+    sampleScreening.film_screening_film_det = randint(1, 9)
+    sampleScreening.film_screening_time = random_date()
+    sampleScreening.theatre_id = randint(1, 9)
+    db.session.add(sampleScreening)
+    db.session.commit()

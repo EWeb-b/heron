@@ -126,8 +126,9 @@ class FilmScreening(db.Model):
     theatre_id = db.Column(db.Integer, db.ForeignKey('theatre.id'))
 
     def __repr__(self):
-        return '<Film: %r\nScreening: %r>' % (
-            self.film_screening_tickets.filmName, self.screening_time)
+        return '''<id: %r, film_details_id: %r, screening_time: %r,
+        theatre_id: %r\n>''' % (self.id, self.film_screening_film_det,
+        self.film_screening_time, self.theatre_id)
 
 
 class Ticket(db.Model):
