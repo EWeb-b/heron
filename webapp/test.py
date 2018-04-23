@@ -91,7 +91,7 @@ class FlaskTestCase(BaseTestCase):
          response = self.register('pat@gmail.com', 'FlaskIsAwesome', 'FlaskIsAwesome')
          self.assertEqual(response.status_code, 200)
          response = self.register('pat@gmail.com', 'FlaskIsReallyAwesome', 'FlaskIsReallyAwesome')
-         self.assertIn(b'That email has already been used, try a different one', response.data)
+         self.assertIn(b'An account has already been registered with that email', response.data)
 
 
     #Ensure user can register successfully
