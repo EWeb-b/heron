@@ -15,6 +15,7 @@ from matplotlib.backends.backend_qt5agg import (
 
 from matplotlib.figure import Figure
 
+
 # listOfMovieNames = ['Black Panther', 'The Shape of Water', 'The Greatest Showman'] # To be changed to work with DB
 # directorNames = ['Ryan Coogler','Guilermo del Toro']
 # BPdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
@@ -95,11 +96,11 @@ class Takings(QScrollArea):
             row = currentQTableWidgetItem.row()
             col = currentQTableWidgetItem.column()
             #print('ahhh:',currentQTableWidgetItem.columnSpan(row,col))
-            if col == 7 and row != 3:
+            if col == 7 and row != 9:
                 print('weekly total!')
                 self.dialog = Example()
                 self.dialog.show()
-            elif row == 3 and col != 7: # needs to be changed to take len(rows)
+            elif row == 9 and col != 7: # needs to be changed to take len(rows)
                 print('daily total!')
                 weeklyBAR('06/04/2018')
 
@@ -183,8 +184,8 @@ class Takings(QScrollArea):
         horizontal_headers = dayDates.dayDates(takingsDate)
         horizontal_headers.append('Total')
 
-        vertical_headers = listOfMovieNames
-        vertical_headers.append('Total')
+        self.vertical_headers = listOfMovieNames
+        self.vertical_headers.append('Total')
 
         print('HORIZONTAL HEADERS!!!!',horizontal_headers)
         self.createTable(listOfMovieNames,horizontal_headers)
@@ -299,10 +300,11 @@ class Compare(QScrollArea):
         print(bufferTakings)
         print(movieBuffer)
         print(color_buffer)
-        #self._dynamic_ax.update()
+        # self._dynamic_ax.update()
+        self._dynamic_ax.clear()
         self._dynamic_ax.pie(bufferTakings,labels = movieBuffer, autopct='%1.1f%%', shadow=False)
 
-        #self.layout.update()
+        # self.layout.update()
 
     def table(self):
         print('table')
