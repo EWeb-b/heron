@@ -68,11 +68,10 @@ class FlaskTestCase(BaseTestCase):
         response = self.client.get('/profile', follow_redirects=True)
         self.assertTrue(b'Please log in to access this page.', response.data)
 
-    # #ensure profile requires login.
-    # def test_basket_requires_login(self):
-    #     response = self.client.get('/profile', follow_redirects=True)
-    #     self.assertTrue(b'Please log in to access this page.', response.data)
-
+    # Ensure that logout page requires user login
+    def test_logout_route_requires_login(self):
+        response = self.client.get('/logout', follow_redirects=True)
+        self.assertIn(b'Please log in to access this page', response.data)
 
     # ensure login works with correct account
     def test_working_login(self):
@@ -98,7 +97,8 @@ class FlaskTestCase(BaseTestCase):
     def test_registration(self):
         with self.client:
             response = self.client.post('/create_account', data=dict(
-                email='jack@yah.com', password='password', passwordCheck='password' ), follow_redirects=True)
+                email='jack@yah.com', password='password', passwordCheck='password' ),
+                follow_redirects=True)
             self.assertTrue(current_user.email == 'jack@yah.com')
             self.assertTrue(current_user.is_active())
             self.assertIn(b'Account created successfully', response.data)
@@ -112,8 +112,15 @@ class FlaskTestCase(BaseTestCase):
             self.assertIn(b'Error creating your account. Invalid email.', response.data)
 
 
-
-
+    #Test adding a card to an account
+    def test_add_payment_method(self):
+        self.register("bob@gmail.com", "bob", 'bob')
+        response = self.client.post('/profile'
+                data=dict( name_on_card='bob', billing_address='house',
+                card_number=1234123412341234,cvc=123,expiry_date_month=12,
+                expiry_date_year=2018)
+                ), follow_redirects=True)
+        self.assertIn('successfully added card', response.data)
 
 
 
