@@ -31,10 +31,12 @@ class BaseTestCase(TestCase):
 
 class FlaskTestCase(BaseTestCase):
 
+    #Functions to reduce repeated code in test suite.
+    
     #Function to speed up login requests
-    def login(self, username, password):
+    def login(self, email, password):
         return self.client.post('/login', data=dict(
-        username=username,
+        email=email,
         password=password
         ), follow_redirects=True)
 
@@ -50,10 +52,12 @@ class FlaskTestCase(BaseTestCase):
         follow_redirects=True
         )
 
+#------------------------------------------------------------------------------#
+
 
     # ensure flask set up correctly
     def test_index(self):
-        #tester = app.test_client(self)
+
         response = self.client.get('/home', content_type='html/text')
         self.assertEqual(response.status_code, 200)
 
@@ -68,22 +72,30 @@ class FlaskTestCase(BaseTestCase):
         response = self.client.get('/profile', follow_redirects=True)
         self.assertTrue(b'Please log in to access this page.', response.data)
 
-    # #ensure profile requires login.
-    # def test_basket_requires_login(self):
-    #     response = self.client.get('/profile', follow_redirects=True)
-    #     self.assertTrue(b'Please log in to access this page.', response.data)
+    #ensure profile requires login.
+    def test_basket_requires_login(self):
+        response = self.client.get('/basket', follow_redirects=True)
+        self.assertTrue(b'Please log in to access this page.', response.data)
 
 
     # ensure login works with correct account
     def test_working_login(self):
-        self.register(email='jack@yah.com', password='password', passwordCheck='password')
+        self.register('jack@yah.com','password', 'password')
         with self.client:
             response = self.client.post(
-                '/login', data=dict(email='jack@yah.com', password='password'), follow_redirects=True)
+                '/login', data=dict(email='jack@yah.com', password='password'),
+                 follow_redirects=True)
             self.assertTrue(current_user.email == 'jack@yah.com')
             self.assertTrue(current_user.is_active())
             self.assertIn(b'Logged in successfully', response.data)
-            #print (response.data)
+
+
+    # Ensure logout behaves correctly
+    def test_logout(self):
+        self.register('jack@yah.com','password', 'password')
+        with self.client:
+            response = self.client.get('/logout', follow_redirects=True)
+            self.assertIn(b'Logged out successfully', response.data)
 
 
     #Ensure one email can only be registed once
