@@ -3,8 +3,9 @@ from app.models import (FilmDetails, Ticket, Seat, Theatre, Certificate,
                         TicketType)
 from app import app, db, models
 from datetime import datetime
+from calendar import monthrange
+from random import randint
 import json
-import random
 
 
 
@@ -92,7 +93,7 @@ filmData = [
         "film_actor": "Anthony Gonzalez"
     }
 ]
-
+print("populating movies")
 for movie in filmData:
     newMovie = FilmDetails(**movie)
     db.session.add(newMovie)
@@ -126,6 +127,7 @@ ticketTypeData = [
     }
 ]
 
+print("populating tickets")
 for ticketType in ticketTypeData:
     newTicketType = TicketType(**ticketType)
     db.session.add(newTicketType)
@@ -160,6 +162,7 @@ certificateData = [
     }
 ]
 
+print("populating certificates")
 for certificate in certificateData:
     newCertificate = Certificate(**certificate)
     db.session.add(newCertificate)
@@ -208,6 +211,7 @@ theatreData = [
     }
 ]
 
+print("populating screens")
 for screen in theatreData:
     newScreen = Theatre(**screen)
     db.session.add(newScreen)
@@ -217,23 +221,26 @@ for screen in theatreData:
 
 # Function to create random dates in the past month.
 def random_date():
-    month = random.randint(3, 4)
-    day = random.randint(1, 20)
+    year = datetime.now().year
+    month = datetime.now().month -1
+    day = randint(1, monthrange(year, month)[1])
     randomDate = datetime(2018, month, day)
 
     return randomDate
 
 # Populate the database with ticket data for 500 tickets.
+print("generating random tickets")
 for x in range(1, 501):
     sampleTicket = Ticket()
-    sampleTicket.owner_account_id = random.randint(1, 100)
-    sampleTicket.ticket_type_id = random.randint(1, 5)
-    sampleTicket.ticket_screening_id = random.randint(1, 9)
+    sampleTicket.owner_account_id = randint(1, 100)
+    sampleTicket.ticket_type_id = randint(1, 5)
+    sampleTicket.ticket_screening_id = randint(1, 9)
     sampleTicket.ticket_date_bought = random_date()
     db.session.add(sampleTicket)
     db.session.commit()
 
 # Populate the Seat table. This is constant - do not remove.
+print("populating seats")
 for x in range(1,10):
     for y in range(1,25): # 24 seats in each theatre.
         newSeat = Seat()
