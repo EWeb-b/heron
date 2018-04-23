@@ -146,7 +146,7 @@ def create_account():
                     return redirect('/create_account')
 
         else:  # when there's an error validating
-            flash("Error creating your account, please try again")
+            flash("Error creating your account. Invalid email.")
             # logging.info()
             return redirect('/create_account')
 
