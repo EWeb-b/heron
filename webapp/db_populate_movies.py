@@ -1,10 +1,6 @@
 from flask import Flask
 from app.models import (FilmDetails, Ticket, Seat, Theatre, Certificate,
-<<<<<<< HEAD
-                        TicketType, FilmScreening, Account)
-=======
                         TicketType, FilmScreening, Account, Card)
->>>>>>> finishPopulate
 from app import app, db, models
 from datetime import datetime
 from calendar import monthrange
