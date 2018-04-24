@@ -434,3 +434,12 @@ def profile():
 
     return render_template(
         'profile.html', title='User Profile')
+
+@app.route('/screenings', methods=['GET'])
+@login_required
+def screenings():
+    # Return the tickets that the account owns.
+    #ticketsOwned = models.Account.account_tickets.query.all()
+
+    return render_template(
+        'screenings.html', title='Screenings')
