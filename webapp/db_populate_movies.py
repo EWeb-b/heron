@@ -308,27 +308,27 @@ db.session.commit()
 # Add cards belonging to the Admin account.
 print("Creating Admin cards")
 adminCard1 = Card()
-id = 1
-name_on_card = 'Admin'
-billing_address = 'EC Stoner'
-last_four_digits = 4444
-card_number = 'hashedCardNumber'
-cvc = 'hashedCVC'
-expiry_date_month = 'hashedExpiryMonth'
-expiry_date_year = 'hashedExpiryYear'
-account_id = 1
+adminCard1.id = 1
+adminCard1.name_on_card = 'Admin'
+adminCard1.billing_address = 'EC Stoner'
+adminCard1.last_four_digits = 4444
+adminCard1.card_number = 'hashedCardNumber'
+adminCard1.cvc = 'hashedCVC'
+adminCard1.expiry_date_month = 'hashedExpiryMonth'
+adminCard1.expiry_date_year = 'hashedExpiryYear'
+adminCard1.account_id = 1
 db.session.add(adminCard1)
 db.session.commit()
 
 adminCard2 = Card()
-id = 2
-name_on_card = 'Admin'
-billing_address = 'EC Stoner'
-last_four_digits = 9999
-card_number = 'hashedCardNumber2'
-cvc = 'hashedCVC2'
-expiry_date_month = 'hashedExpiryMonth2'
-expiry_date_year = 'hashedExpiryYear2'
-account_id = 1
+adminCard1.id = 2
+adminCard1.name_on_card = 'Admin'
+adminCard1.billing_address = 'EC Stoner'
+adminCard1.last_four_digits = 9999
+adminCard1.card_number = 'hashedCardNumber2'
+adminCard1.cvc = 'hashedCVC2'
+adminCard1.expiry_date_month = 'hashedExpiryMonth2'
+adminCard1.expiry_date_year = 'hashedExpiryYear2'
+adminCard1.account_id = 1
 db.session.add(adminCard2)
 db.session.commit()
