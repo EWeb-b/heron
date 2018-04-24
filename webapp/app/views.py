@@ -241,23 +241,26 @@ def change_password():
                 current_user.email)
             return redirect('/change_password')
 
-
+# Route for a user to add a debit/credit card to their account.
 @app.route('/add_card', methods=['GET', 'POST'])
 @login_required
+
 def add_card():
     form = CardDetails()
     if request.method == 'GET':
         return render_template(
             'add_card.html', title='Add Card', form=form)
     elif request.method == 'POST':
-        print('POST method')
         if form.validate_on_submit():
-            print('form validate_on_submit')
+        # If data in form was added correctly
             if (check_password_hash(current_user.password, form.password.data)):
-                print('passwords match')
+            # If passwords match, create a new Card object with the parameters
+            # enetered by the user in the form.
                 newCard = Card(
                     name_on_card=form.name_on_card.data,
                     billing_address=form.billing_address.data,
+                    # last_four_digits is used in /basket when user selects
+                    # which they card they want to pay with.
                     last_four_digits=int(str(form.card_number.data)[12:]),
                     card_number=hashNumber(form.card_number.data),
                     cvc=hashNumber(form.cvc.data),
@@ -265,19 +268,16 @@ def add_card():
                     expiry_date_year=hashNumber(form.expiry_date_year.data),
                     account_id=current_user.id
                 )
-                print('card created not added')
                 db.session.add(newCard)
                 db.session.commit()
                 flash('successfully added card')
                 return redirect('/profile')
             else:
                 flash("passwords didn't match")
-                print("passwords didn't match")
                 return redirect('/add_card')
         else:
             flash_errors(form)
             flash('form did not validate on submit')
-            print('form didnt validate on submit')
             return redirect('/add_card')
 
 
