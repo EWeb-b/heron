@@ -318,7 +318,7 @@ expiry_date_month = 'hashedExpiryMonth'
 expiry_date_year = 'hashedExpiryYear'
 account_id = 1
 db.session.add(adminCard1)
-db. session.commit()
+db.session.commit()
 
 adminCard2 = Card()
 id = 2
@@ -331,4 +331,4 @@ expiry_date_month = 'hashedExpiryMonth2'
 expiry_date_year = 'hashedExpiryYear2'
 account_id = 1
 db.session.add(adminCard2)
-db. session.commit()
+db.session.commit()
