@@ -48,10 +48,11 @@ class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name_on_card = db.Column(db.String(250))
     billing_address = db.Column(db.String(250))
-    card_number = db.Column(db.Integer)
-    cvc = db.Column(db.Integer)
-    expiry_date_month = db.Column(db.Integer)
-    expiry_date_year = db.Column(db.Integer)
+    last_four_digits = db.Column(db.Integer)
+    card_number = db.Column(db.String)
+    cvc = db.Column(db.String)
+    expiry_date_month = db.Column(db.String)
+    expiry_date_year = db.Column(db.String)
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
 
     def __repr__(self):
@@ -128,7 +129,7 @@ class FilmScreening(db.Model):
     def __repr__(self):
         return '''<id: %r, film_details_id: %r, screening_time: %r,
         theatre_id: %r\n>''' % (self.id, self.film_screening_film_det,
-        self.film_screening_time, self.theatre_id)
+                                self.film_screening_time, self.theatre_id)
 
 
 class Ticket(db.Model):
@@ -151,12 +152,13 @@ class Ticket(db.Model):
     def __repr__(self):
         return '''<ticket_id: %r, owner_account_id: %r, ticket_type_id: %r,
          ticket_screening_id: %r, ticket_date_bought: %r>''' % (self.id,
-         self.owner_account_id, self.ticket_type_id, self.ticket_screening_id,
-         self.ticket_date_bought)
+                                                                self.owner_account_id, self.ticket_type_id, self.ticket_screening_id,
+                                                                self.ticket_date_bought)
 
     def __json__(self):
         return ['id', 'owner_account_id', 'ticket_type_id', 'ticket_screening_id',
                 'ticket_date_bought', 'seat_reserves']
+
 
 class TicketType(db.Model):
     """
