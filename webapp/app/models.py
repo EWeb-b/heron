@@ -48,10 +48,11 @@ class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name_on_card = db.Column(db.String(250))
     billing_address = db.Column(db.String(250))
-    card_number = db.Column(db.Integer)
-    cvc = db.Column(db.Integer)
-    expiry_date_month = db.Column(db.Integer)
-    expiry_date_year = db.Column(db.Integer)
+    last_four_digits = db.Column(db.Integer)
+    card_number = db.Column(db.String)
+    cvc = db.Column(db.String)
+    expiry_date_month = db.Column(db.String)
+    expiry_date_year = db.Column(db.String)
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
 
     def __repr__(self):
