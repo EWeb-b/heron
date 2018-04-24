@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+
+<head>
+  <link href = "../static/style.css"  type = "text/css" rel = "stylesheet">
+  <link href = "form-validation.css" rel = "stylesheet">
+</head>
+
 <form action="/add_card" method="POST" style="margin-top: 100px">
     {{ form.hidden_tag() }}
     <a><tab1> Account Password </a></tab1>

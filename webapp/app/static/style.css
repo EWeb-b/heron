@@ -20,18 +20,38 @@ body {
     padding: 0 4px;
 }
 
-/* Create four equal columns that sits next to each other */
+/* Create three equal columns that sits next to each other */
 .column {
-    -ms-flex: 25%; /* IE10 */
-    flex: 25%;
-    max-width: 25%;
-    padding: 0 4px;
+    -ms-flex: 33%; /* IE10 */
+    flex: 33%;
+    max-width: 33%;
+    padding: 0 3px;
 }
-
 .column img {
     margin-top: 8px;
     vertical-align: middle;
 }
+
+.extra-margin{
+margin-top: 100px;
+}
+
+.font1{
+  font color: orange;
+}
+
+div.shadow {
+	width: 500px;
+	margin: 0px;
+	border: 0px solid #ccc;
+	padding: 0px;
+	}
+
+div.shadow:hover {
+	-moz-box-shadow: 0 0 5px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 0 5px rgba(0,0,0,0.5);
+	box-shadow: 0 0 30px #ff6600;
+	}
 
 /* Responsive layout - makes a two column-layout instead of four columns */
 @media screen and (max-width: 800px) {
@@ -49,12 +69,5 @@ body {
         flex: 100%;
         max-width: 100%;
     }
-}
 
-.extra-margin{
-margin-top: 100px;
-}
-
-.font1{
-  font color: orange;
 }
