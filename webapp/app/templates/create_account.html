@@ -14,25 +14,25 @@
   <div class="container">
     <div class="py-5 text-center text-muted">
       <img class="d-block mx-auto mb-4" src="static/heronLogo.png" alt="" width="92" height="72">
-      <h2>Create Account</h2>
+      <h2><font color = "white">Create Account</font></h2>
     </div>
 <form  style="margin-top: 100px" action="/create_account" method="post" align="center" >
 
 
     {{ form.hidden_tag() }}
-    <a class="py-5 text-center text-muted" align="center" style="margin-bottom:10px">Email </a>
+    <a class="py-5 text-center text-muted b" align="center" style="margin-bottom:10px"><font color = "orange"><strong>Email </strong></font></a>
     <p>{{ form.email }}<br>
        {% for error in form.email.errors %}
        <span style="color: red;">{{ error }}</span>
        {% endfor %}
     </p>
-    <a class="py-5 text-center text-muted" align="center" style="margin-bottom:10px">Password </a>
+    <a class="py-5 text-center text-muted" align="center" style="margin-bottom:10px"><font color = "orange"><strong>Password</strong> </font></a>
     <p>{{ form.password }}<br>
        {% for error in form.password.errors %}
        <span style="color: red;">{{ error }}</span>
        {% endfor %}
     </p>
-    <a class="py-5 text-center text-muted" align="center" style="margin-bottom:10px">Confirm Password </a>
+    <a class="py-5 text-center text-muted" align="center" style="margin-bottom:10px"><font color = "orange"><strong>Confirm Password</strong></font></a>
     <p>{{ form.passwordCheck }}<br>
        {% for error in form.passwordCheck.errors %}
        <span style="color: red;">{{ error }}</span>
