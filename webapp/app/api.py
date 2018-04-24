@@ -36,3 +36,12 @@ def apiGetTicketsForScreening(screening):
     """
     tickets = Ticket.query.filter_by(ticket_screening_id=screening).all()
     return jsonify({"tickets": tickets})
+
+
+@app.route('/api/screenings', methods=['GET'])
+def apiGetScreenings():
+    """Returns all screenings in the database
+    """
+    screenings = FilmScreening.query.all()
+    return jsonify({"screenings": screenings})
+
