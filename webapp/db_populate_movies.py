@@ -1,10 +1,11 @@
 from flask import Flask
 from app.models import (FilmDetails, Ticket, Seat, Theatre, Certificate,
-                        TicketType)
+                        TicketType, FilmScreening)
 from app import app, db, models
 from datetime import datetime
+from calendar import monthrange
+from random import randint
 import json
-import random
 
 
 ################################################################################
@@ -91,7 +92,7 @@ filmData = [
         "film_actor": "Anthony Gonzalez"
     }
 ]
-
+print("populating movies (the FilmDetails table)")
 for movie in filmData:
     newMovie = FilmDetails(**movie)
     db.session.add(newMovie)
@@ -125,6 +126,7 @@ ticketTypeData = [
     }
 ]
 
+print("populating TicketType table")
 for ticketType in ticketTypeData:
     newTicketType = TicketType(**ticketType)
     db.session.add(newTicketType)
@@ -159,6 +161,7 @@ certificateData = [
     }
 ]
 
+print("populating certificates")
 for certificate in certificateData:
     newCertificate = Certificate(**certificate)
     db.session.add(newCertificate)
@@ -180,33 +183,10 @@ theatreData = [
     {
         "id": 3,
         "theatre_name": "Screen 3"
-    },
-    {
-        "id": 4,
-        "theatre_name": "Screen 4"
-    },
-    {
-        "id": 5,
-        "theatre_name": "Screen 5"
-    },
-    {
-        "id": 6,
-        "theatre_name": "Screen 6"
-    },
-    {
-        "id": 7,
-        "theatre_name": "Screen 7"
-    },
-    {
-        "id": 8,
-        "theatre_name": "Screen 8"
-    },
-    {
-        "id": 9,
-        "theatre_name": "Screen 9"
     }
 ]
 
+print("populating theatre screens")
 for screen in theatreData:
     newScreen = Theatre(**screen)
     db.session.add(newScreen)
@@ -218,28 +198,87 @@ for screen in theatreData:
 
 
 def random_date():
-    month = random.randint(3, 4)
-    day = random.randint(1, 20)
+    year = datetime.now().year
+    month = datetime.now().month -1
+    day = randint(1, monthrange(year, month)[1])
     randomDate = datetime(2018, month, day)
 
     return randomDate
 
 # Populate the database with ticket data for 500 tickets.
-# for x in range(1, 501):
-#     sampleTicket = Ticket()
-#     sampleTicket.owner_profile_id = random.randint(1, 100)
-#     sampleTicket.ticket_type_id = random.randint(1, 5)
-#     sampleTicket.ticket_screening_id = random.randint(1, 9)
-#     sampleTicket.ticket_date_bought = random_date()
-#     db.session.add(sampleTicket)
-#     db.session.commit()
-
+print("generating random tickets")
+for x in range(1, 501):
+    sampleTicket = Ticket()
+    sampleTicket.owner_account_id = randint(1, 100)
+    sampleTicket.ticket_type_id = randint(1, 5)
+    sampleTicket.ticket_screening_id = randint(1, 100)
+    sampleTicket.ticket_date_bought = random_date()
+    db.session.add(sampleTicket)
+    db.session.commit()
 
 # Populate the Seat table. This is constant - do not remove.
-for x in range(1, 10):
-    for y in range(1, 25):  # 24 seats in each theatre.
+print("populating seats")
+for x in range(1,10): # 9 theatres
+    for y in range(1,25): # 24 seats in each theatre.
         newSeat = Seat()
         newSeat.seat_pos = y
         newSeat.theatre_id = x
         db.session.add(newSeat)
         db.session.commit()
+
+# Function for creating consecutive dates to be used in the FilmScreening
+# table.
+def screening_date(x, z):
+
+    if x < 32:
+        month = 3
+    elif (x > 31 and x < 62):
+        month = 4
+    elif (x > 61):
+        month = 5
+
+    if month == 3:
+        screen_day = x
+
+    elif month == 4:
+        screen_day = (x % 31)
+
+    elif month == 5:
+        screen_day = ((x % 31) + 1)
+
+    if z == 0:
+        hours = 10
+    elif z == 1:
+        hours = 14
+    elif z == 2:
+        hours = 20
+
+    screeningDate = datetime(2018, month, screen_day, hours, 0, 0)
+
+    return screeningDate
+
+
+# Populate the FilmScreening table.
+print("populating film screenings")
+for x in range(24, 68): # One week of March, all of April and 6 days of May
+
+    f = 1
+    for z in range(0, 3): # 3 different screening times per day
+        for q in range(1, 4): # 3 different cinema screens
+            sampleScreening = FilmScreening()
+            sampleScreening.film_screening_time = screening_date(x, z)
+            sampleScreening.theatre_id = q
+            sampleScreening.film_screening_film_det = f
+            db.session.add(sampleScreening)
+            db.session.commit()
+            f = f + 1 # f is incremented to cycle through each film
+
+
+# Create an admin Account.
+print("Creating admin Account")
+adminAccount = Account()
+adminAccount.email = 'movies.heron@gmail.com'
+adminAccount.password = 'admin'
+adminAccount.staff = True
+db.session.add(adminAccount)
+db.session.commit()
