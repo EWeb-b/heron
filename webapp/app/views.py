@@ -219,8 +219,9 @@ def change_password():
         if form.validate_on_submit():  # if form data entered correctly
             # current_user is a variable name from flask_login:
             # don't need to create a new user object
-            if current_user.password == form.prev_password.data:
-                current_user.password = form.new_password.data
+            if (check_password_hash(current_user.password, form.password.data)):
+                current_user.password = generate_password_hash(
+                                                        form.new_password.data)
                 db.session.commit()
                 flash('Password changed successfully')
                 logging.info(
@@ -432,7 +433,7 @@ def list_films():
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    
+
 
     return render_template(
         'profile.html', title='User Profile')
