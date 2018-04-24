@@ -36,6 +36,7 @@ login_manager.login_view = 'login'
 def hashNumber(numberToBeHashed):
     string = str(numberToBeHashed)
     hashedNumber = print(hashlib.md5(string.encode('utf-8')).hexdigest())
+
     return hashedNumber
 
 
@@ -257,7 +258,8 @@ def add_card():
                 newCard = Card(
                     name_on_card=form.name_on_card.data,
                     billing_address=form.billing_address.data,
-                    card_number=form.card_number.data,
+                    last_four_digits=int(str(form.card_number.data)[12:]),
+                    card_number=hashNumber(form.card_number.data),
                     cvc=hashNumber(form.cvc.data),
                     expiry_date_month=hashNumber(form.expiry_date_month.data),
                     expiry_date_year=hashNumber(form.expiry_date_year.data),
@@ -435,6 +437,7 @@ def profile():
 
     return render_template(
         'profile.html', title='User Profile')
+
 
 @app.route('/screenings', methods=['GET'])
 @login_required
