@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% block title %}Basket{% endblock %}
+{% block content %}
+
+
+<html lang="en">
+  <head>
+
+      <link href = "style.css" rel = "stylesheet">
+      <link href="form-validation.css" rel="stylesheet">
+  </head>
+
+  <body class="bg-dark">
+
+    <div class="container">
+      <div class="py-5 text-center text-muted">
+        <img class="d-block mx-auto mb-4" src="static/heronLogo.png" alt="" width="90" height="90">
+        <h2>Checkout</h2>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 order-md-2 mb-4">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span style="color: #ff7214">Your Cart</span>
+            <span class="badge badge-secondary badge-pill">1</span>
+          </h4>
+          <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">Ticket</h6>
+                <span class="text-muted">{{ticket_film}}</span>
+            <div>
+              <small class="text-muted">{{film_time}}</small>
+            </div>
+            <div>
+              <small class="text-muted">{{ticket_type}}: £{{ticket_value}}</small>
+            </div>
+            <div>
+              <small class="text-muted">Seat Number: {{seat_number}}</small>
+            </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Total</span>
+              <strong>£{{ticket_value}}</strong>
+            </li>
+          </ul>
+
+        </div>
+
+        <form method="POST">
+          {{ form.csrf_token }}
+
+        <div class="col-md-8 order-md-1">
+          <h4 style="color: #ff7214">Billing Address</h4>
+          <form class="needs-validation" novalidate>
+            <div class="row">
+              <div class="col-md-6 text-">
+                <label for="first_name">First name</label>
+                <p>{{ form.first_name(size="40")}}<br>
+                   {% for error in form.first_name.errors %}
+                   <span style="color: white;">{{ error }}</span>
+                   {% endfor %}
+                </p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="last_name">Last name</label>
+                <p>{{ form.last_name(size="42") }}<br>
+                   {% for error in form.last_name.errors %}
+                   <span style="color: white;">{{ error }}</span>
+                   {% endfor %}
+                </p>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label style="margin-top: 20px" for="address">Address</label>
+              <p>{{ form.address(size="91") }}<br>
+                 {% for error in form.address.errors %}
+                 <span style="color: white;">{{ error }}</span>
+                 {% endfor %}
+              </p>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label style="margin-top: 20px" for="zip">Postcode</label>
+                <p>{{ form.postcode(size="40") }}<br>
+                   {% for error in form.postcode.errors %}
+                   <span style="color: red;">{{ error }}</span>
+                   {% endfor %}
+                </p>
+              </div>
+            </div>
+              <fieldset>
+            <div style="margin-top: 20px">
+            <h4 style="color: #ff7214" class="mb-3">Payment</h4>
+          </div>
+          <label for="card_number">Select a Card:</label>
+            <p>{{ form.card }}<br>
+            </p>
+            <a href="/add_card">Add a Card</a>
+            <hr class="mb-4">
+            <button class="btn btn-danger btn-lg btn-block" type="submit">Continue to checkout</button>
+          </fieldset>
+          </form>
+        </div>
+      </form>
+      </div>
+
+      <footer style="margin-top: 10px" class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2017-2018 Heron</p>
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="#">Privacy</a></li>
+          <li class="list-inline-item"><a href="#">Terms</a></li>
+          <li class="list-inline-item"><a href="#">Support</a></li>
+        </ul>
+      </footer>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+    <script src="../../../../assets/js/vendor/holder.min.js"></script>
+    <script>
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function() {
+        'use strict';
+
+        window.addEventListener('load', function() {
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.getElementsByClassName('needs-validation');
+
+          // Loop over them and prevent submission
+          var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+        }, false);
+      })();
+    </script>
+  </body>
+</html>
+
+{% endblock %}

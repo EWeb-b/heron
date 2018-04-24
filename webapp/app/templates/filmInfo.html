@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+  {% extends "base.html" %}
+  {% block title %}Film Info{% endblock %}
+   {% block content %}
+<style>
+
+aa {
+  display:inline;
+}
+
+   .image {
+     margin-left:2%;
+     float:left;
+     height:450px;
+     width:300px;
+   }
+   }
+   .container {
+   	width:100%;
+   	height:auto;
+   	padding:1%;
+   }
+
+</style>
+
+<html lang="en">
+  <head>
+    <link href = "/static/style.css" rel = "stylesheet">
+    <link href="form-validation.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+
+
+
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4">
+        <div class="py-5 text-center text-danger">
+            <img src="/static/portraits/{{film.film_name}}.jpg" alt="Film Image" class="image"></a>
+        </div>
+      </div>
+      <div class="col-sm-8">
+          <div>
+          <h3><font color = "orange">Film Name:</font></h3>
+         <div>
+           <i><font color = "white">{{film.film_name}}</font></i>
+         </div>
+         <h3><font color = "orange">Blurb:</font></h3>
+         <div>
+           <i><font color = "white">{{film.film_blurb}}</font></i>
+         </div>
+         <h3><font color = "orange" style="font-size:5-px">Film Certificate:</font></h3>
+         <div>
+           <i><font color = "white">{{film.film_certificate}}</font></i>
+         </div>
+         <h3><font color = "orange">Director:</font></h3>
+         <div>
+           <i><font color = "white">{{film.film_director}}</font></i>
+         </div>
+         <h3><font color = "orange">Lead Actor:</font></h3>
+         <div>
+           <i><font color = "white">{{film.film_actor}}</font></i>
+         </div>
+         <h3><font color = "orange"> Screening Times:</font></h3>
+         <form method="POST">
+           {{ form.csrf_token }}
+           <fieldset>
+           <p>{{form.times}}<br>
+           </p>
+
+           <p><input class="btn btn-danger" type="submit" value="Order Ticket" style="margin-top: 10px"></p>
+         </fieldset>
+         </form>
+
+      </div>
+
+  </div>
+  </div>
+
+
+
+   </body>
+
+{% endblock %}
