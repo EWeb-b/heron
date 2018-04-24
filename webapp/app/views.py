@@ -285,7 +285,6 @@ def basket():
     form = Basket()
     date = datetime.datetime.now()
     cards = models.Card.query.filter_by(account_id=current_user.id).all()
-    form.card.choices = cards
     if session.get('seat_number') is None:
         film_chosen = None
         time = None
@@ -309,8 +308,10 @@ def basket():
             ticket_type_number = 3
         elif ticket_type == 'child':
             ticket_type_number = 4
-
-    choices = [(str(i.card_number), str(i.card_number)) for i in cards]
+    if not cards:
+        choices = [("No Saved Cards", "No Saved Cards")]
+    else:
+        choices = [(str(i.card_number), str(i.card_number)) for i in cards]
     form.card.choices = choices
 
     if film_chosen == None:
