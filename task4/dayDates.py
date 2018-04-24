@@ -14,27 +14,38 @@ def dayDates(day):
     # past = day - datetime.timedelta(days = 15)
     #
     # print(past)
-    if datetime.today().weekday() == 1:
-        for i in range(6):
+    if datetime.today().weekday() == 0:
+        print('MMMMMMMMMMOOOOOOOOOOOOOOONNNNNNNNNNDDDDDDDDDDAAAAAAAAAYYYYYYYYY')
+        for i in range(7):
             list1.append(day + timedelta(days = i))
-    elif datetime.today().weekday() == 2:
-        for i in range(-2,5):
+    elif datetime.today().weekday() == 1:
+        print('TTTTTTTTTUUUUUUUUUUUUESSSSSSSSSSDDDDDDDAAAAAAYYYYYYYYY')
+        for i in range(-1,6):
             list1.append(str(day + timedelta(days = i)))
-    elif datetime.today().weekday() == 3:
+    elif datetime.today().weekday() == 2:
+        print('WWWWWWWWWWWWWEEEEEEEEEEEEEEDDDDDDDDDNNNNNNNEEESDDDDDAYY')
         for i in range(-3,4):
             list1.append(str(day + timedelta(days = i)))
-    elif datetime.today().weekday() == 4:
+    elif datetime.today().weekday() == 3:
+        print('TTTTTTTTTTTTTTTHHHHHHHHUUUUUUUURRRRSSSDDDDDDAYYYYY')
         for i in range(-4,3):
             list1.append(str(day + timedelta(days = i)))
-    elif datetime.today().weekday() == 5:
+    elif datetime.today().weekday() == 4:
+        print('FFFFFFFFRRRRRRRRRRRRIIIIIIIIIIIDDDDDDDDAYYYYYY')
         for i in range(-5,2):
             list1.append(str(day + timedelta(days = i)))
-    elif datetime.today().weekday() == 6:
+    elif datetime.today().weekday() == 5:
+        print('SSSSSSSSSSSSSSAAAAAAAAAAAAATTTTTTTTTTTUUUUUUUURRRRRRRDDDDDDDDDDAAAAAAAYYYYY')
         for i in range(-6,1):
             list1.append(str(day + timedelta(days = i)))
-    else:
-        for i in range(-7,0):
+    elif datetime.today().weekday() == 6:
+        print('SSSSSSSSSSSSSSUUUUUUUUUUUUNNNNNNNNNNNDDDDDDDAAAAAAAAYYYYYYYY')
+        for i in range(-7,1):
             list1.append(str(day + timedelta(days = i)))
+    else:
+        print('EEEELLLLLLSSSSEEEEE')
+        # for i in range(-7,0):
+        #     list1.append(str(day + timedelta(days = i)))
 
     # for i in range(len(list1)):
     #     print(i)
@@ -56,7 +67,7 @@ def dayDates(day):
         elif i == 5:
             list1[i] = 'Saturday\n'+str(list1[i])
         else:
-            list1[i] = 'Sunday\n'+str(list1[i])
+            list1[i] = 'Sunday\n'+list1[i]
     print(list1)
     return list1
 # day = date.today()
