@@ -1,6 +1,6 @@
 from flask import Flask
 from app.models import (FilmDetails, Ticket, Seat, Theatre, Certificate,
-                        TicketType, FilmScreening)
+                        TicketType, FilmScreening, Account)
 from app import app, db, models
 from datetime import datetime
 from calendar import monthrange

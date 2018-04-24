@@ -108,7 +108,7 @@ class FilmDetails(db.Model):
 
     def __json__(self):
         return ['id', 'film_name', 'film_blurb', 'film_director',
-                'film_actor', 'film_certificate_id', 'screening']
+                'film_actor', 'film_certificate_id']
 
 
 class FilmScreening(db.Model):
