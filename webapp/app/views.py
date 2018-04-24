@@ -438,8 +438,8 @@ def profile():
 @app.route('/screenings', methods=['GET'])
 @login_required
 def screenings():
-    # Return the tickets that the account owns.
-    #ticketsOwned = models.Account.account_tickets.query.all()
+
+    films_of_the_day = FilmDetails.query.limit(3).all()
 
     return render_template(
-        'screenings.html', title='Screenings')
+        'screenings.html', title='Screenings', film=films_of_the_day)
