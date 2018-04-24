@@ -22,6 +22,7 @@ class BaseTestCase(TestCase):
     def setUp(self):
         db.create_all()
         db.session.add(Account(email='jack@yahooo.com', password='password'))
+
         db.session.commit()
 
     def tearDown(self):
@@ -70,6 +71,19 @@ class FlaskTestCase(BaseTestCase):
     def test_sign_up_page_loads(self):
         response = self.client.get('/create_account', content_type='html/text')
         self.assertEqual(response.status_code, 200)
+
+    # ensure screenings page loads
+    def test_screenings_page_loads(self):
+        response = self.client.get('/screenings', content_type='html/text',follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(b'On Today' in response.data)
+        print (response.data)
+
+    # ensure film_details page loads
+    def test_film_details_page_loads(self):
+        response = self.client.get('/film_details',content_type='html/text')
+        self.assertEqual(response.status_code, 200)
+        print(response.data)
 
     #ensure profile requires login.
     def test_profile_requires_login(self):
@@ -129,6 +143,8 @@ class FlaskTestCase(BaseTestCase):
                 expiry_date_year=2018
                 ), follow_redirects=True)
         self.assertIn(b'successfully added card', response.data)
+
+    #Test change password.
 
 
 
