@@ -1,6 +1,6 @@
 from flask import Flask
 from app.models import (FilmDetails, Ticket, Seat, Theatre, Certificate,
-                        TicketType, FilmScreening)
+                        TicketType, FilmScreening, Account)
 from app import app, db, models
 from datetime import datetime
 from calendar import monthrange
@@ -216,11 +216,12 @@ for screen in theatreData:
 
 def random_date():
     year = datetime.now().year
-    month = datetime.now().month -1
+    month = datetime.now().month - 1
     day = randint(1, monthrange(year, month)[1])
     randomDate = datetime(2018, month, day)
 
     return randomDate
+
 
 # Populate the database with ticket data for 500 tickets.
 print("generating random tickets")
@@ -235,8 +236,8 @@ for x in range(1, 501):
 
 # Populate the Seat table. This is constant - do not remove.
 print("populating seats")
-for x in range(1,10): # 9 theatres
-    for y in range(1,25): # 24 seats in each theatre.
+for x in range(1, 10):  # 9 theatres
+    for y in range(1, 25):  # 24 seats in each theatre.
         newSeat = Seat()
         newSeat.seat_pos = y
         newSeat.theatre_id = x
@@ -245,6 +246,8 @@ for x in range(1,10): # 9 theatres
 
 # Function for creating consecutive dates to be used in the FilmScreening
 # table.
+
+
 def screening_date(x, z):
 
     if x < 32:
@@ -277,18 +280,18 @@ def screening_date(x, z):
 
 # Populate the FilmScreening table.
 print("populating film screenings")
-for x in range(24, 68): # One week of March, all of April and 6 days of May
+for x in range(24, 68):  # One week of March, all of April and 6 days of May
 
     f = 1
-    for z in range(0, 3): # 3 different screening times per day
-        for q in range(1, 4): # 3 different cinema screens
+    for z in range(0, 3):  # 3 different screening times per day
+        for q in range(1, 4):  # 3 different cinema screens
             sampleScreening = FilmScreening()
             sampleScreening.film_screening_time = screening_date(x, z)
             sampleScreening.theatre_id = q
             sampleScreening.film_screening_film_det = f
             db.session.add(sampleScreening)
             db.session.commit()
-            f = f + 1 # f is incremented to cycle through each film
+            f = f + 1  # f is incremented to cycle through each film
 
 
 # Create an admin Account.
