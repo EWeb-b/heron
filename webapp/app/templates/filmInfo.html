@@ -3,11 +3,6 @@
   {% block title %}Film Info{% endblock %}
    {% block content %}
 <style>
-
-aa {
-  display:inline;
-}
-
    .image {
      margin-left:2%;
      float:left;
@@ -20,7 +15,42 @@ aa {
    	height:auto;
    	padding:1%;
    }
-
+   * { box-sizing: border-box; }
+   .video-background {
+     background: #000;
+     position: fixed;
+     top: 0; right: 0; bottom: 0; left: 0;
+     z-index: -99;
+   }
+   .video-foreground,
+   .video-background iframe {
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     pointer-events: none;
+   }
+   #vidtop-content {
+   	top: 0;
+   	color: #fff;
+   }
+   .vid-info { position: absolute; top: 0; right: 0; width: 33%; background: rgba(0,0,0,0.3); color: #fff; padding: 1rem; font-family: Avenir, Helvetica, sans-serif; }
+   .vid-info h1 { font-size: 2rem; font-weight: 700; margin-top: 0; line-height: 1.2; }
+   .vid-info a { display: block; color: #fff; text-decoration: none; background: rgba(0,0,0,0.5); transition: .6s background; border-bottom: none; margin: 1rem auto; text-align: center; }
+   @media (min-aspect-ratio: 16/9) {
+     .video-foreground { height: 300%; top: -100%; }
+   }
+   @media (max-aspect-ratio: 16/9) {
+     .video-foreground { width: 300%; left: -100%; }
+   }
+   @media all and (max-width: 600px) {
+   .vid-info { width: 50%; padding: .5rem; }
+   .vid-info h1 { margin-bottom: .2rem; }
+   }
+   @media all and (max-width: 500px) {
+   .vid-info .acronym { display: none; }
+   }
 </style>
 
 <html lang="en">
@@ -30,54 +60,38 @@ aa {
   </head>
 
   <body>
-
-
-
-
       <div class="container">
-        <div class="row">
-          <div class="col-sm-4">
-        <div class="py-5 text-center text-danger">
-            <img src="/static/portraits/{{film.film_name}}.jpg" alt="Film Image" class="image"></a>
+
+        <div class="video-background">
+          <div class="video-foreground">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/ej3ioOneTy8?rel=0&amp;controls=0&amp;showinfo=0?rel=0&autoplay=1&loop=1" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+          </div>
         </div>
-      </div>
-      <div class="col-sm-8">
-          <div>
-          <h3><font color = "orange">Film Name:</font></h3>
-         <div>
-           <i><font color = "white">{{film.film_name}}</font></i>
-         </div>
-         <h3><font color = "orange">Blurb:</font></h3>
-         <div>
-           <i><font color = "white">{{film.film_blurb}}</font></i>
-         </div>
-         <h3><font color = "orange" style="font-size:5-px">Film Certificate:</font></h3>
-         <div>
-           <i><font color = "white">{{film.film_certificate}}</font></i>
-         </div>
-         <h3><font color = "orange">Director:</font></h3>
-         <div>
-           <i><font color = "white">{{film.film_director}}</font></i>
-         </div>
-         <h3><font color = "orange">Lead Actor:</font></h3>
-         <div>
-           <i><font color = "white">{{film.film_actor}}</font></i>
-         </div>
-         <h3><font color = "orange"> Screening Times:</font></h3>
-         <form method="POST">
-           {{ form.csrf_token }}
-           <fieldset>
-           <p>{{form.times}}<br>
-           </p>
 
-           <p><input class="btn btn-danger" type="submit" value="Order Ticket" style="margin-top: 10px"></p>
-         </fieldset>
-         </form>
+        <div id="vidtop-content">
+          <div class="vid-info" style="margin-top: 100px">
+            <h1>{{film.film_name}}</h1>
+            <p>{{film.film_blurb}}
+            <p>{{film.film_director}}
+            <p>{{film.film_actor}}
+              <form method="POST">
+                {{ form.csrf_token }}
+                <fieldset>
+                  <p style="color: black">{{form.times}}<br>
+                  </p>
+
+                  <p><input class="btn btn-danger" type="submit" value="Order Ticket" style="margin-top: 10px"></p>
+                </fieldset>
+              </form>
+            </div>
+
+          </div>
 
       </div>
 
   </div>
   </div>
+</div>
 
 
 

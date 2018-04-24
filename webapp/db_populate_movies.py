@@ -71,7 +71,7 @@ filmData = [
                         family on a journey that would lead to establishing the
                         foundations of showbusiness.""",
         "film_director": "Michael Gracey",
-        "film_name": "The Greatest  Showman",
+        "film_name": "The Greatest Showman",
         "film_actor": "Hugh Jackman"
     },
     {
