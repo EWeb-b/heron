@@ -3,12 +3,12 @@
 {% block content %}
 
 
+<html lang="en">
+  <head>
 
-<head>
-  <link href = "../static/style.css"  type = "text/css" rel = "stylesheet">
-  <link href = "form-validation.css" rel = "stylesheet">
-</head>
-
+      <link href = "style.css" rel = "stylesheet">
+      <link href="form-validation.css" rel="stylesheet">
+  </head>
 
   <body class="bg-dark">
 
@@ -55,7 +55,7 @@
           <form class="needs-validation" novalidate>
             <div class="row">
               <div class="col-md-6 text-">
-                <label for="first_name">First name</label>
+                <label for="first_name">First Name</label>
                 <p>{{ form.first_name(size="40")}}<br>
                    {% for error in form.first_name.errors %}
                    <span style="color: white;">{{ error }}</span>
@@ -63,7 +63,7 @@
                 </p>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="last_name">Last name</label>
+                <label for="last_name">Last Name</label>
                 <p>{{ form.last_name(size="42") }}<br>
                    {% for error in form.last_name.errors %}
                    <span style="color: white;">{{ error }}</span>
@@ -90,10 +90,9 @@
                 </p>
               </div>
             </div>
-
-            <h4 style="color: #ff7214" class="mb-3">Payment</h4>
               <fieldset>
             <div style="margin-top: 20px">
+            <h4 style="color: #ff7214" class="mb-3">Payment</h4>
           </div>
           <label for="card_number">Select a Card:</label>
             <p>{{ form.card }}<br>
@@ -107,7 +106,7 @@
       </form>
       </div>
 
-      <footer style="margin-top: 30px" class="my-5 pt-5 text-muted text-center text-small">
+      <footer style="margin-top: 10px" class="my-5 pt-5 text-muted text-center text-small">
         <p class="mb-1">&copy; 2017-2018 Heron</p>
         <ul class="list-inline">
           <li class="list-inline-item"><a href="#">Privacy</a></li>
@@ -148,6 +147,6 @@
       })();
     </script>
   </body>
-
+</html>
 
 {% endblock %}
