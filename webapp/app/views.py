@@ -8,7 +8,7 @@ from app import app, db, models, mail
 from .forms import (CreateAccountForm, ChangePasswordForm, LogInForm,
                     CardDetails, OrderTicket, ShowTimes, Basket)
 from .models import (Account, Certificate, FilmDetails, FilmScreening, Ticket,
-                     TicketType, Card)
+                     TicketType, Card, SeatReserved)
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
 import datetime
@@ -36,6 +36,7 @@ login_manager.login_view = 'login'
 def hashNumber(numberToBeHashed):
     string = str(numberToBeHashed)
     hashedNumber = print(hashlib.md5(string.encode('utf-8')).hexdigest())
+
     return hashedNumber
 
 
@@ -70,13 +71,13 @@ def email_ticket():
     screening, the theatre and seats and film name.
     Email also needs to include these details.
     """
-    film_title = session.get('film_title', None)
-    film_time = session.get('film_time', None)
+    film_chosen = session.get('film_title', None)
+    time = session.get('film_time', None)
     ticket_type = session.get('ticket_type', None)
     seat_number = session.get('seat_number', None)
     card_number = session.get('card_number', None)
     try:
-        qrStringEncoder(film_title+film_time+ticket_type +
+        qrStringEncoder(film_chosen+time+ticket_type +
                         seat_number+card_number)
         msg = Message("Heron Cinema Ticket",
                       sender="movies.heron@gmail.com",
@@ -96,6 +97,8 @@ def email_ticket():
         session.pop('ticket_type')
         session.pop('seat_number')
         session.pop('card_number')
+        session.pop('time')
+        session.pop('film_chosen')
         flash("Order successfully registered")
         return redirect('/profile')
 
@@ -200,7 +203,7 @@ def create_account():
                     return redirect('/create_account')
 
         else:  # when there's an error validating
-            flash("Error creating your account, please try again")
+            flash("Error creating your account. Invalid email.")
             # logging.info()
             return redirect('/create_account')
 
@@ -255,7 +258,8 @@ def add_card():
                 newCard = Card(
                     name_on_card=form.name_on_card.data,
                     billing_address=form.billing_address.data,
-                    card_number=form.card_number.data,
+                    last_four_digits=int(str(form.card_number.data)[12:]),
+                    card_number=hashNumber(form.card_number.data),
                     cvc=hashNumber(form.cvc.data),
                     expiry_date_month=hashNumber(form.expiry_date_month.data),
                     expiry_date_year=hashNumber(form.expiry_date_year.data),
@@ -282,50 +286,55 @@ def add_card():
 def basket():
     form = Basket()
     date = datetime.datetime.now()
-    print(date)
     cards = models.Card.query.filter_by(account_id=current_user.id).all()
-    print(cards)
     form.card.choices = cards
-    film_title = session.get('film_title', None)
-    film_time = session.get('film_time', 'N/A')
+    if session.get('seat_number') is None:
+        film_chosen = None
+        time = None
+    else:
+        film_chosen = session.get('film_chosen', None)
+        time = session.get('time', 'N/A')
     ticket_type = session.get('ticket_type', 'N/A')
     seat_number = session.get('seat_number', None)
-    print(int(seat_number))
 
-    if (int(seat_number) == 9 or int(seat_number) == 10 or
-            int(seat_number) == 11 or int(seat_number) == 12 or
-            int(seat_number) == 13 or int(seat_number) == 14 or
-            int(seat_number) == 15 or int(seat_number) == 16):
-        ticket_type_number = 5
-    elif ticket_type == 'oap':
-        ticket_type_number = 1
-    elif ticket_type == 'standard':
-        ticket_type_number = 2
-    elif ticket_type == 'student':
-        ticket_type_number = 3
-    elif ticket_type == 'child':
-        ticket_type_number = 4
-
-    choices = [(str(i.card_number), str(i.card_number)) for i in cards]
-    form.card.choices = choices
-
-    if film_title == None:
-        ticket_value = 0
-    else:
+    if session.get('seat_number') is not None:
         if (int(seat_number) == 9 or int(seat_number) == 10 or
                 int(seat_number) == 11 or int(seat_number) == 12 or
                 int(seat_number) == 13 or int(seat_number) == 14 or
                 int(seat_number) == 15 or int(seat_number) == 16):
-            ticket_value = 6
+            ticket_type_number = 5
+        elif ticket_type == 'oap':
+            ticket_type_number = 1
         elif ticket_type == 'standard':
-            ticket_value = 5
+            ticket_type_number = 2
+        elif ticket_type == 'student':
+            ticket_type_number = 3
+        elif ticket_type == 'child':
+            ticket_type_number = 4
+
+    choices = [(str(i.last_four_digits), str(i.last_four_digits)) for i in cards]
+    form.card.choices = choices
+
+    if film_chosen == None:
+        ticket_value = 0
+    else:
+        if session.get('seat_number') is not None:
+            if (int(seat_number) == 9 or int(seat_number) == 10 or
+                    int(seat_number) == 11 or int(seat_number) == 12 or
+                    int(seat_number) == 13 or int(seat_number) == 14 or
+                    int(seat_number) == 15 or int(seat_number) == 16):
+                ticket_value = 6
+            elif ticket_type == 'standard':
+                ticket_value = 5
+            else:
+                ticket_value = 4
         else:
-            ticket_value = 4
+            ticket_value = 0
 
     if request.method == 'GET':
         return render_template(
-            'basket.html', title='Checkout', ticket_film=film_title,
-            ticket_value=ticket_value, film_time=film_time,
+            'basket.html', title='Checkout', ticket_film=film_chosen,
+            ticket_value=ticket_value, film_time=time,
             ticket_type=ticket_type, seat_number=seat_number, cards=cards,
             form=form)
     elif request.method == 'POST':
@@ -339,6 +348,14 @@ def basket():
                     ticket_type_id=ticket_type_number,
                     ticket_date_bought=date,
                 )
+                db.session.add(newTicket)
+                db.session.commit()
+                newReserveSeat = SeatReserved(
+                    seat_id=seat_number,
+                    ticket_id=newTicket.id,
+                )
+                db.session.add(newReserveSeat)
+                db.session.commit()
                 ticket = models.Ticket.query.all()
                 print(ticket)
                 return redirect('/send-mail')
@@ -353,7 +370,12 @@ def basket():
 
 @app.route('/order_ticket', methods=['GET', 'POST'])
 def order_ticket():
+    if session.get('seat_number') is not None:
+        session.pop('seat_number')
+        session.pop('ticket_type')
     form = OrderTicket()
+    ticket_type = session.get('ticket_type', 'N/A')
+    film_time = session.get('film_time', 'N/A')
     film_title = session.get('film_title', None)
     film = models.FilmDetails.query.filter_by(film_name=film_title).first_or_404()
 
@@ -365,6 +387,8 @@ def order_ticket():
         print('posting')
         if form.validate() == True:
             print('validation successful')
+            session['film_chosen'] = film_title
+            session['time'] = film_time
             session['seat_number'] = form.seat_number.data
             session['ticket_type'] = form.ticket_type.data
             return redirect('/basket')
@@ -408,7 +432,16 @@ def list_films():
 @login_required
 def profile():
     # Return the tickets that the account owns.
-    # ticketsOwned = models.Account.account_tickets.query.all()
+    #ticketsOwned = models.Account.account_tickets.query.all()
 
     return render_template(
         'profile.html', title='User Profile')
+
+@app.route('/screenings', methods=['GET'])
+@login_required
+def screenings():
+    # Return the tickets that the account owns.
+    #ticketsOwned = models.Account.account_tickets.query.all()
+
+    return render_template(
+        'screenings.html', title='Screenings')

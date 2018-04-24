@@ -1,82 +1,42 @@
 {% extends "base.html" %}
 {% block title %}Films{% endblock %}
-   {% block content %}
+{% block content %}
 
-<style>
-  div.shadow {
-	width: 500px;
-	margin: 0px;
-	border: 0px solid #ccc;
-	padding: 0px;
-	}
+<head>
+  <link href = "../static/style.css"  type = "text/css" rel = "stylesheet">
+  <link href = "form-validation.css" rel = "stylesheet">
+</head>
 
-div.shadow:hover {
-	-moz-box-shadow: 0 0 5px rgba(0,0,0,0.5);
-	-webkit-box-shadow: 0 0 5px rgba(0,0,0,0.5);
-	box-shadow: 0 0 30px #ff6600;
-	}
-</style>
 <body>
-      <div class="container-fluid" style="color: #4582EC" style="margin-top:20px"></div>
+  <div class="container">
+    <div class="row">
+      <div style="margin-bottom:30px" class="column">
+        <a href="{{ url_for('film_details', passed='The Martian') }}">
+        <img src="/static/portraits/The Martian.jpg" style="width:100%"></a>
+        <a href="{{ url_for('film_details', passed='Inception') }}">
+        <img src="/static/portraits/Inception.jpg" style="width:100%"></a>
+        <a href="{{ url_for('film_details', passed='Interstellar') }}">
+          <img src="/static/portraits/Interstellar.jpg" style="width:100%"></a>
+      </div>
+    <div class="column">
+      <a href="{{ url_for('film_details', passed='Paddington 2') }}">
+      <img src="/static/portraits/Paddington2.jpg" style="width:100%"></a>
+      <a href="{{ url_for('film_details', passed='The Shape of Water') }}">
+      <img src="/static/portraits/shapeofwater.jpg" style="width:100%"></a>
+      <a href="{{ url_for('film_details', passed='Black Panther') }}">
+      <img src="/static/portraits/blackpanther.jpg" style="width:100%"></a>
+    </div>
 
-            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
-              <div class="shadow">
-                <a href="{{ url_for('film_details', passed='The Martian') }}">
-                <img src="/static/portraits/The Martian.jpg" class="img-responsive"></a>
-              </div>
-            </div>
-            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
-              <div class="shadow">
-                <a href="{{ url_for('film_details', passed='Inception') }}">
-                <img src="/static/portraits/Inception.jpg" class="img-responsive"></a>
-              </div>
-            </div>
+    <div class="column">
+      <a href="{{ url_for('film_details', passed='The Greatest Showman') }}">
+      <img src="/static/portraits/The Greatest Showman.jpg" style="width:100%"></a>
+      <a href="{{ url_for('film_details', passed='Jumanji: Welcome to the Jungle') }}">
+      <img src="/static/portraits/Jumanji: Welcome to the Jungle.jpg" style="width:100%"></a>
+      <a href="{{ url_for('film_details', passed='coco') }}">
+      <img src="/static/portraits/coco.jpg" style="width:100%"></a>
+    </div>
+    </div>
+  </div>
+</body>
 
-            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
-              <div class="shadow">
-                <a href="{{ url_for('film_details', passed='Interstellar') }}">
-                <img src="/static/portraits/Interstellar.jpg" class="img-responsive"></a>
-              </div>
-            </div>
-            <div style="margin-top: 50px" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
-              <div class="shadow">
-                <a href="{{ url_for('film_details', passed='The Martian') }}">
-                <img src="/static/portraits/The Martian.jpg" class="img-responsive"></a>
-              </div>
-            </div>
-            <div style="margin-top: 50px" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
-              <div class="shadow">
-                <a href="{{ url_for('film_details', passed='Inception') }}">
-                <img src="/static/portraits/Inception.jpg" class="img-responsive"></a>
-              </div>
-            </div>
-            <div style="margin-top: 50px" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
-              <div class="shadow">
-                <a href="{{ url_for('film_details', passed='Interstellar') }}">
-                <img src="/static/portraits/Interstellar.jpg" class="img-responsive"></a>
-              </div>
-            </div>
-            <div style="margin-top: 50px" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
-              <div class="shadow">
-                <a href="{{ url_for('film_details', passed='The Martian') }}">
-                <img src="/static/portraits/The Martian.jpg" class="img-responsive"></a>
-              </div>
-            </div>
-            <div style="margin-top: 50px" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
-              <div class="shadow">
-                <a href="{{ url_for('film_details', passed='Inception') }}">
-                <img src="/static/portraits/Inception.jpg" class="img-responsive"></a>
-              </div>
-            </div>
-            <div style="margin-top: 50px" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
-              <div style="margin-bottom 50px">
-              <div class="shadow">
-                <a href="{{ url_for('film_details', passed='Interstellar') }}">
-                <img src="/static/portraits/Interstellar.jpg" class="img-responsive"></a>
-              </div>
-            </div>
-            </div>
-          </div>
-   </body>
-</html>
 {% endblock %}
