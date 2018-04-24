@@ -429,11 +429,10 @@ def list_films():
         'filmDetails.html', title='Film List', filmDetails=filmDetails)
 
 
-@app.route('/profile', methods=['GET'])
+@app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    # Return the tickets that the account owns.
-    #ticketsOwned = models.Account.account_tickets.query.all()
+    
 
     return render_template(
         'profile.html', title='User Profile')
