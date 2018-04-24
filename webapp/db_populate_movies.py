@@ -1,6 +1,6 @@
 from flask import Flask
 from app.models import (FilmDetails, Ticket, Seat, Theatre, Certificate,
-                        TicketType, FilmScreening)
+                        TicketType, FilmScreening, Account)
 from app import app, db, models
 from datetime import datetime
 from calendar import monthrange
@@ -277,7 +277,7 @@ def screening_date(x, z):
 
 # Populate the FilmScreening table.
 print("populating film screenings")
-for x in range(24, 68): # One week of March, all of April and 6 days of May
+for x in range(1, 68): # From 1st March to
 
     f = 1
     for z in range(0, 3): # 3 different screening times per day
