@@ -39,11 +39,8 @@ class CardDetails(Form):
     name_on_card = StringField('Name on Card', validators=[DataRequired()])
     billing_address = StringField('Billing Address',
                                   validators=[DataRequired()])
-    card_number = IntegerField('Card Number', [validators.DataRequired(),
-                                               validators.Regexp(
-                                               r'[0-9]{16}$')])
-    cvc = IntegerField('CVC', [validators.DataRequired(),
-                               validators.Regexp(r'[0-9]{3}$')])
+    card_number = IntegerField('Card Number', [validators.DataRequired()])
+    cvc = IntegerField('CVC', [validators.DataRequired()])
     expiry_date_month = IntegerField('Expiry Date Month',
                                      [validators.DataRequired(),
                                       validators.NumberRange(min=1, max=12)])
