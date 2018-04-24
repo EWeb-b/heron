@@ -12,12 +12,13 @@ from app.models import Account
 
 class BaseTestCase(TestCase):
 
+    #Configures the app to a flask-testing supported configuration
     def create_app(self):
-
         app.config.from_object('config.TestConfig')
-
         return app
 
+    #Create all the tables and destroy them with each unit test to ensure
+    # they're clean and self contained.
     def setUp(self):
         db.create_all()
         db.session.add(Account(email='jack@yahooo.com', password='password'))
@@ -53,7 +54,6 @@ class FlaskTestCase(BaseTestCase):
 
     # ensure flask set up correctly
     def test_index(self):
-        #tester = app.test_client(self)
         response = self.client.get('/home', content_type='html/text')
         self.assertEqual(response.status_code, 200)
 
@@ -86,7 +86,7 @@ class FlaskTestCase(BaseTestCase):
             self.assertTrue(current_user.email == 'jack@yah.com')
             self.assertTrue(current_user.is_active())
             self.assertIn(b'Logged in successfully', response.data)
-            #print (response.data)
+
 
 
     #Ensure one email can only be registed once

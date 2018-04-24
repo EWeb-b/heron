@@ -17,12 +17,10 @@
          <div class="jumbotron">
 
          <div class="py-5 text-center text-danger">
-           <!-- <img class="d-block mx-auto mb-4" src="static/heronLogo.png" alt="" width="90" height="90"> -->
            <h2>What's on Today?</h2>
          </div>
-
-         </div>
        </div>
+      </div>
 
 
 
@@ -39,26 +37,25 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td><font color = "red">Paddington 2</font></td>
+    {%for movie in film %}
+    <tr onclick="document.location.href='{{ url_for('film_details', passed=movie.film_name) }}'">
+      <th scope="row">{{loop.index}}</th>
+      <td><font color = "red">{{movie.film_name}}</font></td>
       <td><font color = "red">10:00/ 14:00 / 20:00</font></td>
-      <td> <font1>The blurb for paddington 2 goes here</font1></td>
+      <td> <font color = "red">{{movie.film_blurb}}</font></td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Black Panther</td>
-      <td>10:00/ 14:00 / 20:00</td>
-      <td>The blurb for Black Panther goes here</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>The Greatest Showman</td>
-      <td>10:00/ 14:00 / 20:00</td>
-      <td>The blurb for The Greatest Showman goes here</td>
-    </tr>
+    {%endfor%}
   </tbody>
 </table>
+
+<div class="container">
+  &nbsp
+  {%for movie in film %}
+  <div class="py-5 text-center text-danger" align="center">
+      <img src="/static/portraits/{{movie.film_name}}.jpg" alt="Film Image" class="image"></a>
+  </div>
+  {%endfor%}
+</div>
 </body>
 
 
