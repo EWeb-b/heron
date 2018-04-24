@@ -319,10 +319,10 @@ class Compare(QScrollArea):
         print(bufferTakings)
         print(movieBuffer)
         print(color_buffer)
-        # self._dynamic_ax.update()
+
         self._dynamic_ax.clear()
         self._dynamic_ax.pie(bufferTakings,labels = movieBuffer, autopct='%1.1f%%', shadow=False)
-
+        dynamic_canvas.updateGeometry()
         # self.layout.update()
 
     def table(self):
@@ -353,7 +353,7 @@ class Compare(QScrollArea):
 
         vbox2.addWidget(self.buffer_header)
         graphbox = QVBoxLayout()
-
+        global dynamic_canvas
         dynamic_canvas = FigureCanvas(Figure(figsize=(5, 5)))
         self._dynamic_ax = dynamic_canvas.figure.subplots()
         self._dynamic_ax.pie([1],labels = [''], autopct='', shadow=False, colors = 'white')
