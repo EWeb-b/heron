@@ -321,14 +321,14 @@ db.session.add(adminCard1)
 db.session.commit()
 
 adminCard2 = Card()
-adminCard1.id = 2
-adminCard1.name_on_card = 'Admin'
-adminCard1.billing_address = 'EC Stoner'
-adminCard1.last_four_digits = 9999
-adminCard1.card_number = 'hashedCardNumber2'
-adminCard1.cvc = 'hashedCVC2'
-adminCard1.expiry_date_month = 'hashedExpiryMonth2'
-adminCard1.expiry_date_year = 'hashedExpiryYear2'
-adminCard1.account_id = 1
+adminCard2.id = 2
+adminCard2.name_on_card = 'Admin'
+adminCard2.billing_address = 'EC Stoner'
+adminCard2.last_four_digits = 9999
+adminCard2.card_number = 'hashedCardNumber2'
+adminCard2.cvc = 'hashedCVC2'
+adminCard2.expiry_date_month = 'hashedExpiryMonth2'
+adminCard2.expiry_date_year = 'hashedExpiryYear2'
+adminCard2.account_id = 1
 db.session.add(adminCard2)
 db.session.commit()
