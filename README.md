@@ -21,6 +21,10 @@ To run server:
 
 	python webapp.py
 
+Admin Account:
+	email = movies.heron@gmail.com
+	password = admin
+
 
 ## Members
 | Name          | email           | gitlab name |

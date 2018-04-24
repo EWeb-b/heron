@@ -1,6 +1,6 @@
 from flask import Flask
 from app.models import (FilmDetails, Ticket, Seat, Theatre, Certificate,
-                        TicketType, FilmScreening, Account)
+                        TicketType, FilmScreening, Account, Card)
 from app import app, db, models
 from datetime import datetime
 from calendar import monthrange
@@ -269,8 +269,8 @@ def screening_date(x, z):
 
 # Populate the FilmScreening table.
 print("populating film screenings")
-for x in range(24, 68): # One week of March, all of April and 6 days of May
 
+for x in range(1, 68): # From 1st March to
     f = 1
     for z in range(0, 3): # 3 different screening times per day
         for q in range(1, 4): # 3 different cinema screens
@@ -286,8 +286,37 @@ for x in range(24, 68): # One week of March, all of April and 6 days of May
 # Create an admin Account.
 print("Creating admin Account")
 adminAccount = Account()
+adminAccount.id = 1
 adminAccount.email = 'movies.heron@gmail.com'
 adminAccount.password = 'admin'
 adminAccount.staff = True
 db.session.add(adminAccount)
+db.session.commit()
+
+# Add cards belonging to the Admin account.
+print("Creating Admin cards")
+adminCard1 = Card()
+adminCard1.id = 1
+adminCard1.name_on_card = 'Admin'
+adminCard1.billing_address = 'EC Stoner'
+adminCard1.last_four_digits = 4444
+adminCard1.card_number = 'hashedCardNumber'
+adminCard1.cvc = 'hashedCVC'
+adminCard1.expiry_date_month = 'hashedExpiryMonth'
+adminCard1.expiry_date_year = 'hashedExpiryYear'
+adminCard1.account_id = 1
+db.session.add(adminCard1)
+db.session.commit()
+
+adminCard2 = Card()
+adminCard2.id = 2
+adminCard2.name_on_card = 'Admin'
+adminCard2.billing_address = 'EC Stoner'
+adminCard2.last_four_digits = 9999
+adminCard2.card_number = 'hashedCardNumber2'
+adminCard2.cvc = 'hashedCVC2'
+adminCard2.expiry_date_month = 'hashedExpiryMonth2'
+adminCard2.expiry_date_year = 'hashedExpiryYear2'
+adminCard2.account_id = 1
+db.session.add(adminCard2)
 db.session.commit()
