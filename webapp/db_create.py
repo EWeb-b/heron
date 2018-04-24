@@ -1,6 +1,6 @@
 from migrate.versioning import api
-from config import Config
 from app import db
+from config import Config
 import os.path
 
 
