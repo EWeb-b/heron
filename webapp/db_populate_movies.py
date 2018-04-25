@@ -19,7 +19,9 @@ filmData = [
     {
         "id": 1,
         "film_certificate_id": 3,
-        "film_blurb": "Entering dreams.",
+        "film_blurb": """A thief, who steals corporate secrets through the use of
+                        dream-sharing technology, is given the inverse task of
+                        planting an idea into the mind of a CEO.""",
         "film_director": "Christopher Nolan",
         "film_name": "Inception",
         "film_actor": "Leonardo DiCaprio"
@@ -27,7 +29,9 @@ filmData = [
     {
         "id": 2,
         "film_certificate_id": 3,
-        "film_blurb": "Home alone, but on mars.",
+        "film_blurb": """An astronaut becomes stranded on Mars after his team
+                        assume him dead, and must rely on his ingenuity to find
+                        a way to signal to Earth that he is alive.""",
         "film_director": "Ridley Scott",
         "film_name": "The Martian",
         "film_actor": "Matt Damon"
@@ -36,7 +40,7 @@ filmData = [
         "id": 3,
         "film_certificate_id": 3,
         "film_blurb": """A team of explorers travel through a wormhole in space
-                            in an attempt to ensure humanity's survival""",
+                            in an attempt to ensure humanity's survival.""",
         "film_director": "Christopher Nolan",
         "film_name": "Interstellar",
         "film_actor": "Matthew McConaughey"
@@ -44,7 +48,11 @@ filmData = [
     {
         "id": 4,
         "film_certificate_id": 2,
-        "film_blurb": "Peruvain Bear up to no good",
+        "film_blurb": """Paddington, now happily settled with the Brown family
+                        and a popular member of the local community, picks up a
+                        series of odd jobs to buy the perfect present for his
+                        Aunt Lucy's 100th birthday, only for the gift to be
+                        stolen.""",
         "film_director": "Paul King",
         "film_name": "Paddington 2",
         "film_actor": "Ben Wishaw"
@@ -52,7 +60,9 @@ filmData = [
     {
         "id": 5,
         "film_certificate_id": 4,
-        "film_blurb": "Fishman seduces silent woman",
+        "film_blurb": """At a top secret research facility in the 1960s, a
+                        lonely janitor forms a unique relationship with an
+                        amphibious creature that is being held in captivity.""",
         "film_director": "Guillermo del Toro",
         "film_name": "The Shape of Water",
         "film_actor": "Sally Hawkins"
@@ -60,7 +70,11 @@ filmData = [
     {
         "id": 6,
         "film_certificate_id": 3,
-        "film_blurb": "superhero movie",
+        "film_blurb": """T'Challa, the King of Wakanda, rises to the throne in
+                        the isolated, technologically advanced African nation,
+                        but his claim is challenged by a vengeful outsider who
+                        was a childhood victim of T'Challa's
+                        father's mistake.""",
         "film_director": "Ryan Coogler",
         "film_name": "Black Panther",
         "film_actor": "Chadwick Boseman"
@@ -80,7 +94,9 @@ filmData = [
     {
         "id": 8,
         "film_certificate_id": 3,
-        "film_blurb": "Horrible remake",
+        "film_blurb": """ Four teenagers are sucked into a magical video game,
+                            and the only way they can escape is to work together
+                            to finish the game.""",
         "film_director": "Jake Kasden",
         "film_name": "Jumanji: Welcome to the Jungle",
         "film_actor": "Dwayne Johnson"
@@ -88,7 +104,10 @@ filmData = [
     {
         "id": 9,
         "film_certificate_id": 1,
-        "film_blurb": "Undead reconcilliation",
+        "film_blurb": """Aspiring musician Miguel, confronted with his family's
+                        ancestral ban on music, enters the Land of the Dead to
+                        find his great-great-grandfather,
+                        a legendary singer.""",
         "film_director": "Lee Unkrich",
         "film_name": "CoCo",
         "film_actor": "Anthony Gonzalez"
