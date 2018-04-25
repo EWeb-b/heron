@@ -8,7 +8,7 @@ from app import app, db, models, mail
 from .forms import (CreateAccountForm, ChangePasswordForm, LogInForm,
                     CardDetails, OrderTicket, ShowTimes, Basket)
 from .models import (Account, Certificate, FilmDetails, FilmScreening, Ticket,
-                     TicketType, Card, SeatReserved)
+                     TicketType, Card, SeatReserved, Seat)
 from flask_login import (
     LoginManager, login_user, logout_user, login_required, current_user)
 import datetime
@@ -39,6 +39,8 @@ def hashNumber(numberToBeHashed):
 
     return hashedNumber
 
+# creates a QR code from a string in /basket when a ticket is bought
+
 
 def qrStringEncoder(string):
     cwd = os.getcwd()
@@ -46,10 +48,11 @@ def qrStringEncoder(string):
     qrcode.png(cwd+'/ticketQrCode.png', scale=8)
 
 
-
 @login_manager.user_loader
 def load_user(user_id):
     return Account.query.filter(Account.id == int(user_id)).first()
+
+# flash fields of the form that is causing the invalid form validation
 
 
 def flash_errors(form):
@@ -59,6 +62,9 @@ def flash_errors(form):
                 getattr(form, field).label.text,
                 error
             ))
+
+# sends an email and qr code using the passed varaibles from the ticket
+# made from /basket
 
 
 @app.route('/send-mail')
@@ -75,14 +81,24 @@ def email_ticket():
     ticket_type = session.get('ticket_type', None)
     seat_number = session.get('seat_number', None)
     card_number = session.get('card_number', None)
+    first_name = session.get('first_name', None)
+    last_name = session.get('last_name', None)
+    address = session.get('address', None)
+    postcode = session.get('postcode', None)
     try:
         qrStringEncoder(film_chosen+time+ticket_type +
                         seat_number+card_number)
         msg = Message("Heron Cinema Ticket",
                       sender="movies.heron@gmail.com",
                       recipients=[current_user.email])
+        # email body made using session variables from filled in information
+        # from /basket
         msg.body = ("Thank you for your purchase, your ticket is attached to this email.\n\n"
-                    "Ticket details: \n"
+                    "Customer Details: \n"
+                    + first_name + " " + last_name + "\n"
+                    + address + "\n"
+                    + postcode + "\n\n"
+                    + "Ticket details: \n"
                     + film_chosen + "\n"
                     + "Screening Time:  " + time + "\n"
                     + "Ticket Type:  " + ticket_type + "\n"
@@ -91,6 +107,7 @@ def email_ticket():
         with app.open_resource(cwd+"/ticketQrCode.png") as fp:
             msg.attach("ticketQrCode", "ticketQrCode/png", fp.read())
         mail.send(msg)
+        # end all sessions used to buy the ticket being sent
         session.pop('film_title')
         session.pop('film_time')
         session.pop('ticket_type')
@@ -98,11 +115,17 @@ def email_ticket():
         session.pop('card_number')
         session.pop('time')
         session.pop('film_chosen')
+        session.pop('first_name')
+        session.pop('last_name')
+        session.pop('address')
+        session.pop('postcode')
         flash("Order successfully registered")
         return redirect('/profile')
 
     except Exception as e:
         return str(e) + ' | email_ticket function error.'
+
+# redirect to home
 
 
 @app.route('/')
@@ -116,6 +139,8 @@ def home():
     return render_template(
         'home.html', title='Heron Home')
 
+# logs out the current_user that started a session when logging in
+
 
 @app.route('/logout')
 @login_required
@@ -128,6 +153,9 @@ def logout():
     flash("Logged out successfully")
     logging.info('%s logged out successfully', name_email)
     return redirect('/login')
+
+# login for users that are stored in the database, creates a new current_user
+# session
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -161,6 +189,9 @@ def login():
             logging.warning('Unsuccessful login: Form not validated')
             return redirect('/login')
 
+# creates a new user and stores them into the database, also logs them in
+# and creates a new session for the user
+
 
 @app.route('/create_account', methods=['GET', 'POST'])
 def create_account():
@@ -183,8 +214,10 @@ def create_account():
             else:
                 if form.password.data == form.passwordCheck.data:
                     print("password matched")
+                    # new user generated then stored in the database
                     newuser = Account(
                         email=form.email.data,
+                        # hash the password so cannot be accessed by anyone else
                         password=generate_password_hash(form.password.data),
                         staff=False)
                     print(newuser.password)
@@ -205,6 +238,8 @@ def create_account():
             flash("Error creating your account. Invalid email.")
             # logging.info()
             return redirect('/create_account')
+
+# changes the current_users password
 
 
 @app.route('/change_password', methods=['GET', 'POST'])
@@ -246,7 +281,7 @@ def change_password():
                 current_user.email)
             return redirect('/change_password')
 
-# Route for a user to add a debit/credit card to their account.
+# function to add a debit card to the users account
 
 
 @app.route('/add_card', methods=['GET', 'POST'])
@@ -286,13 +321,19 @@ def add_card():
             flash('form did not validate on submit')
             return redirect('/add_card')
 
+# creates a ticket that is used to generate an email and QR code, all
+# sessions point to here to be used to store entries in the database
+
 
 @app.route('/basket', methods=['GET', 'POST'])
 @login_required
 def basket():
     form = Basket()
+    # uses current date to be used on the ticket
     date = datetime.datetime.now()
     cards = models.Card.query.filter_by(account_id=current_user.id).all()
+    # set basket to empty if the user didnt complete the website routine
+    # for adding an order to the basket
     if session.get('seat_number') is None:
         film_chosen = None
         time = None
@@ -301,7 +342,11 @@ def basket():
         time = session.get('time', 'N/A')
     ticket_type = session.get('ticket_type', 'N/A')
     seat_number = session.get('seat_number', None)
+    theatre_id = session.get('theatre', None)
+    screening_id = session.get('screening_id', None)
 
+    # check what ticket type the ticket should be using both the seat chosen
+    # and the ticket type chosen in /order_ticket
     if session.get('seat_number') is not None:
         if (int(seat_number) == 9 or int(seat_number) == 10 or
                 int(seat_number) == 11 or int(seat_number) == 12 or
@@ -322,6 +367,7 @@ def basket():
         choices = [(str(i.last_four_digits), str(i.last_four_digits)) for i in cards]
     form.card.choices = choices
 
+    # if-else statements to find the value the ticket should be
     if film_chosen == None:
         ticket_value = 0
     else:
@@ -349,7 +395,13 @@ def basket():
         if film_chosen != None:
             if form.validate() == True:
                 print('validation successful')
+                # generate sessions for user info to be used in the ticket email
                 session['card_number'] = form.card.data
+                session['first_name'] = form.first_name.data
+                session['last_name'] = form.last_name.data
+                session['address'] = form.address.data
+                session['postcode'] = form.postcode.data
+                # store a ticket into the database
                 newTicket = Ticket(
                     owner_account_id=current_user.id,
                     ticket_type_id=ticket_type_number,
@@ -357,17 +409,12 @@ def basket():
                 )
                 db.session.add(newTicket)
                 db.session.commit()
-                newReserveSeat = SeatReserved(
-                    seat_id=seat_number,
-                    ticket_id=newTicket.id,
-                )
+                newReserveSeat = SeatReserved(ticket_id=newTicket.id)
                 db.session.add(newReserveSeat)
                 db.session.commit()
-                ticket = models.Ticket.query.all()
-                print(ticket)
+                # send the ticket using /send-email
                 return redirect('/send-mail')
             else:
-                print('fail')
                 flash_errors(form)
                 return redirect('/basket')
         else:
@@ -378,6 +425,8 @@ def basket():
 @app.route('/order_ticket', methods=['GET', 'POST'])
 def order_ticket():
     if session.get('seat_number') is not None:
+        # remove sessions for seat number and ticket type if the user
+        # attempts to buy a new ticket with a different film
         session.pop('seat_number')
         session.pop('ticket_type')
     form = OrderTicket()
@@ -404,18 +453,29 @@ def order_ticket():
             flash_errors(form)
             return redirect('/order_ticket')
 
+# page that shows the film information as well as the trailer for the film
+# the function queries the databse to check what screening times are available
+# the chosen film today
+
 
 @app.route('/film_info', methods=['GET', 'POST'])
 def film_details():
     form = ShowTimes()
     passed = request.args.get('passed', None)
     film = models.FilmDetails.query.filter_by(film_name=passed).first_or_404()
-
-    # .with_entities(FilmScreening.film_screening_time).
+    # query to find the available screening times
     film_times = FilmScreening.query.join(FilmDetails).filter(FilmScreening.film_screening_film_det == film.id, FilmScreening.film_screening_time.between(
+        datetime.date.today(), datetime.date.today() + datetime.timedelta(1))).all()
+    # query to find which theatre the film is showing in
+    theatre = models.FilmScreening.query.with_entities(FilmScreening.theatre_id).filter(
+        FilmScreening.film_screening_film_det == film.id).first()
+    # find the screening id for the specific screening time and theatre
+    screening_id = FilmScreening.query.with_entities(FilmScreening.id).join(FilmDetails).filter(FilmScreening.film_screening_film_det == film.id, FilmScreening.film_screening_time.between(
         datetime.date.today(), datetime.date.today() + datetime.timedelta(1))).all()
 
     times = []
+    # convert the datetimes returned into the 24 hour clock to be used as an
+    # option in the SelectField on the webpage
     for showing in film_times:
         time = showing.film_screening_time
         times.append(str(time.hour) + ":" + "{:02d}".format(time.minute))
@@ -433,6 +493,8 @@ def film_details():
     elif request.method == 'POST':
         if form.validate() == True:
             print('validation successful')
+            session['screening_id'] = screening_id
+            session['theatre'] = theatre
             session['film_title'] = passed
             session['film_time'] = form.time.data
             return redirect('/order_ticket')
@@ -440,6 +502,8 @@ def film_details():
             flash_errors(form)
             return render_template(
                 'filmInfo.html', title='Film Details', film=film, passed=passed, form=form)
+
+# list all the films currently showing at the cinema
 
 
 @app.route('/film_details', methods=['GET', 'POST'])
@@ -450,13 +514,16 @@ def list_films():
     return render_template(
         'filmDetails.html', title='Film List', filmDetails=filmDetails)
 
+# shows the debit cards stored and the ticket history of the user
+
 
 @app.route('/profile', methods=['GET'])
 @login_required
 def profile():
 
     cards = Card.query.filter_by(account_id=current_user.id).all()
-    tickets = Ticket.query.join(Account).join(FilmScreening).join(FilmDetails).filter(Ticket.owner_account_id==current_user.id).all()
+    tickets = Ticket.query.join(Account).join(FilmScreening).join(
+        FilmDetails).filter(Ticket.owner_account_id == current_user.id).all()
 
     return render_template(
         'profile.html', title='User Profile', cards=cards, tickets=tickets)
