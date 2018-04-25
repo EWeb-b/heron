@@ -7,10 +7,11 @@
   <link href = "form-validation.css" rel = "stylesheet">
 </head>
 
+
 <body>
   <div class="container">
-    <div class="row">
-      <div style="margin-bottom:30px" class="column">
+    <div class="detail-row">
+      <div style="margin-bottom:30px" class="detail-column">
         <a href="{{ url_for('film_details', passed='The Martian') }}">
         <img src="/static/portraits/The Martian.jpg" style="width:100%"></a>
         <a href="{{ url_for('film_details', passed='Inception') }}">
@@ -18,7 +19,7 @@
         <a href="{{ url_for('film_details', passed='Interstellar') }}">
           <img src="/static/portraits/Interstellar.jpg" style="width:100%"></a>
       </div>
-    <div class="column">
+    <div class="detail-column">
       <a href="{{ url_for('film_details', passed='Paddington 2') }}">
       <img src="/static/portraits/Paddington 2.jpg" style="width:100%"></a>
       <a href="{{ url_for('film_details', passed='The Shape of Water') }}">
@@ -27,7 +28,7 @@
       <img src="/static/portraits/Black Panther.jpg" style="width:100%"></a>
     </div>
 
-    <div class="column">
+    <div class="detail-column">
       <a href="{{ url_for('film_details', passed='The Greatest Showman') }}">
       <img src="/static/portraits/The Greatest Showman.jpg" style="width:100%"></a>
       <a href="{{ url_for('film_details', passed='Jumanji: Welcome to the Jungle') }}">
