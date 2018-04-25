@@ -468,6 +468,7 @@ def profile():
 @app.route('/screenings', methods=['GET'])
 def screenings():
 
+    
     films_of_the_day = FilmDetails.query.limit(3).all()
 
     return render_template(
