@@ -45,7 +45,16 @@
         <p>{{film.film_blurb}}
         <p>Director: {{film.film_director}}
         <p>Lead Actor: {{film.film_actor}}
-        <p><img class="" src="static/certificates/U.png" alt="" width="50" height="40">
+        {% if film.film_certificate_id == 1 %}
+        <p><img class="" src="static/certificates/U.png" alt="" width="60" height="50">
+        {% elif film.film_certificate_id == 2 %}
+        <p><img class="" src="static/certificates/PG.png" alt="" width="60" height="50">
+        {% elif film.film_certificate_id == 3 %}
+        <p><img class="" src="static/certificates/12.png" alt="" width="50" height="50">
+        {% elif film.film_certificate_id == 4 %}
+        <p><img class="" src="static/certificates/15.png" alt="" width="50" height="50">
+
+        {% endif %}
         <p>Screening Times:
           <form method="POST">
             {{ form.csrf_token }}
