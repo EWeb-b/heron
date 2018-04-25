@@ -446,10 +446,7 @@ def list_films():
 @login_required
 def profile():
 
-<<<<<<< HEAD
-=======
     cards = Card.query.filter_by(account_id=current_user.id).all()
->>>>>>> 617b33cd05b89c074ba3b1e3fdb886e3f37ceec4
 
     return render_template(
         'profile.html', title='User Profile', cards=cards)
