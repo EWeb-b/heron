@@ -22,6 +22,7 @@ class BaseTestCase(TestCase):
     def setUp(self):
         db.create_all()
         db.session.add(Account(email='jack@yahooo.com', password='password'))
+
         db.session.commit()
 
     def tearDown(self):
@@ -32,10 +33,12 @@ class BaseTestCase(TestCase):
 
 class FlaskTestCase(BaseTestCase):
 
+    #Functions to reduce repeated code in test suite.
+
     #Function to speed up login requests
-    def login(self, username, password):
+    def login(self, email, password):
         return self.client.post('/login', data=dict(
-        username=username,
+        email=email,
         password=password
         ), follow_redirects=True)
 
@@ -50,6 +53,8 @@ class FlaskTestCase(BaseTestCase):
         data=dict(email=email, password=password, passwordCheck=passwordCheck),
         follow_redirects=True
         )
+
+#------------------------------------------------------------------------------#
 
 
     # ensure flask set up correctly
@@ -67,6 +72,19 @@ class FlaskTestCase(BaseTestCase):
         response = self.client.get('/create_account', content_type='html/text')
         self.assertEqual(response.status_code, 200)
 
+    # ensure screenings page loads
+    def test_screenings_page_loads(self):
+        response = self.client.get('/screenings', content_type='html/text',follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(b'On Today' in response.data)
+        print (response.data)
+
+    # ensure film_details page loads
+    def test_film_details_page_loads(self):
+        response = self.client.get('/film_details',content_type='html/text')
+        self.assertEqual(response.status_code, 200)
+        print(response.data)
+
     #ensure profile requires login.
     def test_profile_requires_login(self):
         response = self.client.get('/profile', follow_redirects=True)
@@ -79,14 +97,14 @@ class FlaskTestCase(BaseTestCase):
 
     # ensure login works with correct account
     def test_working_login(self):
-        self.register(email='jack@yah.com', password='password', passwordCheck='password')
+        self.register('jack@yah.com','password', 'password')
         with self.client:
             response = self.client.post(
-                '/login', data=dict(email='jack@yah.com', password='password'), follow_redirects=True)
+                '/login', data=dict(email='jack@yah.com', password='password'),
+                 follow_redirects=True)
             self.assertTrue(current_user.email == 'jack@yah.com')
             self.assertTrue(current_user.is_active())
             self.assertIn(b'Logged in successfully', response.data)
-
 
 
     #Ensure one email can only be registed once
@@ -125,6 +143,8 @@ class FlaskTestCase(BaseTestCase):
                 expiry_date_year=2018
                 ), follow_redirects=True)
         self.assertIn(b'successfully added card', response.data)
+
+    #Test change password.
 
 
 

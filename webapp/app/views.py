@@ -432,14 +432,13 @@ def list_films():
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    
+
 
     return render_template(
         'profile.html', title='User Profile')
 
 
 @app.route('/screenings', methods=['GET'])
-@login_required
 def screenings():
 
     films_of_the_day = FilmDetails.query.limit(3).all()
