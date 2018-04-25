@@ -9,6 +9,7 @@ import json
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
+
 ################################################################################
 
 # Populates the FilmDetails table with films.
@@ -18,9 +19,7 @@ filmData = [
     {
         "id": 1,
         "film_certificate_id": 3,
-        "film_blurb": """A thief, who steals corporate secrets through the use
-                        of dream-sharing technology, is given the inverse task
-                        of planting an idea into the mind of a CEO.""",
+        "film_blurb": "Entering dreams.",
         "film_director": "Christopher Nolan",
         "film_name": "Inception",
         "film_actor": "Leonardo DiCaprio"
@@ -28,9 +27,7 @@ filmData = [
     {
         "id": 2,
         "film_certificate_id": 3,
-        "film_blurb": """An astronaut becomes stranded on Mars after his team
-                        assume him dead, and must rely on his ingenuity to find
-                        a way to signal to Earth that he is alive.""",
+        "film_blurb": "Home alone, but on mars.",
         "film_director": "Ridley Scott",
         "film_name": "The Martian",
         "film_actor": "Matt Damon"
@@ -47,10 +44,7 @@ filmData = [
     {
         "id": 4,
         "film_certificate_id": 2,
-        "film_blurb": """Paddington, now happily settled with the Brown family
-                        and a popular member of the local community, picks up a
-                        series of odd jobs to buy the perfect present for his
-                        Aunt Lucy's 100th birthday, """,
+        "film_blurb": "Peruvain Bear up to no good",
         "film_director": "Paul King",
         "film_name": "Paddington 2",
         "film_actor": "Ben Wishaw"
@@ -58,10 +52,7 @@ filmData = [
     {
         "id": 5,
         "film_certificate_id": 4,
-        "film_blurb": """A reclusive girl working in a high security American
-                        government laboratory during the Cold War Era befriends
-                        a strange, other-worldly creature who is part of a
-                        secret classified experiment. """,
+        "film_blurb": "Fishman seduces silent woman",
         "film_director": "Guillermo del Toro",
         "film_name": "The Shape of Water",
         "film_actor": "Sally Hawkins"
@@ -69,10 +60,7 @@ filmData = [
     {
         "id": 6,
         "film_certificate_id": 3,
-        "film_blurb": """T'Challa, the King of Wakanda, rises to the throne in
-                        the isolated, technologically advanced African nation,
-                        but his claim is challenged by a vengeful outsider who
-                        was a childhood victim of T'Challa's father's mistake.""",
+        "film_blurb": "superhero movie",
         "film_director": "Ryan Coogler",
         "film_name": "Black Panther",
         "film_actor": "Chadwick Boseman"
@@ -92,9 +80,7 @@ filmData = [
     {
         "id": 8,
         "film_certificate_id": 3,
-        "film_blurb": """Four teenagers are sucked into a magical video game,
-                        and the only way they can escape is to work together to
-                        finish the game.""",
+        "film_blurb": "Horrible remake",
         "film_director": "Jake Kasden",
         "film_name": "Jumanji: Welcome to the Jungle",
         "film_actor": "Dwayne Johnson"
@@ -102,14 +88,13 @@ filmData = [
     {
         "id": 9,
         "film_certificate_id": 1,
-        "film_blurb": """Ignoring his family’s baffling ban on music, Miguel
-                        embarks on a journey through the enchanting Land of the
-                        Dead in search of his dreams of becoming a musician.""",
+        "film_blurb": "Undead reconcilliation",
         "film_director": "Lee Unkrich",
         "film_name": "CoCo",
         "film_actor": "Anthony Gonzalez"
     }
 ]
+
 print("populating movies (the FilmDetails table)")
 for movie in filmData:
     newMovie = FilmDetails(**movie)
@@ -144,7 +129,9 @@ ticketTypeData = [
     }
 ]
 
+
 print("populating TicketType table")
+
 for ticketType in ticketTypeData:
     newTicketType = TicketType(**ticketType)
     db.session.add(newTicketType)
@@ -204,7 +191,9 @@ theatreData = [
     }
 ]
 
+
 print("populating theatre screens")
+
 for screen in theatreData:
     newScreen = Theatre(**screen)
     db.session.add(newScreen)
@@ -217,12 +206,11 @@ for screen in theatreData:
 
 def random_date():
     year = datetime.now().year
-    month = datetime.now().month - 1
+    month = datetime.now().month -1
     day = randint(1, monthrange(year, month)[1])
     randomDate = datetime(2018, month, day)
 
     return randomDate
-
 
 # Populate the database with ticket data for 500 tickets.
 print("generating random tickets")
@@ -237,8 +225,11 @@ for x in range(1, 501):
 
 # Populate the Seat table. This is constant - do not remove.
 print("populating seats")
-for x in range(1, 10):  # 9 theatres
-    for y in range(1, 25):  # 24 seats in each theatre.
+
+
+for x in range(1,10): # 9 theatres
+
+    for y in range(1,25): # 24 seats in each theatre.
         newSeat = Seat()
         newSeat.seat_pos = y
         newSeat.theatre_id = x
@@ -247,8 +238,6 @@ for x in range(1, 10):  # 9 theatres
 
 # Function for creating consecutive dates to be used in the FilmScreening
 # table.
-
-
 def screening_date(x, z):
 
     if x < 32:
@@ -281,19 +270,18 @@ def screening_date(x, z):
 
 # Populate the FilmScreening table.
 print("populating film screenings")
+
 for x in range(1, 68): # From 1st March to
-
-
     f = 1
-    for z in range(0, 3):  # 3 different screening times per day
-        for q in range(1, 4):  # 3 different cinema screens
+    for z in range(0, 3): # 3 different screening times per day
+        for q in range(1, 4): # 3 different cinema screens
             sampleScreening = FilmScreening()
             sampleScreening.film_screening_time = screening_date(x, z)
             sampleScreening.theatre_id = q
             sampleScreening.film_screening_film_det = f
             db.session.add(sampleScreening)
             db.session.commit()
-            f = f + 1  # f is incremented to cycle through each film
+            f = f + 1 # f is incremented to cycle through each film
 
 
 # Create an admin Account.
