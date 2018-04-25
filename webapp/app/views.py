@@ -231,6 +231,7 @@ def change_password():
                 else:
                     flash_errors(form)
                     return redirect('/change_password')
+
             else:
                 flash('Previous Password is incorrect')
                 logging.warning(
@@ -417,9 +418,17 @@ def film_details():
         film_screening_time.date()=datetime.date.now())
     print(available)
 
+    # .with_entities(FilmScreening.film_screening_time).
+    film_times = FilmScreening.query.join(FilmDetails).filter(FilmScreening.film_screening_film_det==film.id, FilmScreening.film_screening_time.between(datetime.date.today(), datetime.date.today() + datetime.timedelta(1))).all()
+
+    times = []
+    for showing in film_times:
+        time = showing.film_screening_time
+        times.append(str(time.hour) + ":" + "{:02d}".format(time.minute))
+
     if request.method == 'GET':
         return render_template(
-            'filmInfo.html', title='Film Details', film=film, passed=passed, form=form)
+            'filmInfo.html', title='Film Details', times=times, film=film, passed=passed, form=form)
     elif request.method == 'POST':
         if form.validate() == True:
             print('validation successful')
