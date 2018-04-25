@@ -12,23 +12,24 @@
            <h2><font color = "white">Profile Details</font></h2>
          </div>
            </div>
-
-           <div class="well-lg">
+           &nbsp;&nbsp;
+           <div class="wcontainer">
              <div class="py-5  text-muted">
                <img class="d-block mx-auto mb-4" src="static/visa.png" alt="" width="120" height="120">
                <div>
-                 <h5>Cardholder Name</h3>
+
                    {%for card in cards%}
-                    <p>xxxx-xxxx-xxxx-{{card.last_four_digits}}</p><br>
+                   <h4><font color = "orange"><strong>Cardholder Name</strong></font></h4>
+                    <p><font color = "black">{{card.name_on_card}}</font></p>
+                    <h4><font color = "orange"><strong>Card Number</strong></font></h4>
+                    <p><font color = "black">xxxx-xxxx-xxxx-{{card.last_four_digits}}</font></p>&nbsp;
                     {%endfor%}
 
+
+
                 <div>
 
-                </div>
-                <h5>Card Number</h3>
-                <div>
-
-                    <a href="/add_card">Add a Card</a>
+                    <a href="/add_card"><strong>Add a Card</strong></a>
                 </div>
              </div>
            </div>
