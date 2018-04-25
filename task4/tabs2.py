@@ -9,6 +9,7 @@ import datetime
 import dayDates
 import requests
 import tickets2money
+import convert 
 
 from matplotlib.backends.qt_compat import QtCore, QtWidgets, is_pyqt5
 
@@ -64,6 +65,7 @@ weekTakings = [INCtakings,TMtakings,INTtakings,P2takings,SWtakings,BPtakings,GSt
 
 takings = ['1320', '1222', '950','4378','1320', '1222', '950','4378','46'] # Used for pie
 movieBuffer = []
+
 timeSpan = 'daily'
 
 
@@ -161,6 +163,8 @@ INCtakings = ['120','120','300','200','180','240','150']
 
 INCweekly = [[10,2,3,5,1],[0,0,0,0,0]]
 
+# x axis days of the week
+# y axis movies in order of IDs in the database
 week_data = [[[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[0,0,0,0,0]],
             [[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[0,0,0,0,0]],
             [[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[0,0,0,0,0]],
@@ -521,14 +525,14 @@ class Compare(QScrollArea):
             day_of_the_week = len(list_of_lists)
     #print('weekly takings for inception, broken down by days',calc_takings_list(INCweekly))
 
-    def calc_weekly_takings(list_of_lists_of_lists):
+    def calc_weekly_takings(self,list_of_lists_of_lists):
         # list of legnth 9, then
         # list of length 7, then
         # list of legnth 5(ticket types)
         takings_buffer = []
         for i in range(9):
             #print(calc_takings_list(list_of_lists_of_lists[i]))
-            takings_buffer.append(calc_takings_list(list_of_lists_of_lists[i]))
+            takings_buffer.append(self.calc_takings_list(list_of_lists_of_lists[i]))
         weekly_buffer = [0,0,0,0,0,0,0]
         for i in range(7):
             for j in range(9):
@@ -568,16 +572,27 @@ class Compare(QScrollArea):
     def make_movie_button(self,button):
         return button.clicked.connect(lambda:self.movie2Buffer(button))
     def selectDaily(self):
+        global timeSpan
         timeSpan = 'daily'
         print (timeSpan+'\n')
     def selectWeeky(self):
+        global timeSpan
         timeSpan = 'weekly'
         print (timeSpan+'\n')
     def selectOverall(self):
+        global timeSpan
         timeSpan = 'overall'
         print (timeSpan+'\n')
     def compare(self):
 
+        if timeSpan == 'daily':
+            takings = takings
+
+        elif timeSpan == 'weekly':
+            print('WWWWWWWWWWWEEEEEEEEEEEEEEEEEKKKKKLLLLLLLLLYYYYY')
+            takings = self.calc_weekly_takings(week_data)
+        elif timeSpan == 'overall':
+            hi = 0
         print('plot',movieBuffer,'for',timeSpan)
         bufferTakings = []
         for i in range(len(movieBuffer)):
