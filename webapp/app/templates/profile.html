@@ -12,8 +12,9 @@
            <h2><font color = "white">Profile Details</font></h2>
          </div>
            </div>
-           &nbsp;&nbsp;
-           <div class="wcontainer">
+
+
+           <div class="white_one_container">
              <div class="py-5  text-muted">
                <img class="d-block mx-auto mb-4" src="static/visa.png" alt="" width="120" height="120">
                <div>
@@ -34,6 +35,22 @@
              </div>
            </div>
          </div>
+
+
+         <div class="white_two_container">
+           <div class="py-5  text-muted">
+             <img class="d-block mx-auto mb-4" src="static/visa.png" alt="" width="120" height="120">
+             <div>
+
+                 {%for card in cards%}
+                 <h4><font color = "orange"><strong>Cardholder Name</strong></font></h4>
+                  <p><font color = "black">{{card.name_on_card}}</font></p>
+                  <h4><font color = "orange"><strong>Card Number</strong></font></h4>
+                  <p><font color = "black">xxxx-xxxx-xxxx-{{card.last_four_digits}}</font></p>&nbsp;
+                  {%endfor%}
+           </div>
+         </div>
+       </div>
 
 
 
