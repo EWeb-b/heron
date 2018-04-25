@@ -84,8 +84,8 @@ def email_ticket():
                       recipients=[current_user.email])
         msg.body = ("Thank you for your purchase, your ticket is attached to this email.\n\n"
                     "Ticket details: \n"
-                    + film_title + "\n"
-                    + "Screening Time:  " + film_time + "\n"
+                    + film_chosen + "\n"
+                    + "Screening Time:  " + time + "\n"
                     + "Ticket Type:  " + ticket_type + "\n"
                     + "Seat Number:  " + seat_number + "\n")
 
@@ -346,7 +346,7 @@ def basket():
             form=form)
     elif request.method == 'POST':
         print('posting')
-        if film_title != None:
+        if film_chosen != None:
             if form.validate() == True:
                 print('validation successful')
                 session['card_number'] = form.card.data
@@ -410,12 +410,22 @@ def film_details():
     form = ShowTimes()
     passed = request.args.get('passed', None)
     film = models.FilmDetails.query.filter_by(film_name=passed).first_or_404()
-    all_screening = models.FilmScreening.query.filter_by(
-        film_screening_film_det=film.id).all()
 
-    available = models.FilmScreening.query.filter_by(
-        film_screening_time.date()=datetime.date.now())
-    print(available)
+    all_screenings = models.FilmScreening.query.with_entities(
+        FilmScreening.film_screening_time).filter_by(film_screening_film_det=film.id).all()
+
+    #today = datetime.datetime.now()
+    # print(today)
+
+    for x in all_screenings:
+        tmp = x
+        temp = tmp.date()
+
+    #available = [i.film_screening_time.date()]
+
+    # available = models.FilmScreening.query.filter_by(
+    #        film_screening_time_date()=datetime_date_now())
+    #    print(available)
 
     if request.method == 'GET':
         return render_template(
