@@ -82,7 +82,7 @@
             <!--First column-->
             <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
                 <h6 class="text-uppercase font-weight-bold">
-                    <strong><font color = "orange">Team Heron</font></strong>
+                    <strong><font color = "#ff7214">Team Heron</font></strong>
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p><font color = "white">This is Team Heron's submission for Software Project.</font></p>
@@ -91,13 +91,12 @@
             <!--Second column-->
             <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                 <h6 class="text-uppercase font-weight-bold">
-                    <strong><font color = "orange">Latest Films</font></strong>
+                    <strong><font color = "#ff7214">Latest Films</font></strong>
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                <p>
-                    <a href="/film_info?passed=Paddington+2">Paddington 2</a>
-                    <a href="">CoCo</a>
-                    <a href="">The Shape of Water</a>
+                <p><a href="/film_info?passed=Paddington+2">Paddington 2</a></p>
+                <p><a href="/film_info?passed=CoCo">CoCo</a></p>
+                <p><a href="/film_info?passed=The+Shape+of+Water">The Shape of Water</a></p>
                 </p>
             </div>
             <!--/.Second column-->
@@ -105,22 +104,22 @@
             <!--Third column-->
             <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                 <h6 class="text-uppercase font-weight-bold">
-                    <strong><font color = "orange">Useful links</font></strong>
+                    <strong><font color = "#ff7214">Useful links</font></strong>
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
                     <a href="/film_details">Films</a>
                 </p>
-                <p>
-                    <a href="/create_account">Sign Up</a>
-                </p>
                 {% if current_user.is_authenticated %}
                 <p>
-                    <a href="/login">Log In</a>
+                    <a href="/logout">Log out</a>
                 </p>
                 {% else %}
                 <p>
-                    <a href="#!">Sign in</a>
+                    <a href="/login">Log In</a>
+                </p>
+                <p>
+                    <a href="/create_account">Sign Up</a>
                 </p>
                 {% endif %}
             </div>
@@ -129,7 +128,7 @@
             <!--Fourth column-->
             <div class="col-md-4 col-lg-3 col-xl-3">
                 <h6 class="text-uppercase font-weight-bold">
-                    <strong><font color = "orange">Contact</font></strong>
+                    <strong><font color = "#ff7214">Contact</font></strong>
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
