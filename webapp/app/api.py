@@ -53,7 +53,7 @@ def apiGetWeeklyTickets(year, week):
     """
     start_day = Week(year, week).monday()
     end_day = Week(year, week).sunday()
-
-
-    tickets = Ticket.query.join(FilmScreening).
+    start_dt = datetime(start_day.year, start_day.month, start_day.day)
+    end_dt = datetime(end_day.year, end_day.month, end_day.day)
+    tickets = Ticket.query.join(FilmScreening).filter(FilmScreening.film_screening_time > start_dt, FilmScreening.film_screening_time < end_dt).all()
     return jsonify({"tickets": tickets})
