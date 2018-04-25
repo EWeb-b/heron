@@ -1,3 +1,124 @@
 body {
   background-color: #111111;
 }
+
+/* ---------------- order_ticket css ---------------- */
+* {
+    box-sizing: border-box;
+}
+
+   .order-row {
+       display: -ms-flexbox; /* IE10 */
+       display: flex;
+       -ms-flex-wrap: wrap; /* IE10 */
+       flex-wrap: wrap;
+       padding: 0 4px;
+   }
+
+   /* Create four equal columns that sits next to each other */
+   .order-column {
+       -ms-flex: 12.5%; /* IE10 */
+       flex: 12.5%;
+       max-width: 12.5%;
+       padding: 0 4px;
+   }
+
+   .order-column img {
+       margin-top: 8px;
+       vertical-align: middle;
+   }
+
+   /* Responsive layout - makes a two column-layout instead of four columns */
+   @media screen and (max-width: 800px) {
+       .order-column {
+           -ms-flex: 12.5%;
+           flex: 12.5%;
+           max-width: 12.5%;
+       }
+   }
+
+
+
+/* ---------------- film_info css ---------------- */
+
+.image {
+  margin-left:2%;
+  float:left;
+  height:450px;
+  width:300px;
+}
+}
+.info-container {
+ width:100%;
+ height:auto;
+ padding:1%;
+}
+* { box-sizing: border-box; }
+.video-background {
+  background: #000;
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: -99;
+}
+.video-foreground,
+.video-background iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+#vidtop-content {
+ top: 0;
+ color: #fff;
+}
+.vid-info { position: absolute; top: 0; right: 0; width: 33%; background: rgba(0,0,0,0.3); color: #fff; padding: 1rem; font-family: Avenir, Helvetica, sans-serif; }
+.vid-info h1 { font-size: 2rem; font-weight: 700; margin-top: 0; line-height: 1.2; }
+.vid-info a { display: block; color: #fff; text-decoration: none; background: rgba(0,0,0,0.5); transition: .6s background; border-bottom: none; margin: 1rem auto; text-align: center; }
+@media (min-aspect-ratio: 16/9) {
+  .video-foreground { height: 300%; top: -100%; }
+}
+@media (max-aspect-ratio: 16/9) {
+  .video-foreground { width: 300%; left: -100%; }
+}
+@media all and (max-width: 600px) {
+.vid-info { width: 50%; padding: .5rem; }
+.vid-info h1 { margin-bottom: .2rem; }
+}
+@media all and (max-width: 500px) {
+.vid-info .acronym { display: none; }
+}
+
+/* ---------------- film_details css ---------------- */
+
+
+.detail-row {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+    padding: 0 4px;
+}
+
+/* Create three equal detail-columns that sits next to each other */
+.detail-column {
+    -ms-flex: 33%; /* IE10 */
+    flex: 33%;
+    max-width: 33%;
+    padding: 0 3px;
+}
+
+.detail-column img {
+    margin-top: 8px;
+    vertical-align: middle;
+}
+
+/* Responsive layout - makes a two detail-column-layout instead of four detail-columns */
+@media screen and (max-width: 500px) {
+    .detail-column {
+        -ms-flex: 100%;
+        flex: 100%;
+        max-width: 100%;
+    }
+}
