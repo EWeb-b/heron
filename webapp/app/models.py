@@ -108,7 +108,7 @@ class FilmDetails(db.Model):
 
     def __json__(self):
         return ['id', 'film_name', 'film_blurb', 'film_director',
-                'film_actor', 'film_certificate_id', 'screening']
+                'film_actor', 'film_certificate_id']
 
 
 class FilmScreening(db.Model):
@@ -130,6 +130,9 @@ class FilmScreening(db.Model):
         return '''<id: %r, film_details_id: %r, screening_time: %r,
         theatre_id: %r\n>''' % (self.id, self.film_screening_film_det,
                                 self.film_screening_time, self.theatre_id)
+
+    def __json__(self):
+        return ['id', 'film_screening_film_det', 'film_screening_time', 'theatre_id']
 
 
 class Ticket(db.Model):
@@ -157,7 +160,7 @@ class Ticket(db.Model):
 
     def __json__(self):
         return ['id', 'owner_account_id', 'ticket_type_id', 'ticket_screening_id',
-                'ticket_date_bought', 'seat_reserves']
+                'ticket_date_bought']
 
 
 class TicketType(db.Model):
