@@ -31,7 +31,7 @@ mov_det = ''
 # GStakings = ['180','240','150','300','160','120','200']
 #
 # weekTakings = [BPtakings,SWtakings,GStakings]
-listOfMovieNames = ['Inception', 'The Martian', 'Interstellar','Paddington 2','The Shape of Water','Black Panther','The Greatest Showman','Jumanji: Welcome to the jungle','CoCo'] # To be changed to work with DB
+#listOfMovieNames = ['Inception', 'The Martian', 'Interstellar','Paddington 2','The Shape of Water','Black Panther','The Greatest Showman','Jumanji: Welcome to the jungle','CoCo'] # To be changed to work with DB
 
 INCdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
 INCtakings = ['120','120','300','200','180','240','150']
@@ -151,6 +151,7 @@ filmData = [
         "film_actor": "Anthony Gonzalez"
     }
 ]
+
 listOfMovieNames = []
 for i in range(len(filmData)):
     listOfMovieNames.append(filmData[i]["film_name"])
@@ -383,18 +384,19 @@ class Takings(QScrollArea):
         self.tableWidget.doubleClicked.connect(self.on_click)
     def __init__(self):
         super(Takings, self).__init__()
-        self.daysWeek = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','Total']
+        self.daysWeek = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 
 
         now = datetime.datetime.now()
-        horizontal_headers = dayDates.dayDates(takingsDate)
-        horizontal_headers.append('Total')
+        self.horizontal_headers = dayDates.dayDates(takingsDate)
+        self.horizontal_headers.append('Total')
 
         self.vertical_headers = listOfMovieNames
+        print('listOfMovieNames',listOfMovieNames)
         self.vertical_headers.append('Total')
 
-        print('HORIZONTAL HEADERS!!!!',horizontal_headers)
-        self.createTable(listOfMovieNames,horizontal_headers)
+        #print('HORIZONTAL HEADERS!!!!',horizontal_headers)
+        self.createTable(listOfMovieNames,self.horizontal_headers)
         self.date = QLabel()
         self.date.setText(now.strftime("%d-%m-%Y"))
         self.date.setStyleSheet('font-size: 80px;')
@@ -404,8 +406,8 @@ class Takings(QScrollArea):
         self.week.setStyleSheet('font-size: 40px;')
 
         self.rankingLayout = QVBoxLayout()
-        self.num1 = QPushButton('#1')
-        self.rankingLayout.addWidget(self.num1)
+        # self.num1 = QPushButton('#1')
+        # self.rankingLayout.addWidget(self.num1)
 
         self.buttLayout = QHBoxLayout()
         self.previous = QPushButton('Previous')
@@ -437,10 +439,13 @@ class Takings(QScrollArea):
         self.rankingLayout.addWidget(self.ranktitle)
         self.rankingLayout.addWidget(self.revunetitle)
 
-        for i in range(len(listOfMovieNames)):
+        print('listOfMovieNames!!!!!!!!!',listOfMovieNames)
+        global listOfMovieNames2
+        listOfMovieNames2 = listOfMovieNames[:-1]
+        for i in range(len(listOfMovieNames2)):
             movie = 'movie'+str(i)
             print (movie)
-            buttonTitle = '#'+str(i+1)+' '+listOfMovieNames[i]
+            buttonTitle = '#'+str(i+1)+' '+listOfMovieNames2[i]
             self.movie = QPushButton(buttonTitle)
 
             self.make_rank_button(self.movie)
@@ -501,11 +506,11 @@ class Compare(QScrollArea):
         bufferTakings = []
         for i in range(len(movieBuffer)):
             self.tableButton.setEnabled(True)
-            index = listOfMovieNames.index(movieBuffer[i])
+            index = listOfMovieNames2.index(movieBuffer[i])
             bufferTakings.append(takings[index])
         print(bufferTakings)
         print(movieBuffer)
-        
+
 
         self._dynamic_ax.clear()
         self._dynamic_ax.pie(bufferTakings,labels = movieBuffer, autopct='%1.1f%%', shadow=False)
@@ -586,10 +591,10 @@ class Compare(QScrollArea):
         self.bufferScrollLayout = QVBoxLayout()
         self.bufferScroll.setLayout(self.bufferScrollLayout)
 
-        for i in range(len(listOfMovieNames)):
+        for i in range(len(listOfMovieNames2)):
             movie = 'movie'+str(i)
             print (movie)
-            self.movie = QPushButton(listOfMovieNames[i])
+            self.movie = QPushButton(listOfMovieNames2[i])
             self.movie.setStyleSheet('background-color: green; color: white')
             self.make_movie_button(self.movie)
             self.movieScrollLayout.addWidget(self.movie)
