@@ -62,7 +62,18 @@ data = [   [   [(3, 3), (4, 3), (5, 4)],
         [(1, 1), (3, 2), (5, 1)],
         [(1, 2), (2, 1), (4, 1), (5, 1)]]]
 
+shell = [[[],[],[],[],[],[],[]],
+            [[],[],[],[],[],[],[]],
+            [[],[],[],[],[],[],[]],
+            [[],[],[],[],[],[],[]],
+            [[],[],[],[],[],[],[]],
+            [[],[],[],[],[],[],[]],
+            [[],[],[],[],[],[],[]],
+            [[],[],[],[],[],[],[]],
+            [[],[],[],[],[],[],[]]]
+
 types = [1,2,3,4,5]
+
 
 for i in range(9):
     for j in range(7):
@@ -77,7 +88,16 @@ for i in range(9):
             #print(types)
             for x in range(len(types)):
                 data[i][j].insert(types[x]-1,(types[x],0))
+            for x in range(5):
+                shell[i][j].append(data[i][j][x][1])
             types = [1,2,3,4,5]
         # for k in range(len(data[i][j])):
         #     print(i,j,k)
-print(data)
+#print(data)
+for i in range(9):
+    for j in range(7):
+        if shell[i][j] == []:
+            shell[i][j] = [0,0,0,0,0]
+
+
+print(shell)
