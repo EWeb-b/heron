@@ -219,14 +219,19 @@ def change_password():
         if form.validate_on_submit():  # if form data entered correctly
             # current_user is a variable name from flask_login:
             # don't need to create a new user object
-            if current_user.password == form.prev_password.data:
-                current_user.password = form.new_password.data
-                db.session.commit()
-                flash('Password changed successfully')
-                logging.info(
-                    '%s successfully changed their password',
-                    current_user.email)
-                return redirect('/logout')
+            if check_password_hash(current_user.password, form.prev_password.data):
+                if form.new_password.data == form.confirmation.data:
+                    current_user.password = generate_password_hash(form.new_password.data)
+                    db.session.commit()
+                    flash('Password changed successfully')
+                    logging.info(
+                        '%s successfully changed their password',
+                        current_user.email)
+                    return redirect('/profile')
+                else:
+                    flash_errors(form)
+                    return redirect('/change_password')
+
             else:
                 flash('Previous Password is incorrect')
                 logging.warning(
@@ -235,16 +240,18 @@ def change_password():
                     current_user.email)
                 return redirect('/change_password')
         else:
-            flash('Inputs Missing')
+
+            flash_errors(form)
             logging.warning(
                 'Change password error for %s: form validation error',
                 current_user.email)
             return redirect('/change_password')
 
 # Route for a user to add a debit/credit card to their account.
+
+
 @app.route('/add_card', methods=['GET', 'POST'])
 @login_required
-
 def add_card():
     form = CardDetails()
     if request.method == 'GET':
@@ -252,10 +259,10 @@ def add_card():
             'add_card.html', title='Add Card', form=form)
     elif request.method == 'POST':
         if form.validate_on_submit():
-        # If data in form was added correctly
+            # If data in form was added correctly
             if (check_password_hash(current_user.password, form.password.data)):
-            # If passwords match, create a new Card object with the parameters
-            # enetered by the user in the form.
+                # If passwords match, create a new Card object with the parameters
+                # enetered by the user in the form.
                 newCard = Card(
                     name_on_card=form.name_on_card.data,
                     billing_address=form.billing_address.data,
@@ -313,7 +320,7 @@ def basket():
     if not cards:
         choices = [("No Saved Cards", "No Saved Cards")]
     else:
-        choices = [(str(i.card_number), str(i.card_number)) for i in cards]
+        choices = [(str(i.last_four_digits), str(i.last_four_digits)) for i in cards]
     form.card.choices = choices
 
     if film_chosen == None:
@@ -404,10 +411,24 @@ def film_details():
     form = ShowTimes()
     passed = request.args.get('passed', None)
     film = models.FilmDetails.query.filter_by(film_name=passed).first_or_404()
+    all_screening = models.FilmScreening.query.filter_by(
+        film_screening_film_det=film.id).all()
+    # print(all_screening)
+    # available = models.FilmScreening.query.filter(
+#        film_screening_time >= datetime.datetime(2018, 5, 6, 14, 0)).all()
+#    print(available)
+
+    # .with_entities(FilmScreening.film_screening_time).
+    film_times = FilmScreening.query.join(FilmDetails).filter(FilmScreening.film_screening_film_det==film.id, FilmScreening.film_screening_time.between(datetime.date.today(), datetime.date.today() + datetime.timedelta(1))).all()
+
+    times = []
+    for showing in film_times:
+        time = showing.film_screening_time
+        times.append(str(time.hour) + ":" + "{:02d}".format(time.minute))
 
     if request.method == 'GET':
         return render_template(
-            'filmInfo.html', title='Film Details', film=film, passed=passed, form=form)
+            'filmInfo.html', title='Film Details', times=times, film=film, passed=passed, form=form)
     elif request.method == 'POST':
         if form.validate() == True:
             print('validation successful')
@@ -429,17 +450,17 @@ def list_films():
         'filmDetails.html', title='Film List', filmDetails=filmDetails)
 
 
-@app.route('/profile', methods=['GET', 'POST'])
+@app.route('/profile', methods=['GET'])
 @login_required
 def profile():
-    
+
+    cards = Card.query.filter_by(account_id=current_user.id).all()
 
     return render_template(
-        'profile.html', title='User Profile')
+        'profile.html', title='User Profile', cards=cards)
 
 
 @app.route('/screenings', methods=['GET'])
-@login_required
 def screenings():
 
     films_of_the_day = FilmDetails.query.limit(3).all()

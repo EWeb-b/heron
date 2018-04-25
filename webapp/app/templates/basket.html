@@ -15,7 +15,7 @@
     <div class="container">
       <div class="py-5 text-center text-muted">
         <img class="d-block mx-auto mb-4" src="static/heronLogo.png" alt="" width="90" height="90">
-        <h2>Checkout</h2>
+        <h2><font color = "white">Checkout</font></h2>
       </div>
 
       <div class="row">
@@ -55,7 +55,7 @@
           <form class="needs-validation" novalidate>
             <div class="row">
               <div class="col-md-6 text-">
-                <label for="first_name">First Name</label>
+                <label for="first_name" style="color: #FFFFFF">First name</label>
                 <p>{{ form.first_name(size="40")}}<br>
                    {% for error in form.first_name.errors %}
                    <span style="color: white;">{{ error }}</span>
@@ -63,7 +63,7 @@
                 </p>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="last_name">Last Name</label>
+                <label for="last_name" style="color: #FFFFFF">Last name</label>
                 <p>{{ form.last_name(size="42") }}<br>
                    {% for error in form.last_name.errors %}
                    <span style="color: white;">{{ error }}</span>
@@ -72,7 +72,7 @@
               </div>
             </div>
             <div class="mb-3">
-              <label style="margin-top: 20px" for="address">Address</label>
+              <label for="address" style="color: #FFFFFF">Address</label>
               <p>{{ form.address(size="91") }}<br>
                  {% for error in form.address.errors %}
                  <span style="color: white;">{{ error }}</span>
@@ -82,7 +82,7 @@
 
             <div class="row">
               <div class="col-md-3 mb-3">
-                <label style="margin-top: 20px" for="zip">Postcode</label>
+                <label for="zip" style="color: #FFFFFF">Postcode</label>
                 <p>{{ form.postcode(size="40") }}<br>
                    {% for error in form.postcode.errors %}
                    <span style="color: red;">{{ error }}</span>
@@ -91,10 +91,7 @@
               </div>
             </div>
               <fieldset>
-            <div style="margin-top: 20px">
-            <h4 style="color: #ff7214" class="mb-3">Payment</h4>
-          </div>
-          <label for="card_number">Select a Card:</label>
+          <label for="card_number" style="color: #FFFFFF">Select a Card (Last Four Digits):</label>
             <p>{{ form.card }}<br>
             </p>
             <a href="/add_card">Add a Card</a>
@@ -106,8 +103,8 @@
       </form>
       </div>
 
-      <footer style="margin-top: 10px" class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; 2017-2018 Heron</p>
+      <footer style="margin-top: 30px" class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1"><font color = "white">&copy; 2017-2018 Heron</font></p>
         <ul class="list-inline">
           <li class="list-inline-item"><a href="#">Privacy</a></li>
           <li class="list-inline-item"><a href="#">Terms</a></li>
