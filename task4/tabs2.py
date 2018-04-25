@@ -70,7 +70,7 @@ timeSpan = 'daily'
 takingsDate = datetime.date.today() #used to keep track of the week in
 
 
-
+# filmData = requests.get("http://localhost:5000/api/films")
 
 filmData = [
     {
@@ -505,7 +505,7 @@ class Compare(QScrollArea):
             bufferTakings.append(takings[index])
         print(bufferTakings)
         print(movieBuffer)
-        print(color_buffer)
+        
 
         self._dynamic_ax.clear()
         self._dynamic_ax.pie(bufferTakings,labels = movieBuffer, autopct='%1.1f%%', shadow=False)
