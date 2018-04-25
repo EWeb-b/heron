@@ -72,87 +72,91 @@ timeSpan = 'daily'
 takingsDate = datetime.date.today() #used to keep track of the week in
 
 
-filmData = requests.get("http://localhost:5000/api/films")
-weekData = requests.get('http://localhost:5000/api/tickets/ticket_types/weekly/2018/16')
-filmData = [
-    {
-        "id": 1,
-        "film_certificate_id": 3,
-        "film_blurb": "Entering dreams.",
-        "film_director": "Christopher Nolan",
-        "film_name": "Inception",
-        "film_actor": "Leonardo DiCaprio"
-    },
-    {
-        "id": 2,
-        "film_certificate_id": 3,
-        "film_blurb": "Home alone, but on mars.",
-        "film_director": "Ridley Scott",
-        "film_name": "The Martian",
-        "film_actor": "Matt Damon"
-    },
-    {
-        "id": 3,
-        "film_certificate_id": 3,
-        "film_blurb": """A team of explorers travel through a wormhole in space
-                            in an attempt to ensure humanity's survival""",
-        "film_director": "Christopher Nolan",
-        "film_name": "Interstellar",
-        "film_actor": "Matthew McConaughey"
-    },
-    {
-        "id": 4,
-        "film_certificate_id": 2,
-        "film_blurb": "Peruvain Bear up to no good",
-        "film_director": "Paul King",
-        "film_name": "Paddington 2",
-        "film_actor": "Ben Wishaw"
-    },
-    {
-        "id": 5,
-        "film_certificate_id": 4,
-        "film_blurb": "Fishman seduces silent woman",
-        "film_director": "Guillermo del Toro",
-        "film_name": "The Shape of Water",
-        "film_actor": "Sally Hawkins"
-    },
-    {
-        "id": 6,
-        "film_certificate_id": 3,
-        "film_blurb": "superhero movie",
-        "film_director": "Ryan Coogler",
-        "film_name": "Black Panther",
-        "film_actor": "Chadwick Boseman"
-    },
-    {
-        "id": 7,
-        "film_certificate_id": 2,
-        "film_blurb": """P. T. Barnum is a man with little more than ambition to
-                        his name. When the company he works for goes bust, he
-                        decides to leave his mediocre life behind, and takes his
-                        family on a journey that would lead to establishing the
-                        foundations of showbusiness.""",
-        "film_director": "Michael Gracey",
-        "film_name": "The Greatest  Showman",
-        "film_actor": "Hugh Jackman"
-    },
-    {
-        "id": 8,
-        "film_certificate_id": 3,
-        "film_blurb": "Horrible remake",
-        "film_director": "Jake Kasden",
-        "film_name": "Jumanji: Welcome to the Jungle",
-        "film_actor": "Dwayne Johnson"
-    },
-    {
-        "id": 9,
-        "film_certificate_id": 1,
-        "film_blurb": "Undead reconcilliation",
-        "film_director": "Lee Unkrich",
-        "film_name": "CoCo",
-        "film_actor": "Anthony Gonzalez"
-    }
-]
+filmData = requests.get("http://localhost:5000/api/films").json()
+
+print('filmData',filmData.get('films'))
+
+weekData = requests.get('http://localhost:5000/api/tickets/ticket_types/weekly/2018/10')
+print('weekData:',weekData.json())
+# filmData = [
+#     {
+#         "id": 1,
+#         "film_certificate_id": 3,
+#         "film_blurb": "Entering dreams.",
+#         "film_director": "Christopher Nolan",
+#         "film_name": "Inception",
+#         "film_actor": "Leonardo DiCaprio"
+#     },
+#     {
+#         "id": 2,
+#         "film_certificate_id": 3,
+#         "film_blurb": "Home alone, but on mars.",
+#         "film_director": "Ridley Scott",
+#         "film_name": "The Martian",
+#         "film_actor": "Matt Damon"
+#     },
+#     {
+#         "id": 3,
+#         "film_certificate_id": 3,
+#         "film_blurb": """A team of explorers travel through a wormhole in space
+#                             in an attempt to ensure humanity's survival""",
+#         "film_director": "Christopher Nolan",
+#         "film_name": "Interstellar",
+#         "film_actor": "Matthew McConaughey"
+#     },
+#     {
+#         "id": 4,
+#         "film_certificate_id": 2,
+#         "film_blurb": "Peruvain Bear up to no good",
+#         "film_director": "Paul King",
+#         "film_name": "Paddington 2",
+#         "film_actor": "Ben Wishaw"
+#     },
+#     {
+#         "id": 5,
+#         "film_certificate_id": 4,
+#         "film_blurb": "Fishman seduces silent woman",
+#         "film_director": "Guillermo del Toro",
+#         "film_name": "The Shape of Water",
+#         "film_actor": "Sally Hawkins"
+#     },
+#     {
+#         "id": 6,
+#         "film_certificate_id": 3,
+#         "film_blurb": "superhero movie",
+#         "film_director": "Ryan Coogler",
+#         "film_name": "Black Panther",
+#         "film_actor": "Chadwick Boseman"
+#     },
+#     {
+#         "id": 7,
+#         "film_certificate_id": 2,
+#         "film_blurb": """P. T. Barnum is a man with little more than ambition to
+#                         his name. When the company he works for goes bust, he
+#                         decides to leave his mediocre life behind, and takes his
+#                         family on a journey that would lead to establishing the
+#                         foundations of showbusiness.""",
+#         "film_director": "Michael Gracey",
+#         "film_name": "The Greatest  Showman",
+#         "film_actor": "Hugh Jackman"
+#     },
+#     {
+#         "id": 8,
+#         "film_certificate_id": 3,
+#         "film_blurb": "Horrible remake",
+#         "film_director": "Jake Kasden",
+#         "film_name": "Jumanji: Welcome to the Jungle",
+#         "film_actor": "Dwayne Johnson"
+#     },
+#     {
+#         "id": 9,
+#         "film_certificate_id": 1,
+#         "film_blurb": "Undead reconcilliation",
+#         "film_director": "Lee Unkrich",
+#         "film_name": "CoCo",
+#         "film_actor": "Anthony Gonzalez"
+#     }
+# ]
 
 
 
@@ -181,9 +185,9 @@ week_data = [[[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1
 
 
 listOfMovieNames = []
-for i in range(len(filmData)):
-    listOfMovieNames.append(filmData[i]["film_name"])
-print(listOfMovieNames)
+for i in range(9):
+    listOfMovieNames.append(filmData.get('films')[i].get('film_name'))
+print('listOfMovieNames',listOfMovieNames)
 def parse_json(film_data, film):
     # this function is designed to parse the json data so that Example.detailWindow can display the correct info
 
@@ -407,7 +411,14 @@ class Takings(QScrollArea):
         #self.colum1 = self.tableWidget.horizontalHeaderItem(1)
         global dailyTOT
         dailyTOT = [0,0,0,0,0,0,0]
+        print('now:',str(now.isocalendar()[1]))
 
+        myresult = requests.get('http://localhost:5000/api/tickets/ticket_types/weekly/2018/'+str(now.isocalendar()[1])).json()
+        print(myresult.get('p'))
+
+        weekData = convert.convert(myresult.get('p'))
+        print('init:', weekData)
+        print('big lad:',weekTakings)
         for i in range(num_of_row-1):
             for j in range(num_of_col-1):
                 self.tableWidget.setItem(i,j, QTableWidgetItem(weekTakings[i][j]))
