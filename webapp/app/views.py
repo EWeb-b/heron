@@ -219,14 +219,18 @@ def change_password():
         if form.validate_on_submit():  # if form data entered correctly
             # current_user is a variable name from flask_login:
             # don't need to create a new user object
-            if current_user.password == form.prev_password.data:
-                current_user.password = form.new_password.data
-                db.session.commit()
-                flash('Password changed successfully')
-                logging.info(
-                    '%s successfully changed their password',
-                    current_user.email)
-                return redirect('/logout')
+            if check_password_hash(current_user.password, form.prev_password.data):
+                if form.new_password.data == form.confirmation.data:
+                    current_user.password = generate_password_hash(form.new_password.data)
+                    db.session.commit()
+                    flash('Password changed successfully')
+                    logging.info(
+                        '%s successfully changed their password',
+                        current_user.email)
+                    return redirect('/profile')
+                else:
+                    flash_errors(form)
+                    return redirect('/change_password')
             else:
                 flash('Previous Password is incorrect')
                 logging.warning(
@@ -235,7 +239,8 @@ def change_password():
                     current_user.email)
                 return redirect('/change_password')
         else:
-            flash('Inputs Missing')
+
+            flash_errors(form)
             logging.warning(
                 'Change password error for %s: form validation error',
                 current_user.email)
