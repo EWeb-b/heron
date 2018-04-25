@@ -214,11 +214,11 @@ def random_date():
 
 # Populate the database with ticket data for 500 tickets.
 print("generating random tickets")
-for x in range(1, 501):
+for x in range(1, 2501):
     sampleTicket = Ticket()
     sampleTicket.owner_account_id = randint(1, 100)
     sampleTicket.ticket_type_id = randint(1, 5)
-    sampleTicket.ticket_screening_id = randint(1, 100)
+    sampleTicket.ticket_screening_id = randint(1, 603)
     sampleTicket.ticket_date_bought = random_date()
     db.session.add(sampleTicket)
 
