@@ -281,8 +281,7 @@ def screening_date(x, z):
 
 # Populate the FilmScreening table.
 print("populating film screenings")
-for x in range(1, 68): # From 1st March to
-
+for x in range(1, 68):  # From 1st March to
 
     f = 1
     for z in range(0, 3):  # 3 different screening times per day

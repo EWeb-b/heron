@@ -63,7 +63,7 @@
 
 <!--Footer-->
 
-<footer class="page-footer font-small unique-color-dark pt-0">
+<footer style="margin-top: 10px" class="page-footer font-small unique-color-dark pt-0">
 
     <div style="background-color: #6351ce;">
         <div class="container">
@@ -95,7 +95,9 @@
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
-                    <a href="">Paddington 2</a>
+                    <a href="/film_info?passed=Paddington+2">Paddington 2</a>
+                    <a href="">CoCo</a>
+                    <a href="">The Shape of Water</a>
                 </p>
             </div>
             <!--/.Second column-->
@@ -110,11 +112,11 @@
                     <a href="/film_details">Films</a>
                 </p>
                 <p>
-                    <a href="/create_account">Sign up</a>
+                    <a href="/create_account">Sign Up</a>
                 </p>
                 {% if current_user.is_authenticated %}
                 <p>
-                    <a href="/login">Sign out</a>
+                    <a href="/login">Log In</a>
                 </p>
                 {% else %}
                 <p>
@@ -142,7 +144,7 @@
     <!--/.Footer Links-->
 
     <!-- Copyright-->
-    <div class="footer-copyright py-3 text-center"><font color = "white">
+    <div style="margin-bottom: 10px" class="footer-copyright py-3 text-center"><font color = "white">
         © 2018 Copyright:
       </font><a href="https://gitlab.com/comp2931/18/heron">
             <strong> Team Heron</strong>
