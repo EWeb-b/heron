@@ -8,9 +8,11 @@ class Account(db.Model):
     """
     Account table represents a user in the database
     The email address will be used as a representation of the account
-    A staff boolean field: true if account is a staff account toerwise false
+    A staff boolean field: true if account is a staff account otherwise false.
 
-    # TODO: Hash passwords!!!
+    Relationships:
+        One Account to many Cards
+        One Account to many Tickets
     """
     __tablename__ = 'account'
 
@@ -40,8 +42,11 @@ class Account(db.Model):
 class Card(db.Model):
     """
     Representation of a debit/credit card.
-    All integer rows are now hashed, but cannot be unhashed. This seems
-    stupid but backlog asks for user security?
+    card_number and some other columns are of type String because the hash
+    function in views.py returns a string.
+
+    Relationships:
+        Many Cards to one Account
     """
     __tablename__ = 'card'
 
@@ -75,6 +80,9 @@ class Certificate(db.Model):
     12 will be '3' in table
     15 will be '4' in table
     18 will be '5' in table
+
+    Relationships:
+        One Certificate to many FilmDetails
     """
     __tablename__ = "certificate"
 
@@ -90,8 +98,11 @@ class FilmDetails(db.Model):
     """
     A representation of a film. Contains movie name, short description(blurb),
     the director of the film, the lead actor of the film and the certificate
-    of the film. screening is a backref so the film_screening table can
-    reference the Film Details.
+    of the film.
+
+    Relationships:
+        Many FilmDetails to one Certificate
+        One FilmDetails to many FilmScreenings
     """
     __tablename__ = 'film_details'
 
@@ -113,9 +124,14 @@ class FilmDetails(db.Model):
 
 class FilmScreening(db.Model):
     """
-    A reperesentation of a film screening consisting of a datetime and film
-    detail.
-    add cinema screen num
+    A reperesentation of a film screening consisting of a datetime.
+    Includes references to FilmDetails, SeatReserved, Ticket, and Theatre
+
+    Relationships:
+        One FilmScreening to many Tickets
+        One FilmScreening to many SeatReserved
+        Many FilmScreenings to one FilmDetails
+        Many FilmScreenings to one Theatre
     """
     __tablename__ = 'film_screening'
 
@@ -140,8 +156,11 @@ class Ticket(db.Model):
     A table containing details for a ticket, including reference to its owner,
     screening, Ticket Type, and seat number
 
-    TODO: check backrefs (they're in the Profile, TicketType, and
-    FilmScreening tables) work
+    Relationships:
+        One Ticket to many SeatReserved
+        Many Tickets to one Account
+        Many Tickets to one FilmScreening
+        Many Tickets to one TicketType
     """
     __tablename__ = 'ticket'
 
@@ -155,8 +174,11 @@ class Ticket(db.Model):
     def __repr__(self):
         return '''<ticket_id: %r, owner_account_id: %r, ticket_type_id: %r,
          ticket_screening_id: %r, ticket_date_bought: %r>''' % (self.id,
-                                                                self.owner_account_id, self.ticket_type_id, self.ticket_screening_id,
-                                                                self.ticket_date_bought)
+                                                                self.owner_account_id,
+                                                                self.ticket_type_id,
+                                                                self.ticket_screening_id,
+                                                                self.ticket_date_bought
+                                                                )
 
     def __json__(self):
         return ['id', 'owner_account_id', 'ticket_type_id', 'ticket_screening_id',
@@ -173,6 +195,9 @@ class TicketType(db.Model):
     Student ticket will be '3' in table
     Child ticket will be '4' in table
     VIP ticket will be '5' in table
+
+    Relationships:
+        One TicketType to many Tickets
     """
     __tablename__ = 'ticket_type'
 
@@ -186,7 +211,12 @@ class TicketType(db.Model):
 
 class SeatReserved(db.Model):
     """
-    Representation of the reserved seats.
+    Representation of the reserved seats for a particular FilmScreening
+
+    Relationships:
+        Many SeatReserved to one Ticket
+        Many SeatReserved to one FilmScreening
+        Many SeatReserved to one Seat
     """
     __tablename__ = 'seat_reserved'
 
@@ -201,7 +231,11 @@ class SeatReserved(db.Model):
 
 class Seat(db.Model):
     """
-    Simple representation of the seats for one of the theatres.
+    Simple representation of the seats for a particular Theatre
+
+    Relationships:
+        One Seat to many SeatReserved
+        Many Seats to one Theatre
     """
     __tablename__ = 'seat'
 
@@ -217,6 +251,10 @@ class Seat(db.Model):
 class Theatre(db.Model):
     """
     Simple representation of the different theatres at the cinema.
+
+    Relationships:
+        One Theatre to many Seats
+        One Theatre to many FilmScreenings
     """
     __tablename__ = 'theatre'
 
