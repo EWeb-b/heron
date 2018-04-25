@@ -17,6 +17,7 @@ class BaseTestCase(TestCase):
         return app
 
     #Create all the tables and destroy them with each unit test to ensure
+    # Add film to database so film dependent routes can be tested.
     # they're clean and self contained.
     def setUp(self):
         db.create_all()
