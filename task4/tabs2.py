@@ -8,7 +8,7 @@ from weeklyBreakDown import *
 import datetime
 import dayDates
 import requests
-
+import tickets2money
 
 from matplotlib.backends.qt_compat import QtCore, QtWidgets, is_pyqt5
 
@@ -34,7 +34,7 @@ mov_det = ''
 #listOfMovieNames = ['Inception', 'The Martian', 'Interstellar','Paddington 2','The Shape of Water','Black Panther','The Greatest Showman','Jumanji: Welcome to the jungle','CoCo'] # To be changed to work with DB
 
 INCdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
-INCtakings = ['120','120','300','200','180','240','150']
+INCtakings = ['88.0', '0.0', '45.0', '88.0', '0.0', '45.0', '0.0']
 
 TMdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
 TMtakings = ['170','120','180','240','150','300','200']
@@ -62,7 +62,7 @@ CCtakings = ['180','240','150','300','160','120','200']
 
 weekTakings = [INCtakings,TMtakings,INTtakings,P2takings,SWtakings,BPtakings,GStakings,JWJtakings,CCtakings]
 
-takings = ['1320', '1222', '950','4378','1320', '1222', '950','4378','46']
+takings = ['1320', '1222', '950','4378','1320', '1222', '950','4378','46'] # Used for pie
 movieBuffer = []
 timeSpan = 'daily'
 
@@ -151,6 +151,30 @@ filmData = [
         "film_actor": "Anthony Gonzalez"
     }
 ]
+
+
+
+
+
+
+INCtakings = ['120','120','300','200','180','240','150']
+
+INCweekly = [[10,2,3,5,1],[0,0,0,0,0]]
+
+week_data = [[[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[0,0,0,0,0]],
+            [[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[0,0,0,0,0]],
+            [[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[0,0,0,0,0]],
+            [[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[0,0,0,0,0]],
+            [[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[0,0,0,0,0]],
+            [[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[0,0,0,0,0]],
+            [[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[0,0,0,0,0]],
+            [[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[0,0,0,0,0]],
+            [[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[0,0,0,0,0]]]
+
+
+
+
+
 
 listOfMovieNames = []
 for i in range(len(filmData)):
@@ -264,8 +288,8 @@ class Takings(QScrollArea):
         for i in range(num_of_row-1):
             for j in range(num_of_col-1):
                 self.tableWidget.setItem(i,j, QTableWidgetItem(weekTakings[i][j]))
-                dailyTOT[j] += int(weekTakings[i][j])
-            self.tableWidget.setItem(i,7, QTableWidgetItem(str(sum(map(int,weekTakings[i])))))
+                dailyTOT[j] += float(weekTakings[i][j])
+            self.tableWidget.setItem(i,7, QTableWidgetItem(str(sum(map(float,weekTakings[i])))))
 
     def make_rank_button(self,button):
         return button.clicked.connect(lambda:self.display_info(button))
@@ -383,8 +407,8 @@ class Takings(QScrollArea):
         for i in range(num_of_row-1):
             for j in range(num_of_col-1):
                 self.tableWidget.setItem(i,j, QTableWidgetItem(weekTakings[i][j]))
-                dailyTOT[j] += int(weekTakings[i][j])
-            self.tableWidget.setItem(i,7, QTableWidgetItem(str(sum(map(int,weekTakings[i])))))
+                dailyTOT[j] += float(weekTakings[i][j])
+            self.tableWidget.setItem(i,7, QTableWidgetItem(str(sum(map(float,weekTakings[i])))))
 
         #map(str,self.dailyTOT)
         #print('TOT:',self.dailyTOT)
@@ -398,7 +422,7 @@ class Takings(QScrollArea):
         super(Takings, self).__init__()
         self.daysWeek = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 
-
+        global now
         now = datetime.datetime.now()
         self.horizontal_headers = dayDates.dayDates(takingsDate)
         self.horizontal_headers.append('Total')
@@ -470,7 +494,47 @@ class Takings(QScrollArea):
         self.setLayout(self.layout)
 
 class Compare(QScrollArea):
+    #pasted in code ends here
 
+    def calc_takings_list(self,list_of_lists):
+        # list_of_lists: weekly ticket data breakdown
+        takings_list = []
+        if len(list_of_lists) == 7:
+            for i in range(7):
+                daily_list = tickets2money.Total(list_of_lists[i])
+                takings_list.append(str(daily_list))
+            return takings_list
+        elif len(list_of_lists) < 7 and takingsDate.isocalendar()[1] == now.isocalendar()[1]:
+            # if True, this means that we're currently in the current week, and we're missing data for future dates of the week
+            # need to add 0.0s to the list
+            day_of_the_week = len(list_of_lists) # int corresponds to day of week
+            for i in range(day_of_the_week):
+                daily_list = tickets2money.Total(list_of_lists[i])
+                takings_list.append(str(daily_list))
+            for i in range(7-day_of_the_week):
+                takings_list.append('0.0')
+            return takings_list
+
+        else:
+            # this means that we're in the week containing the 1st of March, and that there are prevoius dates that we do not have data for
+            # we must hence add 0.0s to the front of the lists
+            day_of_the_week = len(list_of_lists)
+    #print('weekly takings for inception, broken down by days',calc_takings_list(INCweekly))
+
+    def calc_weekly_takings(list_of_lists_of_lists):
+        # list of legnth 9, then
+        # list of length 7, then
+        # list of legnth 5(ticket types)
+        takings_buffer = []
+        for i in range(9):
+            #print(calc_takings_list(list_of_lists_of_lists[i]))
+            takings_buffer.append(calc_takings_list(list_of_lists_of_lists[i]))
+        weekly_buffer = [0,0,0,0,0,0,0]
+        for i in range(7):
+            for j in range(9):
+                weekly_buffer[i] += float(takings_buffer[j][i])
+        return weekly_buffer
+#pasted in code ends here
 
     def removeBuffer(self, button):
         print(button)
@@ -533,7 +597,7 @@ class Compare(QScrollArea):
         print('table')
     def __init__(self):
         super(Compare, self).__init__()
-
+        print('weekly takings for inception, broken down by days',self.calc_takings_list(INCweekly))
         # layout
         layout = QVBoxLayout()
 
