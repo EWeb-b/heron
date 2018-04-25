@@ -160,7 +160,7 @@ class Ticket(db.Model):
 
     def __json__(self):
         return ['id', 'owner_account_id', 'ticket_type_id', 'ticket_screening_id',
-                'ticket_date_bought', 'seat_reserves']
+                'ticket_date_bought']
 
 
 class TicketType(db.Model):
