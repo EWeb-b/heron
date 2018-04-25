@@ -1,61 +1,58 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
 {% block title %}Screenings{% endblock %}}
-   {% block content %}
+{% block content %}
 
-   <head>
-     <link href = "../static/style.css"  type = "text/css" rel = "stylesheet">
-     <link href = "form-validation.css" rel = "stylesheet">
-   </head>
-
-
-
+<head>
+  <link href = "../static/style.css"  type = "text/css" rel = "stylesheet">
+  <link href = "form-validation.css" rel = "stylesheet">
+</head>
 
 <body>
 
-       <div class="container">
-         <div class="jumbotron">
+  <div class="container">
+    <div class="jumbotron">
 
-         <div class="py-5 text-center text-danger">
-           <h2>On Today</h2>
-         </div>
-       </div>
+      <div class="py-5 text-center text-danger">
+        <h2>On Today</h2>
       </div>
-
-
-
-<table class="table table-hover table-sm table-dark table-responsive ">
-
-  <thead>
-    <tr>
-
-      <th scope="col"><font color = "orange">#</font></th>
-      <th scope="col"><font color = "orange">Movie</font></th>
-      <th scope="col"><font color = "orange">Time</font></th>
-      <th scope="col"><font color = "orange">Blurb</font></th>
-
-    </tr>
-  </thead>
-  <tbody>
-    {%for movie in film %}
-    <tr onclick="document.location.href='{{ url_for('film_details', passed=movie.film_name) }}'">
-      <th scope="row">{{loop.index}}</th>
-      <td><font color = "red">{{movie.film_name}}</font></td>
-      <td><font color = "red">10:00/ 14:00 / 20:00</font></td>
-      <td> <font color = "red">{{movie.film_blurb}}</font></td>
-    </tr>
-    {%endfor%}
-  </tbody>
-</table>
-
-<div class="container">
-  &nbsp
-  {%for movie in film %}
-  <div class="py-5 text-center text-danger" align="center">
-      <img src="/static/portraits/{{movie.film_name}}.jpg" alt="Film Image" class="image"></a>
+    </div>
   </div>
-  {%endfor%}
-</div>
+
+
+
+  <table class="table table-hover table-sm table-dark table-responsive ">
+
+    <thead>
+      <tr>
+
+        <th scope="col"><font color = "orange">#</font></th>
+        <th scope="col"><font color = "orange">Movie</font></th>
+        <th scope="col"><font color = "orange">Time</font></th>
+        <th scope="col"><font color = "orange">Blurb</font></th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {%for movie in film %}
+        <tr onclick="document.location.href='{{ url_for('film_details', passed=movie.film_name) }}'">
+          <th scope="row">{{loop.index}}</th>
+          <td><font color = "red">{{movie.film_name}}</font></td>
+          <td><font color = "red">10:00/ 14:00 / 20:00</font></td>
+          <td> <font color = "red">{{movie.film_blurb}}</font></td>
+        </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+
+  <div class="container">
+    &nbsp
+    {%for movie in film %}
+      <div class="py-5 text-center text-danger" align="center">
+        <img src="/static/portraits/{{movie.film_name}}.jpg" alt="Film Image" class="image"></a>
+      </div>
+    {%endfor%}
+  </div>
 </body>
 
 
