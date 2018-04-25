@@ -455,9 +455,12 @@ def list_films():
 def profile():
 
     cards = Card.query.filter_by(account_id=current_user.id).all()
+    tickets = Ticket.query.filter_by(owner_account_id=current_user.id).all()
+    #ticketScreenings = FilmScreening.query.filter_by(id=(Ticket.query.filter_by(owner_account_id=current_user.id).all())).all()
+    # ticketDetails = FilmDetails.query.filter_by(id=ticketScreenings.film_screening_film_det).all()
 
     return render_template(
-        'profile.html', title='User Profile', cards=cards)
+        'profile.html', title='User Profile', cards=cards, tickets=tickets)
 
 
 @app.route('/screenings', methods=['GET'])
