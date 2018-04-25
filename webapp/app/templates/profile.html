@@ -36,6 +36,7 @@
 
             <a href="/add_card"><strong>Add a Card</strong></a></p>
             <a href="/change_password"><strong>Change Password</strong></a>
+            <h3><font color = "black">---------------------------------------</font></h3>
 
           </div>
         </div>
@@ -47,10 +48,12 @@
           <div>
 
             <h4><font color = "black"><strong>Your Tickets</strong></font></h4>
-            {%for ticket in ticketScreenings%}
+            {%for ticket in tickets%}
               <h3><font color = "black">---------------------------------------</font></h3>
-              <h4><font color = "orange"><strong>Date Bought</strong></font></h4>
-              <p><font color = "black">{{ticket.film_screening_time}}</font></p>
+              <h4><font color = "orange"><strong>Film Name</strong></font></h4>
+              <p><font color = "black">{{ticket.film_screening.film_details.film_name}}</font></p>
+              <h4><font color = "orange"><strong>Screening Time</strong></font></h4>
+              <p><font color = "black">{{ticket.film_screening.film_screening_time}}</font></p>
             {%endfor%}
             <h3><font color = "black">---------------------------------------</font></h3>
 
