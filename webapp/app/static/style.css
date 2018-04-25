@@ -20,7 +20,7 @@ body {
             position:center;
             padding-left:
     }
-    
+
 
 /* ---------------- order_ticket css ---------------- */
 * {
@@ -137,6 +137,39 @@ body {
 /* Responsive layout - makes a two detail-column-layout instead of four detail-columns */
 @media screen and (max-width: 500px) {
     .detail-column {
+        -ms-flex: 100%;
+        flex: 100%;
+        max-width: 100%;
+    }
+}
+
+/* ---------------- profile css ---------------- */
+
+
+.profile-row {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+    padding: 0 4px;
+}
+
+/* Create three equal detail-columns that sits next to each other */
+.profile-column {
+    -ms-flex: 50%; /* IE10 */
+    flex: 50%;
+    max-width: 50%;
+    padding: 0 3px;
+}
+
+.profile-column img {
+    margin-top: 8px;
+    vertical-align: middle;
+}
+
+/* Responsive layout - makes a two detail-column-layout instead of four detail-columns */
+@media screen and (max-width: 500px) {
+    .profile-column {
         -ms-flex: 100%;
         flex: 100%;
         max-width: 100%;

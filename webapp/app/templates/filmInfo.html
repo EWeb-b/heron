@@ -1,6 +1,6 @@
-  {% extends "base.html" %}
-  {% block title %}Film Info{% endblock %}
-   {% block content %}
+{% extends "base.html" %}
+{% block title %}Film Info{% endblock %}
+{% block content %}
 
 
 <head>
@@ -10,60 +10,55 @@
 
 
 
-  <body>
-      <div class="info-container">
 
-        <div class="video-background">
-          <div class="video-foreground">
-            {% if film.film_name == 'The Martian' %}
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/ej3ioOneTy8?rel=0&amp;controls=0&amp;showinfo=0&amp;start=8&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            {% elif film.film_name == 'CoCo' %}
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/Ga6RYejo6Hk?rel=0&amp;controls=0&amp;showinfo=0&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            {% elif film.film_name == 'Interstellar' %}
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/Lm8p5rlrSkY?rel=0&amp;controls=0&amp;showinfo=0&amp;start=7&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            {% elif film.film_name == 'Inception' %}
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/YoHD9XEInc0?rel=0&amp;controls=0&amp;showinfo=0&amp;start=9&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            {% elif film.film_name == 'The Shape of Water' %}
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/XFYWazblaUA?rel=0&amp;controls=0&amp;showinfo=0&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            {% elif film.film_name == 'The Greatest Showman' %}
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/AXCTMGYUg9A?rel=0&amp;controls=0&amp;showinfo=0&amp;start=6&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            {% elif film.film_name == 'Paddington 2' %}
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/52x5HJ9H8DM?rel=0&amp;controls=0&amp;showinfo=0&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            {% elif film.film_name == 'Jumanji: Welcome to the Jungle' %}
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/2QKg5SZ_35I?rel=0&amp;controls=0&amp;showinfo=0&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            {% elif film.film_name == 'Black Panther' %}
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/xjDjIWPwcPU?rel=0&amp;controls=0&amp;showinfo=0&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            {% endif %}
-          </div>
-        </div>
+<body>
+  <div class="info-container">
 
-        <div id="vidtop-content">
-          <div class="vid-info" style="margin-top: 100px">
-            <h1>{{film.film_name}}</h1>
-            <p>{{film.film_blurb}}
-            <p>Director: {{film.film_director}}
-            <p>Lead Actor: {{film.film_actor}}
-            <p><img class="" src="static/certificates/U.png" alt="" width="50" height="40">
-            <p>Screening Times:
-              <form method="POST">
-                {{ form.csrf_token }}
-                <fieldset>
-                  <p style="color: black">{{form.time}}<br>
-                  </p>
-
-                  <p><input class="btn btn-danger" type="submit" value="Order Ticket" style="margin-top: 5px"></p>
-                </fieldset>
-              </form>
-            </div>
-
-          </div>
+    <div class="video-background">
+      <div class="video-foreground">
+        {% if film.film_name == 'The Martian' %}
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/ej3ioOneTy8?rel=0&amp;controls=0&amp;showinfo=0&amp;start=8&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        {% elif film.film_name == 'CoCo' %}
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/Ga6RYejo6Hk?rel=0&amp;controls=0&amp;showinfo=0&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        {% elif film.film_name == 'Interstellar' %}
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/Lm8p5rlrSkY?rel=0&amp;controls=0&amp;showinfo=0&amp;start=7&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        {% elif film.film_name == 'Inception' %}
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/YoHD9XEInc0?rel=0&amp;controls=0&amp;showinfo=0&amp;start=9&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        {% elif film.film_name == 'The Shape of Water' %}
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/XFYWazblaUA?rel=0&amp;controls=0&amp;showinfo=0&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        {% elif film.film_name == 'The Greatest Showman' %}
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/AXCTMGYUg9A?rel=0&amp;controls=0&amp;showinfo=0&amp;start=6&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        {% elif film.film_name == 'Paddington 2' %}
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/52x5HJ9H8DM?rel=0&amp;controls=0&amp;showinfo=0&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        {% elif film.film_name == 'Jumanji: Welcome to the Jungle' %}
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/2QKg5SZ_35I?rel=0&amp;controls=0&amp;showinfo=0&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        {% elif film.film_name == 'Black Panther' %}
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/xjDjIWPwcPU?rel=0&amp;controls=0&amp;showinfo=0&autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        {% endif %}
 
       </div>
+    </div>
 
-  </div>
-  </div>
-</div>
+    <div id="vidtop-content">
+      <div class="vid-info" style="margin-top: 100px">
+        <h1>{{film.film_name}}</h1>
+        <p>{{film.film_blurb}}
+        <p>Director: {{film.film_director}}
+        <p>Lead Actor: {{film.film_actor}}
+        <p><img class="" src="static/certificates/U.png" alt="" width="50" height="40">
+        <p>Screening Times:
+          <form method="POST">
+            {{ form.csrf_token }}
+            <fieldset>
+              <p style="color: black">{{form.times}}<br>
+              </p>
 
-   </body>
+              <p><input class="btn btn-danger" type="submit" value="Order Ticket" style="margin-top: 5px"></p>
+            </fieldset>
+          </form>
+      </div>
+    </div>
+  </div>
+</body>
 
 {% endblock %}

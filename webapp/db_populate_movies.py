@@ -221,7 +221,8 @@ for x in range(1, 501):
     sampleTicket.ticket_screening_id = randint(1, 100)
     sampleTicket.ticket_date_bought = random_date()
     db.session.add(sampleTicket)
-    db.session.commit()
+
+db.session.commit()
 
 # Populate the Seat table. This is constant - do not remove.
 print("populating seats")
@@ -234,7 +235,7 @@ for x in range(1,10): # 9 theatres
         newSeat.seat_pos = y
         newSeat.theatre_id = x
         db.session.add(newSeat)
-        db.session.commit()
+db.session.commit()
 
 # Function for creating consecutive dates to be used in the FilmScreening
 # table.
@@ -270,10 +271,6 @@ def screening_date(x, z):
 
 # Populate the FilmScreening table.
 print("populating film screenings")
-<<<<<<< HEAD
-for x in range(1, 68):  # From 1st March to
-=======
->>>>>>> 29cbf86fe41a705cbd28da1ab0b415315b647e6c
 
 for x in range(1, 68): # From 1st March to
     f = 1
@@ -284,8 +281,8 @@ for x in range(1, 68): # From 1st March to
             sampleScreening.theatre_id = q
             sampleScreening.film_screening_film_det = f
             db.session.add(sampleScreening)
-            db.session.commit()
             f = f + 1 # f is incremented to cycle through each film
+db.session.commit()
 
 
 # Create an admin Account.

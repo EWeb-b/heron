@@ -1,88 +1,85 @@
-  {% extends "base.html" %}
-  {% block title %}Order Ticket{% endblock %}
-   {% block content %}
+{% extends "base.html" %}
+{% block title %}Order Ticket{% endblock %}
+{% block content %}
 
-   <head>
-     <link href = "../static/style.css"  type = "text/css" rel = "stylesheet">
-     <link href = "form-validation.css" rel = "stylesheet">
-   </head>
+<head>
+  <link href = "../static/style.css"  type = "text/css" rel = "stylesheet">
+  <link href = "form-validation.css" rel = "stylesheet">
+</head>
 
-  <script>
-    submitTicket = function(){
-        document.forms["ticket"].submit();
-        return true;
-    }
+<script>
+  submitTicket = function(){
+    document.forms["ticket"].submit();
+    return true;
+  }
 </script>
 
-
-
 <body>
-      <div class="container">
-        <center>
-          <div>
-           <h3 style="margin-top: 20px"><font color="white">Ticket Type</font></h3>
-           <form id="ticket" method = 'POST'>
-             {{ form.csrf_token }}
-             <fieldset>
-             <p>{{form.ticket_type}}<br>
-             </p>
+  <center>
+    <div class="container">
+      <h3 style="margin-top: 20px"><font color="white">Ticket Type</font></h3>
+      <form id="ticket" method = 'POST'>
+        {{ form.csrf_token }}
+      <fieldset>
+      <p>{{form.ticket_type}}<br>
+      </p>
 
-             <h3><font color="white">Choose Your Seat</font></h3>
+      <h3><font color="white">Choose Your Seat</font></h3>
 
 
-             <div class="order-row">
-               <div class="order-column">
-                 <img src="/static/Seats/cinema_seat1.png" style="width:100%">
-                 <img src="/static/Seats/cinema_seat_vip9.png" style="width:100%">
-                 <img src="/static/Seats/cinema_seat17.png" style="width:100%">
-               </div>
-               <div class="order-column">
-                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
-                 <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
-                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
-               </div>
-               <div class="order-column">
-                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
-                 <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
-                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
-               </div>
-               <div class="order-column">
-                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
-                 <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
-                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
-               </div>
-               <div class="order-column">
-                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
-                 <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
-                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
-               </div>
-               <div class="order-column">
-                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
-                 <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
-                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
-               </div>
-               <div class="order-column">
-                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
-                 <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
-                 <img src="/static/Seats/cinema_seat.png" style="width:100%">
-               </div>
-               <div class="order-column">
-                 <img src="/static/Seats/cinema_seat8.png" style="width:100%">
-                 <img src="/static/Seats/cinema_seat_vip16.png" style="width:100%">
-                 <img src="/static/Seats/cinema_seat24.png" style="width:100%">
-               </div>
-             </div>
-             <p style="margin-top: 10px">Select Seat: {{form.seat_number}}<br>
-             </p>
+      <div class="order-row">
+        <div class="order-column">
+          <img src="/static/Seats/cinema_seat1.png" style="width:100%">
+          <img src="/static/Seats/cinema_seat_vip9.png" style="width:100%">
+          <img src="/static/Seats/cinema_seat17.png" style="width:100%">
+        </div>
+        <div class="order-column">
+          <img src="/static/Seats/cinema_seat.png" style="width:100%">
+          <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
+          <img src="/static/Seats/cinema_seat.png" style="width:100%">
+        </div>
+        <div class="order-column">
+          <img src="/static/Seats/cinema_seat.png" style="width:100%">
+          <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
+          <img src="/static/Seats/cinema_seat.png" style="width:100%">
+        </div>
+        <div class="order-column">
+          <img src="/static/Seats/cinema_seat.png" style="width:100%">
+          <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
+          <img src="/static/Seats/cinema_seat.png" style="width:100%">
+        </div>
+        <div class="order-column">
+          <img src="/static/Seats/cinema_seat.png" style="width:100%">
+          <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
+          <img src="/static/Seats/cinema_seat.png" style="width:100%">
+        </div>
+        <div class="order-column">
+          <img src="/static/Seats/cinema_seat.png" style="width:100%">
+          <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
+          <img src="/static/Seats/cinema_seat.png" style="width:100%">
+        </div>
+        <div class="order-column">
+          <img src="/static/Seats/cinema_seat.png" style="width:100%">
+          <img src="/static/Seats/cinema_seat_vip.png" style="width:100%">
+          <img src="/static/Seats/cinema_seat.png" style="width:100%">
+        </div>
+        <div class="order-column">
+          <img src="/static/Seats/cinema_seat8.png" style="width:100%">
+          <img src="/static/Seats/cinema_seat_vip16.png" style="width:100%">
+          <img src="/static/Seats/cinema_seat24.png" style="width:100%">
+        </div>
+      </div>
+      <p style="margin-top: 10px">Select Seat: {{form.seat_number}}<br>
+      </p>
 
-           </form>
-           <div>
-            <p><input class="btn btn-danger" type="submit" onclick='submitTicket()' value="Add to Cart" style="margin-top: 15px"></p>
-           </div>
+      </form>
+      <div>
+        <p><input class="btn btn-danger" type="submit" onclick='submitTicket()' value="Add to Cart" style="margin-top: 15px"></p>
+      </div>
 
-       </div>
-    </center>
-  </body>
+    </div>
+  </center>
+</body>
 
 {{ super() }}
 {% endblock %}
