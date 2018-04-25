@@ -412,10 +412,10 @@ def film_details():
     film = models.FilmDetails.query.filter_by(film_name=passed).first_or_404()
     all_screening = models.FilmScreening.query.filter_by(
         film_screening_film_det=film.id).all()
-    # print(all_screening)
-    # available = models.FilmScreening.query.filter(
-#        film_screening_time >= datetime.datetime(2018, 5, 6, 14, 0)).all()
-#    print(available)
+
+    available = models.FilmScreening.query.filter_by(
+        film_screening_time.date()=datetime.date.now())
+    print(available)
 
     if request.method == 'GET':
         return render_template(
