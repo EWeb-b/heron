@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify
 from .models import FilmDetails, Ticket, FilmScreening
 from app import app, db, models
-import json
+from datetime import datetime, date
+from isoweek import Week
 
 
 @app.route('/api/films', methods=['GET'])
@@ -45,3 +46,14 @@ def apiGetScreenings():
     screenings = FilmScreening.query.all()
     return jsonify({"screenings": screenings})
 
+
+@app.route('/api/tickets/weekly/<int:year>/<int:week>', methods=['GET'])
+def apiGetWeeklyTickets(year, week):
+    """ Returns all tickets for the given week
+    """
+    start_day = Week(year, week).monday()
+    end_day = Week(year, week).sunday()
+
+
+    tickets = Ticket.query.join(FilmScreening).
+    return jsonify({"tickets": tickets})
