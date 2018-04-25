@@ -429,13 +429,14 @@ def list_films():
         'filmDetails.html', title='Film List', filmDetails=filmDetails)
 
 
-@app.route('/profile', methods=['GET', 'POST'])
+@app.route('/profile', methods=['GET'])
 @login_required
 def profile():
-    
+
+    cards= Card.query.filter_by(account_id=current_user.id).all()
 
     return render_template(
-        'profile.html', title='User Profile')
+        'profile.html', title='User Profile', cards=cards)
 
 
 @app.route('/screenings', methods=['GET'])

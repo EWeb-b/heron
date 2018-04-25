@@ -145,3 +145,11 @@ font-size: 1.2em !important;
 div.c {
 font-size: 350%;
     }
+
+wcontainer {
+        width: 100px;
+        background: green;
+        border-radius: 15px;
+        margin: 0 auto;
+        text-align: center;
+    }

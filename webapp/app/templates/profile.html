@@ -13,30 +13,32 @@
          </div>
            </div>
 
-           <div class="container">
+           <div class="well-lg">
              <div class="py-5  text-muted">
                <img class="d-block mx-auto mb-4" src="static/visa.png" alt="" width="120" height="120">
                <div>
                  <h5>Cardholder Name</h3>
+                   {%for card in cards%}
+                    <p>xxxx-xxxx-xxxx-{{card.last_four_digits}}</p><br>
+                    {%endfor%}
+
                 <div>
 
                 </div>
-                <h5>Account Number</h3>
+                <h5>Card Number</h3>
                 <div>
 
+                    <a href="/add_card">Add a Card</a>
                 </div>
-                <h5>Sort Code</h3>
-                <div>
-
-                </div>
-
              </div>
            </div>
          </div>
 
-         <div class="container">
-            <div class="py-5 text-right text-muted">
-              <img class="d-block mx-auto mb-4" src="static/history.png" alt="" width="120" height="120">
-            </div>
-          </div>
+
+
+
+
+
+
+
 {% endblock %}
