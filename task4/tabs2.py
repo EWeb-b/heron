@@ -151,7 +151,10 @@ filmData = [
         "film_actor": "Anthony Gonzalez"
     }
 ]
-
+listOfMovieNames = []
+for i in range(len(filmData)):
+    listOfMovieNames.append(filmData[i]["film_name"])
+print(listOfMovieNames)
 def parse_json(film_data, film):
     # this function is designed to parse the json data so that Example.detailWindow can display the correct info
 
