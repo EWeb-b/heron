@@ -9,7 +9,7 @@ import datetime
 import dayDates
 import requests
 import tickets2money
-import convert 
+import convert
 
 from matplotlib.backends.qt_compat import QtCore, QtWidgets, is_pyqt5
 
@@ -72,8 +72,8 @@ timeSpan = 'daily'
 takingsDate = datetime.date.today() #used to keep track of the week in
 
 
-# filmData = requests.get("http://localhost:5000/api/films")
-
+filmData = requests.get("http://localhost:5000/api/films")
+weekData = requests.get('http://localhost:5000/api/tickets/ticket_types/weekly/2018/16')
 filmData = [
     {
         "id": 1,
