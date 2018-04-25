@@ -1,11 +1,13 @@
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-import sys
-from movieDetails import *
+import sys, os
+import json
+from PIL import Image
 from weeklyBreakDown import *
 import datetime
 import dayDates
+import requests
 
 
 from matplotlib.backends.qt_compat import QtCore, QtWidgets, is_pyqt5
@@ -15,6 +17,7 @@ from matplotlib.backends.backend_qt5agg import (
 
 from matplotlib.figure import Figure
 
+mov_det = ''
 
 # listOfMovieNames = ['Black Panther', 'The Shape of Water', 'The Greatest Showman'] # To be changed to work with DB
 # directorNames = ['Ryan Coogler','Guilermo del Toro']
@@ -28,7 +31,7 @@ from matplotlib.figure import Figure
 # GStakings = ['180','240','150','300','160','120','200']
 #
 # weekTakings = [BPtakings,SWtakings,GStakings]
-listOfMovieNames = ['Inception', 'The Martian', 'Interstellar','Paddington 2','The Shape of Water','Black Panther','The Greatest Showman','Jumanji:Welcome to the jungle','CoCo'] # To be changed to work with DB
+listOfMovieNames = ['Inception', 'The Martian', 'Interstellar','Paddington 2','The Shape of Water','Black Panther','The Greatest Showman','Jumanji: Welcome to the jungle','CoCo'] # To be changed to work with DB
 
 INCdaily = [['40','40','40'],['30','50','40'],['120','120','60'],['100','50','50'],['100','40','40'],['100','100','40'],['40','40','70']]
 INCtakings = ['120','120','300','200','180','240','150']
@@ -66,7 +69,187 @@ timeSpan = 'daily'
 
 takingsDate = datetime.date.today() #used to keep track of the week in
 
-color_buffer = []
+
+
+
+filmData = [
+    {
+        "id": 1,
+        "film_certificate_id": 3,
+        "film_blurb": "Entering dreams.",
+        "film_director": "Christopher Nolan",
+        "film_name": "Inception",
+        "film_actor": "Leonardo DiCaprio"
+    },
+    {
+        "id": 2,
+        "film_certificate_id": 3,
+        "film_blurb": "Home alone, but on mars.",
+        "film_director": "Ridley Scott",
+        "film_name": "The Martian",
+        "film_actor": "Matt Damon"
+    },
+    {
+        "id": 3,
+        "film_certificate_id": 3,
+        "film_blurb": """A team of explorers travel through a wormhole in space
+                            in an attempt to ensure humanity's survival""",
+        "film_director": "Christopher Nolan",
+        "film_name": "Interstellar",
+        "film_actor": "Matthew McConaughey"
+    },
+    {
+        "id": 4,
+        "film_certificate_id": 2,
+        "film_blurb": "Peruvain Bear up to no good",
+        "film_director": "Paul King",
+        "film_name": "Paddington 2",
+        "film_actor": "Ben Wishaw"
+    },
+    {
+        "id": 5,
+        "film_certificate_id": 4,
+        "film_blurb": "Fishman seduces silent woman",
+        "film_director": "Guillermo del Toro",
+        "film_name": "The Shape of Water",
+        "film_actor": "Sally Hawkins"
+    },
+    {
+        "id": 6,
+        "film_certificate_id": 3,
+        "film_blurb": "superhero movie",
+        "film_director": "Ryan Coogler",
+        "film_name": "Black Panther",
+        "film_actor": "Chadwick Boseman"
+    },
+    {
+        "id": 7,
+        "film_certificate_id": 2,
+        "film_blurb": """P. T. Barnum is a man with little more than ambition to
+                        his name. When the company he works for goes bust, he
+                        decides to leave his mediocre life behind, and takes his
+                        family on a journey that would lead to establishing the
+                        foundations of showbusiness.""",
+        "film_director": "Michael Gracey",
+        "film_name": "The Greatest  Showman",
+        "film_actor": "Hugh Jackman"
+    },
+    {
+        "id": 8,
+        "film_certificate_id": 3,
+        "film_blurb": "Horrible remake",
+        "film_director": "Jake Kasden",
+        "film_name": "Jumanji: Welcome to the Jungle",
+        "film_actor": "Dwayne Johnson"
+    },
+    {
+        "id": 9,
+        "film_certificate_id": 1,
+        "film_blurb": "Undead reconcilliation",
+        "film_director": "Lee Unkrich",
+        "film_name": "CoCo",
+        "film_actor": "Anthony Gonzalez"
+    }
+]
+
+def parse_json(film_data, film):
+    # this function is designed to parse the json data so that Example.detailWindow can display the correct info
+
+    raw_info = list(filter(lambda person: person["film_name"] == film, filmData)) #returns list of movie
+    print('raw_info',raw_info)
+    director = raw_info[0]['film_director']
+    actor = raw_info[0]['film_actor']
+    blurb = raw_info[0]['film_blurb']
+    certificate = raw_info[0]['film_certificate_id']
+    id = raw_info[0]['id']
+
+
+
+    return film, director,actor,blurb,certificate,id
+
+#print(parse_json(filmData,"The Greatest  Showman"))
+
+class Details(QWidget):
+
+    def __init__(self):
+        super().__init__()
+        #data = parse_json(filmData,mov_det)
+        print('argument mov_det ==',mov_det)
+        data = parse_json(filmData, mov_det) # this argument needs to come from button clicked in tabs2.py
+        print('data!!!!!!!',data)
+        # unravel tuple to input argument
+        film = data[0]
+        director = data[1]
+        actor = data[2]
+        blurb = data[3]
+        certificate = data[4]
+        id = data[5]
+
+        detailWindow(self,film,director,actor,blurb,certificate,id)
+
+
+
+def detailWindow(self,title,director,actor,blurb,certificate,id):
+    self.setWindowTitle(title)
+    self.setWindowIcon(QIcon('heron2.png'))
+    closeButton = QPushButton("Close")
+    closeButton.clicked.connect(self.close)
+
+    titleLabel = QLabel()
+    titleLabel.setText(title)
+    titleLabel.setStyleSheet('font-weight: bold; font-size: 35px;')
+
+    directorLabel = QLabel()
+    directorLabel.setText('Director: '+director)
+    directorLabel.setStyleSheet('font-weight: bold; font-size: 20px;')
+
+    actorLabel = QLabel()
+    actorLabel.setText('Lead Actor: '+actor)
+    actorLabel.setStyleSheet('font-weight: bold; font-size: 20px;')
+
+    blurbLabel = QLabel()
+    blurbLabel.setText('Blurb: '+blurb)
+    blurbLabel.setStyleSheet('font-weight: bold; font-size: 20px;')
+
+    # blurb = QLabel()
+    # blurb.setText('Ryan Coogler')
+    # blurb.setStyleSheet('font-weight: bold; font-size: 20px;')
+
+    poster = QLabel()
+    script_dir = sys.path[0]
+    #img_path = os.path.join(script_dir, '../webapp/app/static/portraits/' + title +'.jpg')
+    # img_path = open('portraits/' + str(id) +'.jpg')
+    #
+    # print('img_path',img_path)
+
+    # img = Image.open('./portraits/' + str(id) +'.png')
+    # img.show()
+    # print('type',type(img))
+    poster.setPixmap(QPixmap('./portraits/' + str(id) +'.png'))
+
+    hbox = QHBoxLayout()
+    details = QVBoxLayout()
+    hbox.addLayout(details)
+
+    details.addWidget(directorLabel)
+    details.addWidget(actorLabel)
+    details.addWidget(blurbLabel)
+    hbox.addWidget(poster)
+
+    vbox = QVBoxLayout()
+    vbox.addWidget(titleLabel)
+    vbox.addLayout(hbox)
+    vbox.addWidget(closeButton)
+    self.setLayout(vbox)
+
+    # self.setGeometry(300, 300, 300, 150)
+    # self.setWindowTitle('Buttons')
+    self.show()
+
+
+
+
+
 class Takings(QScrollArea):
     def update_takings_tabe(self):
         print('update table!!!!')
@@ -81,11 +264,12 @@ class Takings(QScrollArea):
         return button.clicked.connect(lambda:self.display_info(button))
 
     def display_info(self,button):
-        print('INFO!!',button.text()[2:])
+        #print('INFO!!',button.text()[2:])
 
         global mov_det # global variable to be passed between Takings and Example classes
-        mov_det = button.text()[2:]
-        self.dialog = Example()
+        mov_det = button.text()[3:]
+        print('mov_det',mov_det)
+        self.dialog = Details()
 
         self.dialog.show()
 
@@ -108,14 +292,14 @@ class Takings(QScrollArea):
             #print('ahhh:',currentQTableWidgetItem.columnSpan(row,col))
             if col == 7 and row != 9:
                 print('weekly total!')
-                self.dialog = Example()
+                self.dialog = Details()
                 self.dialog.show()
             elif row == 9 and col != 7: # needs to be changed to take len(rows)
                 print('daily total!')
                 weeklyBAR('06/04/2018')
 
         # detapp = QApplication(sys.argv)
-        # ex = Example()
+        # ex = Details()
         # ex.show()
         # sys.exit(detapp.exec_())
 
