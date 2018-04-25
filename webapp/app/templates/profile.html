@@ -15,13 +15,11 @@
 
 </head>
 
-                   {%for card in cards%}
-                   <h4><font color = "#ff7214"><strong>Cardholder Name</strong></font></h4>
-                    <p><font color = "black">{{card.name_on_card}}</font></p>
-                    <h4><font color = "#ff7214"><strong>Card Number</strong></font></h4>
-                    <p><font color = "black">xxxx-xxxx-xxxx-{{card.last_four_digits}}</font></p>&nbsp;
-                    {%endfor%}
-
+<body>
+  <div class="container">
+    <div class="profile-row">
+      <div class="profile-column">
+        <div class="white_one_container">
           <img class="d-block mx-auto mb-4" src="static/visa.png" alt="" width="120" height="120">
           <div>
 
@@ -42,6 +40,7 @@
           </div>
         </div>
       </div>
+
       <div class="profile-column">
         <div class="white_one_container">
           <img class="d-block mx-auto mb-4" src="static/ticket.png" alt="" width="120" height="120">
@@ -51,7 +50,7 @@
             <h4><font color = "black"><strong>Your Tickets</strong></font></h4>
             {%for ticket in tickets%}
               <h3><font color = "black">---------------------------------------</font></h3>
-              <h4><font color = "orange"><strong>Film Name</strong></font></h4>
+              <h4><font color = "orange"><strong>Film</strong></font></h4>
               <p><font color = "black">{{ticket.film_screening.film_details.film_name}}</font></p>
               <h4><font color = "orange"><strong>Screening Time</strong></font></h4>
               <p><font color = "black">{{ticket.film_screening.film_screening_time}}</font></p>
@@ -59,21 +58,12 @@
             <h3><font color = "black">---------------------------------------</font></h3>
 
           </div>
-
-
         </div>
       </div>
+
     </div>
   </div>
-
-
-
-
 </body>
-
-
-
-
 
 
 
