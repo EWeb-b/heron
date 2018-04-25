@@ -1,10 +1,11 @@
 from app import app, models, db
+from datetime import datetime
 import unittest
 import flask_testing
 from flask import Flask, request
 from flask_testing import TestCase
 from flask_login import LoginManager, current_user, AnonymousUserMixin
-from app.models import Account, FilmDetails
+from app.models import Account, FilmDetails, FilmScreening
 
 
 
@@ -21,13 +22,14 @@ class BaseTestCase(TestCase):
     # they're clean and self contained.
     def setUp(self):
         db.create_all()
-        db.session.add(FilmDetails(film_certificate_id=3,
+        db.session.add(FilmDetails(id=1,film_certificate_id=3,
         film_blurb="""An astronaut becomes stranded on Mars after his team
         assume him dead, and must rely on his ingenuity to find
         a way to signal to Earth that he is alive.""",
         film_director="Ridley Scott",
         film_name="The Martian",
         film_actor="Matt Damon"))
+        db.session.add(FilmScreening(id=1,film_screening_film_det=1 ,film_screening_time=datetime.now()))
         db.session.commit()
 
     def tearDown(self):
@@ -58,9 +60,45 @@ class FlaskTestCase(BaseTestCase):
         data=dict(email=email, password=password, passwordCheck=passwordCheck),
         follow_redirects=True)
 
-#------------------------------------------------------------------------------#
+#---------------------------API response testing------------------------------#
 
+    #test route for querying all films
+    def test_api_films(self):
+        response = self.client.get('/api/films', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
 
+    #test route for querying all tickets
+    def test_api_tickets(self):
+        response = self.client.get('/api/tickets', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
+
+    #test route for querying all screenings in the database
+    def test_api_film_screenings(self):
+        response = self.client.get('/api/films/1/screenings', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
+
+    # test route for querying all tickets for the given screening
+    def test_api_screening_number(self):
+        response = self.client.get('/api/tickets/screening/1', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
+
+    # test route for querying all screenings in the database
+    def test_api_screenings(self):
+        response = self.client.get('/api/screenings', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
+
+    # test route for querying all tickets for the given week
+    def test_api_weekly_ticket_data(self):
+        response = self.client.get('/api/tickets/weekly/2018/1', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
+
+    #test api route for querying tickets of a given week of a year
+    def test_api_hot_shit(self):
+        response = self.client.get('/api/tickets/ticket_types/weekly/2018/2', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
+
+        
+#---------------------------webapp endpoint testing-----------------------------#
     # ensure flask set up correctly
     def test_index(self):
         response = self.client.get('/home', content_type='html/text')

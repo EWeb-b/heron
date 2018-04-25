@@ -42,10 +42,9 @@ def hashNumber(numberToBeHashed):
 
 def qrStringEncoder(string):
     cwd = os.getcwd()
-    print(cwd)
     qrcode = pyqrcode.create(string)
     qrcode.png(cwd+'/ticketQrCode.png', scale=8)
-    print(qrcode.terminal(quiet_zone=1))
+
 
 
 @login_manager.user_loader

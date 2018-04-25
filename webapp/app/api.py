@@ -4,9 +4,7 @@ from app import app, db, models
 from datetime import datetime, date, timedelta
 import isoweek
 from sqlalchemy import func, and_
-import pprint
 
-pp=pprint.PrettyPrinter(indent=4)
 
 @app.route('/api/films', methods=['GET'])
 def apiGetMovies():
@@ -63,15 +61,12 @@ def apiGetWeeklyTickets(year, week):
 @app.route('/api/tickets/ticket_types/weekly/<int:year>/<int:week>', methods=['GET'])
 def apiTicketTypes(year, week):
     n_films = FilmDetails.query.count()
-    print(n_films)
     p = []
     q = []
     dt_s = isoweek.Week(year, week).monday()
     for film in range(1, n_films + 1):
         for iter_date in (dt_s + timedelta(n) for n in range(7)):
-            print(iter_date)
             q.append(db.session.query(Ticket.ticket_type_id, func.count("*")).join(FilmScreening).join(FilmDetails).filter(FilmDetails.id==film, FilmScreening.film_screening_time.between(iter_date, iter_date + timedelta(1))).group_by(Ticket.ticket_type_id).all())
         p.append(q)
         q = []
-    pp.pprint(p)
     return jsonify({'p':p})
