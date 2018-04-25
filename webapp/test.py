@@ -3,9 +3,8 @@ import unittest
 import flask_testing
 from flask import Flask, request
 from flask_testing import TestCase
-from flask.ext.login import current_user
 from flask_login import LoginManager, current_user, AnonymousUserMixin
-from app.models import Account
+from app.models import Account, FilmDetails
 
 
 
@@ -18,11 +17,17 @@ class BaseTestCase(TestCase):
         return app
 
     #Create all the tables and destroy them with each unit test to ensure
+    # Add film to database so film dependent routes can be tested.
     # they're clean and self contained.
     def setUp(self):
         db.create_all()
-        db.session.add(Account(email='jack@yahooo.com', password='password'))
-
+        db.session.add(FilmDetails(film_certificate_id=3,
+        film_blurb="""An astronaut becomes stranded on Mars after his team
+        assume him dead, and must rely on his ingenuity to find
+        a way to signal to Earth that he is alive.""",
+        film_director="Ridley Scott",
+        film_name="The Martian",
+        film_actor="Matt Damon"))
         db.session.commit()
 
     def tearDown(self):
@@ -51,8 +56,7 @@ class FlaskTestCase(BaseTestCase):
         return self.client.post(
         '/create_account',
         data=dict(email=email, password=password, passwordCheck=passwordCheck),
-        follow_redirects=True
-        )
+        follow_redirects=True)
 
 #------------------------------------------------------------------------------#
 
@@ -77,13 +81,23 @@ class FlaskTestCase(BaseTestCase):
         response = self.client.get('/screenings', content_type='html/text',follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(b'On Today' in response.data)
-        print (response.data)
+
+    # ensure order ticket page loads
+    def test_order_ticket_page_requires_login(self):
+        response = self.client.get('/order_ticket', content_type='html/text',follow_redirects=True)
+        self.assertEqual(response.status_code, 404)
+
+    # ensure order ticket page loads
+    def test_change_password_page_loads(self):
+        self.register('jack@yah.com','password', 'password')
+        self.login('jack@yeh.com', 'password')
+        response = self.client.get('/change_password', content_type='html/text',follow_redirects=True)
+        self.assertTrue(b'Change Password' in response.data)
 
     # ensure film_details page loads
     def test_film_details_page_loads(self):
         response = self.client.get('/film_details',content_type='html/text')
         self.assertEqual(response.status_code, 200)
-        print(response.data)
 
     #ensure profile requires login.
     def test_profile_requires_login(self):
@@ -94,6 +108,8 @@ class FlaskTestCase(BaseTestCase):
     def test_logout_route_requires_login(self):
         response = self.client.get('/logout', follow_redirects=True)
         self.assertIn(b'Please log in to access this page', response.data)
+
+#-----------------------Form Validation---------------------------------------#
 
     # ensure login works with correct account
     def test_working_login(self):
@@ -138,13 +154,71 @@ class FlaskTestCase(BaseTestCase):
     def test_add_payment_method(self):
         self.register("bob@gmail.com", "bob", 'bob')
         response = self.client.post('/add_card',
-                data=dict( password='bob', name_on_card='bob', billing_address='house',
+                data=dict( password='bob', name_on_card='bob',
+                billing_address='house',
                 card_number=1234123412341234,cvc=123,expiry_date_month=12,
                 expiry_date_year=2018
                 ), follow_redirects=True)
         self.assertIn(b'successfully added card', response.data)
 
     #Test change password.
+    def test_change_password(self):
+        self.register('jonah@me.com', 'jonah','jonah')
+        response = self.client.post('/change_password',
+                    data=dict(prev_password='jonah',
+                    new_password='jack', confirmation='jack'),
+                    follow_redirects=True)
+        self.assertIn(b'Password changed successfully', response.data)
+
+    #ensure film_details page loads
+    def test_select_screening(self):
+        response = self.client.get('/film_info?passed=The+Martian',content_type='html/text')
+        self.assertEqual(response.status_code, 200)
+
+    #Test select viewing time.
+    def test_select_viewing_time(self):
+        self.register('jonah@me.com', 'jonah','jonah')
+        response = self.client.post('/film_info?passed=The+Martian',
+                data=dict(times='10am')
+                ,follow_redirects=True)
+        self.assertIn(b'Ticket Type', response.data)
+
+
+    #Test order_ticket
+    def test_order_ticket(self):
+        self.register('jonah@me.com', 'jonah','jonah')
+        self.client.post('/film_info?passed=The+Martian',
+                        data=dict(times='10am')
+                        ,follow_redirects=True)
+        response = self.client.post('/order_ticket',
+                    data=dict(ticket_type='student',
+                    seat_number=('1')),
+                    follow_redirects=True)
+        self.assertIn(b'Checkout', response.data)
+
+    #fully test the purchasing a ticket.
+    def test_purchase_ticket(self):
+        self.register('jonah@me.com', 'jonah','jonah')
+        self.client.post('/add_card',
+                        data=dict( password='jonah', name_on_card='bob',
+                        billing_address='house',
+                        card_number=1234123412341234,cvc=123,expiry_date_month=12,
+                        expiry_date_year=2018
+                        ), follow_redirects=True)
+        self.client.post('/film_info?passed=The+Martian',
+                        data=dict(times='10am')
+                        ,follow_redirects=True)
+        self.client.post('/order_ticket',
+                        data=dict(ticket_type='student',
+                        seat_number=('1')),
+                        follow_redirects=True)
+        response = self.client.post('/basket',
+                        data=dict( first_name='jonah', last_name='poo',
+                        address='i like turtles',
+                        postcode='bradley stoke boy', card=1234),
+                        follow_redirects=True)
+        self.assertIn(b'Order successfully registered', response.data)
+
 
 
 
