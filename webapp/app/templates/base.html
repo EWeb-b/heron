@@ -2,12 +2,12 @@
 {% block title %}Home{% endblock %}
 {% block styles %}
 {{ super() }}
-<link href = "../static/style.css" rel = "stylesheet" type = "text/css">
+
+<head>
+  <link href = "../static/style.css" rel = "stylesheet" type = "text/css">
+</head>
 {% endblock %}
 
-<style>
-
-</style>
 
 <body>
 
@@ -35,10 +35,10 @@
     <ul class="nav navbar-nav navbar-right">
   <li><a href="/basket"><span class="glyphicon glyphicon-shopping-cart"></span> Basket</a></li>
   <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Profile </a></li>
-  <li><a href="/create_account"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
   {% if current_user.is_authenticated %}
   <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
   {% else %}
+  <li><a href="/create_account"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
   <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
   {% endif %}
   <li class="mainnav__search" data-fadeIndex="10"><a href="#" data-grunticon-embed class="icon icon-search"></a></li>
@@ -98,7 +98,7 @@
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
-                    <a href="#!">Mad Max</a>
+                    <a href="">Paddington 2</a>
                 </p>
             </div>
             <!--/.Second column-->
@@ -111,9 +111,6 @@
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
                     <a href="/film_details">Films</a>
-                </p>
-                <p>
-                    <a href="/book_tickets">Book Tickets</a>
                 </p>
                 <p>
                     <a href="/create_account">Sign up</a>

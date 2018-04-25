@@ -1,8 +1,11 @@
-<!DOCTYPE html>
   {% extends "base.html" %}
   {% block title %}Order Ticket{% endblock %}
    {% block content %}
 
+   <head>
+     <link href = "../static/style.css"  type = "text/css" rel = "stylesheet">
+     <link href = "form-validation.css" rel = "stylesheet">
+   </head>
 
    <style>
    * {
@@ -49,18 +52,14 @@
    }
    </style>
 
-<script>
+  <script>
     submitTicket = function(){
         document.forms["ticket"].submit();
         return true;
     }
 </script>
 
-<html lang="en">
-  <head>
-    <link href = "style.css" rel = "stylesheet">
-    <link href="form-validation.css" rel="stylesheet">
-  </head>
+
 
 <body>
       <div class="container">
@@ -74,7 +73,7 @@
              </p>
 
              <h3>Choose Your Seat</h3>
-            <!-- <p style="color: #ff7214">&#x25CF; VIP</p> -->
+
 
              <div class="row">
                <div class="column">
@@ -125,9 +124,10 @@
            <div>
             <p><input class="btn btn-danger" type="submit" onclick='submitTicket()' value="Add to Cart" style="margin-top: 15px"></p>
            </div>
+
        </div>
     </center>
   </body>
 
-</html>
+
 {% endblock %}
