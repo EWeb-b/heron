@@ -23,35 +23,33 @@
 
 <a class="navbar-brand" href="/home">
   <img src="static/heronLogo.png" style="margin-top:-12.5px" width="45" height="45" class="d-inline-block align-top" alt="">
-
     <ul class="nav navbar-nav" style="margin-left: -10px">
-
       <li><a class="nav-link" href="/film_details">Films</a></li>
       <li><a class="nav-link" href="/screenings">Screenings</a></li>
     </ul>
-    <ul class="nav navbar-nav navbar-right">
-  <li><a href="/basket"><span class="glyphicon glyphicon-shopping-cart"></span> Basket</a></li>
-  <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Profile </a></li>
-  {% if current_user.is_authenticated %}
-  <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-  {% else %}
-  <li><a href="/create_account"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-  <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-  {% endif %}
-  <li class="mainnav__search" data-fadeIndex="10"><a href="#" data-grunticon-embed class="icon icon-search"></a></li>
 
-</ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/basket"><span class="glyphicon glyphicon-shopping-cart"></span> Basket</a></li>
+      <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> Profile </a></li>
+      {% if current_user.is_authenticated %}
+        <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      {% else %}
+        <li><a href="/create_account"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      {% endif %}
+      <li class="mainnav__search" data-fadeIndex="10"><a href="#" data-grunticon-embed class="icon icon-search"></a></li>
+    </ul>
   </div>
 </nav>
 
 <div style="color: white">
     {% with messages = get_flashed_messages() %}
     {% if messages %}
-    <ul>
-      {% for message in messages %}
-      <li>{{ message }} </li>
-      {% endfor %}
-    </ul>
+      <ul>
+        {% for message in messages %}
+          <li>{{ message }} </li>
+        {% endfor %}
+      </ul>
     {% endif %}
     {% endwith %}
 </div>
@@ -63,17 +61,80 @@
 
 <!--Footer-->
 
-<footer class="page-footer font-small unique-color-dark pt-0">
+<footer style="margin-top: 10px" class="page-footer font-small unique-color-dark pt-0">
 
-    <div style="background-color: #6351ce;">
-        <div class="container">
-            <!--Grid row-->
-            <div class="row py-4 d-flex align-items-center">
+  <div style="background-color: #6351ce;">
+    <div class="container">
+      <!--Grid row-->
+      <div class="row py-4 d-flex align-items-center">
 
-            </div>
-            <!--Grid row-->
-        </div>
+      </div>
+      <!--Grid row-->
     </div>
+  </div>
+
+  <!--Footer Links-->
+  <div class="container mt-5 mb-4 text-center text-md-left">
+    <div class="row mt-3">
+
+      <!--First column-->
+      <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
+        <h6 class="text-uppercase font-weight-bold">
+            <strong><font color = "orange">Team Heron</font></strong>
+        </h6>
+
+        <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+        <p><font color = "white">This is Team Heron's submission for Software Project.</font></p>
+      </div>
+
+      <!--Second column-->
+      <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+        <h6 class="text-uppercase font-weight-bold">
+          <strong><font color = "orange">Latest Films</font></strong>
+        </h6>
+        <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+        <p>
+          <a href="">Paddington 2</a>
+        </p>
+      </div>
+      <!--/.Second column-->
+
+      <!--Third column-->
+      <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+        <h6 class="text-uppercase font-weight-bold">
+            <strong><font color = "orange">Useful links</font></strong>
+        </h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+            <a href="/film_details">Films</a>
+          </p>
+          <p>
+            <a href="/create_account">Sign up</a>
+          </p>
+          {% if current_user.is_authenticated %}
+            <p>
+              <a href="/login">Sign out</a>
+            </p>
+            {% else %}
+            <p>
+              <a href="#!">Sign in</a>
+            </p>
+          {% endif %}
+      </div>
+      <!--/.Third column-->
+
+      <!--Fourth column-->
+      <div class="col-md-4 col-lg-3 col-xl-3">
+        <h6 class="text-uppercase font-weight-bold">
+          <strong><font color = "orange">Contact</font></strong>
+        </h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+            <i class="fa fa-envelope mr-3"></i><font color = "white"> movies.heron@gmail.com</font></p>
+          <p>
+            <i class="fa fa-print mr-3"></i><font color = "white"> + 044 7 78778  7878</font></p>
+      </div>
+      <!--/.Fourth column-->
 
     <!--Footer Links-->
     <div class="container mt-5 mb-4 text-center text-md-left">
@@ -82,7 +143,7 @@
             <!--First column-->
             <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
                 <h6 class="text-uppercase font-weight-bold">
-                    <strong><font color = "orange">Team Heron</font></strong>
+                    <strong><font color = "#ff7214">Team Heron</font></strong>
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p><font color = "white">This is Team Heron's submission for Software Project.</font></p>
@@ -91,11 +152,12 @@
             <!--Second column-->
             <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                 <h6 class="text-uppercase font-weight-bold">
-                    <strong><font color = "orange">Latest Films</font></strong>
+                    <strong><font color = "#ff7214">Latest Films</font></strong>
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                <p>
-                    <a href="">Paddington 2</a>
+                <p><a href="/film_info?passed=Paddington+2">Paddington 2</a></p>
+                <p><a href="/film_info?passed=CoCo">CoCo</a></p>
+                <p><a href="/film_info?passed=The+Shape+of+Water">The Shape of Water</a></p>
                 </p>
             </div>
             <!--/.Second column-->
@@ -103,22 +165,22 @@
             <!--Third column-->
             <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                 <h6 class="text-uppercase font-weight-bold">
-                    <strong><font color = "orange">Useful links</font></strong>
+                    <strong><font color = "#ff7214">Useful links</font></strong>
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
                     <a href="/film_details">Films</a>
                 </p>
-                <p>
-                    <a href="/create_account">Sign up</a>
-                </p>
                 {% if current_user.is_authenticated %}
                 <p>
-                    <a href="/login">Sign out</a>
+                    <a href="/logout">Log out</a>
                 </p>
                 {% else %}
                 <p>
-                    <a href="#!">Sign in</a>
+                    <a href="/login">Log In</a>
+                </p>
+                <p>
+                    <a href="/create_account">Sign Up</a>
                 </p>
                 {% endif %}
             </div>
@@ -127,7 +189,7 @@
             <!--Fourth column-->
             <div class="col-md-4 col-lg-3 col-xl-3">
                 <h6 class="text-uppercase font-weight-bold">
-                    <strong><font color = "orange">Contact</font></strong>
+                    <strong><font color = "#ff7214">Contact</font></strong>
                 </h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
@@ -139,10 +201,11 @@
 
         </div>
     </div>
-    <!--/.Footer Links-->
+  </div>
+  <!--/.Footer Links-->
 
     <!-- Copyright-->
-    <div class="footer-copyright py-3 text-center"><font color = "white">
+    <div style="margin-bottom: 10px" class="footer-copyright py-3 text-center"><font color = "white">
         © 2018 Copyright:
       </font><a href="https://gitlab.com/comp2931/18/heron">
             <strong> Team Heron</strong>

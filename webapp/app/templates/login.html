@@ -7,40 +7,39 @@
   <link href = "form-validation.css" rel = "stylesheet">
 </head>
 
-
-
-
+<body>
   <div>
     <div class="container">
       <div class="py-5 text-center text-muted">
-        <img class="d-block mx-auto mb-4" src="static/heronLogo.png" alt="" width="92" height="72">
+        <img class="d-block mx-auto mb-4" src="static/heronLogo.png" alt="" width="90" height="90">
         <h2><font color = "white">Login</font></h2>
       </div>
       <center>
        <!-- <pre align = "center">Log into Your Account</pre></br> -->
        <form style="margin-top: 100px" method="post" action="/login" align = "center">
          {{ form.hidden_tag() }}
-         <a class= "py-5 text-center text-muted" align = "center"  style="margin-bottom:10px"><font color = "orange"><strong>Email</strong></font> </a>
+         <a class= "py-5 text-center text-muted" align = "center"  style="margin-bottom:10px"><font color = "#ff7214"><strong>Email</strong></font> </a>
          <p>{{ form.email }}<br>
             {% for error in form.email.errors %}
-            <span style="color: red;">{{ error }}</span>
+              <span style="color: red;">{{ error }}</span>
             {% endfor %}
-         </p>
+          </p>
 
 
-         <a class= "py-5 text-center text-muted" align = "center" style="margin-bottom:10px"><font color = "orange"><strong>Password </strong></font></a>
+         <a class= "py-5 text-center text-muted" align = "center" style="margin-bottom:10px"><font color = "#ff7214"><strong>Password </strong></font></a>
          <p>{{ form.password }}<br>
             {% for error in form.password.errors %}
-            <span style="color: red;">{{ error }}</span>
+              <span style="color: red;">{{ error }}</span>
             {% endfor %}
-         </p>
-         <button type="submit" class="btn btn-danger" value="Log In" style="margin-top: 5px">Log In</button></p>
+          </p>
 
-       <a href="create_account" align = "center" class="font-weight-light" >Create Account</a>
+          <button type="submit" class="btn btn-danger" value="Log In" style="margin-top: 5px">Log In</button></p>
+          <a href="create_account" align = "center" class="font-weight-light" >Create Account</a>
 
-
-     </form>
+        </form>
+      </center>
    </div>
- </div>
+  </div>
+</body>
 
 {% endblock %}

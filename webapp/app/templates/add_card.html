@@ -9,58 +9,60 @@
 <div>
   <div class="container">
     <div class="py-5 text-center text-muted">
-      <img class="d-block mx-auto mb-4" src="static/heronLogo.png" alt="" width="92" height="72">
+      <img class="d-block mx-auto mb-4" src="static/heronLogo.png" alt="" width="90" height="90">
       <h2><font color = "white">Add Card</font></h2>
     </div>
-
-<form action="/add_card" method="POST" style="margin-top: 100px" align="center">
+<center>
+<form action="/add_card" method="POST" style="margin-top: 50px" align="center">
     {{ form.hidden_tag() }}
-    <a><tab1><font color = "orange"> Account Password </font></a></tab1>
+    <a><tab1><font color = "#ff7214"> Account Password </font></a></tab1>
     <p>{{ form.password }}<br>
        {% for error in form.password.errors %}
        <span style="color: red;">{{ error }}</span>
        {% endfor %}
     </p>
-    <a><tab1><font color = "orange">  Name on Card</font></tab1></a>
+    <a><tab1><font color = "#ff7214">  Name on Card</font></tab1></a>
     <p>{{ form.name_on_card }}<br>
        {% for error in form.name_on_card.errors %}
        <span style="color: red;">{{ error }}</span>
        {% endfor %}
     </p>
-    <a><tab1><font color = "orange"> Billing Address </font></a></tab1>
+    <a><tab1><font color = "#ff7214"> Billing Address </font></a></tab1>
     <p>{{ form.billing_address }}<br>
        {% for error in form.billing_address.errors %}
        <span style="color: red;">{{ error }}</span>
        {% endfor %}
     </p>
-    <a><tab1><font color = "orange"> Card Number</font></a></tab1>
+    <a><tab1><font color = "#ff7214"> Card Number</font></a></tab1>
     <p>{{ form.card_number }}<br>
         {% for error in form.card_number.errors %}
         <span style="color: red;">{{ error }}</span>
         {% endfor %}
     </p>
-    <a><tab1><font color = "orange"> CVC </font></a></tab1>
+    <a><tab1><font color = "#ff7214"> CVC </font></a></tab1>
     <p>{{ form.cvc }}<br>
         {% for error in form.cvc.errors %}
         <span style="color: red;">{{ error }}</span>
         {% endfor %}
     </p>
-    <a><tab1><font color = "orange"> Expiry month </font></a></tab1>
+    <a><tab1><font color = "#ff7214"> Expiry month </font></a></tab1>
     <p>{{ form.expiry_date_month }}<br>
         {% for error in form.expiry_date_month.errors %}
         <span style="color: red;">{{ error }}</span>
         {% endfor %}
     </p>
-    <a><tab1><font color = "orange"> Expiry Year</font></a></tab1>
+    <a><tab1><font color = "#ff7214"> Expiry Year</font></a></tab1>
     <p>{{ form.expiry_date_year }}<br>
         {% for error in form.expiry_date_year.errors %}
         <span style="color: red;">{{ error }}</span>
         {% endfor %}
     </p>
 
-    <p><input class = "btn btn-danger" type="submit" value="Add Card" style="margin-top: 5px"></p>
+        <p><input class = "btn btn-danger" type="submit" value="Add Card" style="margin-top: 5px"></p>
 
 </form>
+<center>
 </div>
 </div>
+
 {% endblock %}
