@@ -314,7 +314,7 @@ def basket():
     if not cards:
         choices = [("No Saved Cards", "No Saved Cards")]
     else:
-        choices = [(str(i.card_number), str(i.card_number)) for i in cards]
+        choices = [(str(i.last_four_digits), str(i.last_four_digits)) for i in cards]
     form.card.choices = choices
 
     if film_chosen == None:
