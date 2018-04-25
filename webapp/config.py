@@ -1,9 +1,10 @@
 import os
 from flask_mail import Mail, Message
+
+
 # Default config for webapp
-
-
 class Config(object):
+
     WTF_CSRF_ENABLED = True
     SECRET_KEY = 'Graeme-smells-of-cheese'
     basedir = os.path.abspath(os.path.dirname(__file__))
@@ -12,6 +13,7 @@ class Config(object):
     SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    # The settings used for emailing the user when a ticket is bought.
     MAIL_SERVER='smtp.gmail.com'
     MAIL_PORT=465
     MAIL_USE_SSL=True

@@ -29,11 +29,6 @@ class CreateAccountForm(Form):
     submit = SubmitField('Register')
 
 
-class Profile(Form):
-    forename = StringField('Forename', validators=[DataRequired()])
-    surname = StringField('Surname', validators=[DataRequired()])
-
-
 class CardDetails(Form):
     password = PasswordField('Password', [validators.DataRequired()])
     name_on_card = StringField('Name on Card', validators=[DataRequired()])
@@ -92,6 +87,8 @@ class OrderTicket(Form):
                               choices=[('standard', 'Standard'), ('child', 'Child'),
                                        ('student', 'Student'), ('oap', 'OAP')],
                               validators=[DataRequired()])
+
+    # For selecting which seat the user wants.
     seat_number = SelectField('Seat Number',
                               choices=[('1', '1'), ('2', '2'), ('3', '3'),
                                        ('4', '4'), ('5', '5'), ('6', '6'),
