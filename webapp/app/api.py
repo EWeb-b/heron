@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify
 from .models import FilmDetails, Ticket, FilmScreening
 from app import app, db, models
-import json
+from datetime import datetime, date
+from isoweek import Week
 
 
 @app.route('/api/films', methods=['GET'])
@@ -22,7 +23,37 @@ def apiGetTickets():
     return jsonify({"tickets": tickets})
 
 
-@app.route('/api/tickets/screening/<int:id>', methods=['GET'])
-def apiGetScreeningTickets(id):
-    tickets = Ticket.query.filter_by(ticket_screening_id=id).all()
+@app.route('/api/films/<int:film>/screenings', methods=['GET'])
+def apiGetMovieScreenings(film):
+    """Returns all screenings for the given film
+    """
+    screenings = FilmScreening.query.filter_by(film_screening_film_det=film).all()
+    return jsonify({"screenings": screenings})
+
+
+@app.route('/api/tickets/screening/<int:screening>', methods=['GET'])
+def apiGetTicketsForScreening(screening):
+    """Returns all tickets for the given screening
+    """
+    tickets = Ticket.query.filter_by(ticket_screening_id=screening).all()
+    return jsonify({"tickets": tickets})
+
+
+@app.route('/api/screenings', methods=['GET'])
+def apiGetScreenings():
+    """Returns all screenings in the database
+    """
+    screenings = FilmScreening.query.all()
+    return jsonify({"screenings": screenings})
+
+
+@app.route('/api/tickets/weekly/<int:year>/<int:week>', methods=['GET'])
+def apiGetWeeklyTickets(year, week):
+    """ Returns all tickets for the given week
+    """
+    start_day = Week(year, week).monday()
+    end_day = Week(year, week).sunday()
+    start_dt = datetime(start_day.year, start_day.month, start_day.day)
+    end_dt = datetime(end_day.year, end_day.month, end_day.day)
+    tickets = Ticket.query.join(FilmScreening).filter(FilmScreening.film_screening_time > start_dt, FilmScreening.film_screening_time < end_dt).all()
     return jsonify({"tickets": tickets})

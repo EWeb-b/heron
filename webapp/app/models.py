@@ -131,6 +131,9 @@ class FilmScreening(db.Model):
         theatre_id: %r\n>''' % (self.id, self.film_screening_film_det,
                                 self.film_screening_time, self.theatre_id)
 
+    def __json__(self):
+        return ['id', 'film_screening_film_det', 'film_screening_time', 'theatre_id']
+
 
 class Ticket(db.Model):
     """
