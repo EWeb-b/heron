@@ -235,13 +235,16 @@ def detailWindow(self,title,director,actor,blurb,certificate,id):
     details = QVBoxLayout()
     hbox.addLayout(details)
 
+    details.addWidget(titleLabel)
+    details.addStretch()
     details.addWidget(directorLabel)
     details.addWidget(actorLabel)
     details.addWidget(blurbLabel)
+    details.addStretch()
     hbox.addWidget(poster)
 
     vbox = QVBoxLayout()
-    vbox.addWidget(titleLabel)
+
     vbox.addLayout(hbox)
     vbox.addWidget(closeButton)
     self.setLayout(vbox)
@@ -293,14 +296,22 @@ class Takings(QScrollArea):
             print(currentQTableWidgetItem.row(), currentQTableWidgetItem.column(), currentQTableWidgetItem.text())
             row = currentQTableWidgetItem.row()
             col = currentQTableWidgetItem.column()
+            print('row',row,'col',col)
             #print('ahhh:',currentQTableWidgetItem.columnSpan(row,col))
             if col == 7 and row != 9:
                 print('weekly total!')
+                print(listOfMovieNames2[row])
+                global mov_det # global variable to be passed between Takings and Example classes
+                mov_det = listOfMovieNames2[row]
+                print('mov_det',mov_det)
                 self.dialog = Details()
+
                 self.dialog.show()
+                # self.dialog = Details()
+                # self.dialog.show()
             elif row == 9 and col != 7: # needs to be changed to take len(rows)
                 print('daily total!')
-                weeklyBAR('06/04/2018')
+                # weeklyBAR('06/04/2018')
 
         # detapp = QApplication(sys.argv)
         # ex = Details()
@@ -358,6 +369,7 @@ class Takings(QScrollArea):
         num_of_col = len(colums)
        # Create table
         self.tableWidget = QTableWidget()
+
         self.tableWidget.setRowCount(num_of_row)
         self.tableWidget.setColumnCount(num_of_col)
         self.tableWidget.setVerticalHeaderLabels(rows)
