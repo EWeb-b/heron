@@ -414,12 +414,13 @@ def film_details():
     all_screening = models.FilmScreening.query.filter_by(
         film_screening_film_det=film.id).all()
 
-    available = models.FilmScreening.query.filter_by(
-        film_screening_time.date()=datetime.date.now())
-    print(available)
+    # available = models.FilmScreening.query.filter_by(
+    #    film_screening_time.date()=datetime.date.now())
+    # print(available)
 
     # .with_entities(FilmScreening.film_screening_time).
-    film_times = FilmScreening.query.join(FilmDetails).filter(FilmScreening.film_screening_film_det==film.id, FilmScreening.film_screening_time.between(datetime.date.today(), datetime.date.today() + datetime.timedelta(1))).all()
+    film_times = FilmScreening.query.join(FilmDetails).filter(FilmScreening.film_screening_film_det == film.id, FilmScreening.film_screening_time.between(
+        datetime.date.today(), datetime.date.today() + datetime.timedelta(1))).all()
 
     times = []
     for showing in film_times:
