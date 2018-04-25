@@ -242,9 +242,10 @@ def change_password():
             return redirect('/change_password')
 
 # Route for a user to add a debit/credit card to their account.
+
+
 @app.route('/add_card', methods=['GET', 'POST'])
 @login_required
-
 def add_card():
     form = CardDetails()
     if request.method == 'GET':
@@ -252,10 +253,10 @@ def add_card():
             'add_card.html', title='Add Card', form=form)
     elif request.method == 'POST':
         if form.validate_on_submit():
-        # If data in form was added correctly
+            # If data in form was added correctly
             if (check_password_hash(current_user.password, form.password.data)):
-            # If passwords match, create a new Card object with the parameters
-            # enetered by the user in the form.
+                # If passwords match, create a new Card object with the parameters
+                # enetered by the user in the form.
                 newCard = Card(
                     name_on_card=form.name_on_card.data,
                     billing_address=form.billing_address.data,
@@ -404,6 +405,12 @@ def film_details():
     form = ShowTimes()
     passed = request.args.get('passed', None)
     film = models.FilmDetails.query.filter_by(film_name=passed).first_or_404()
+    all_screening = models.FilmScreening.query.filter_by(
+        film_screening_film_det=film.id).all()
+    # print(all_screening)
+    # available = models.FilmScreening.query.filter(
+#        film_screening_time >= datetime.datetime(2018, 5, 6, 14, 0)).all()
+#    print(available)
 
     if request.method == 'GET':
         return render_template(
@@ -433,7 +440,7 @@ def list_films():
 @login_required
 def profile():
 
-    cards= Card.query.filter_by(account_id=current_user.id).all()
+    cards = Card.query.filter_by(account_id=current_user.id).all()
 
     return render_template(
         'profile.html', title='User Profile', cards=cards)
