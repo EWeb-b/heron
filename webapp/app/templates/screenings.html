@@ -17,41 +17,84 @@
         <h2>On Today</h2>
       </div>
     </div>
-  </div>
 
 
 
-  <table class="table table-hover table-sm table-dark table-responsive ">
+    <table class="table table-hover table-sm table-dark table-responsive ">
 
-    <thead>
-      <tr>
+      <thead>
+        <tr>
 
-        <th scope="col"><font color = "orange">#</font></th>
-        <th scope="col"><font color = "orange">Movie</font></th>
-        <th scope="col"><font color = "orange">Time</font></th>
-        <th scope="col"><font color = "orange">Blurb</font></th>
 
-      </tr>
-    </thead>
-    <tbody>
-      {%for movie in film %}
-        <tr onclick="document.location.href='{{ url_for('film_details', passed=movie.film_name) }}'">
-          <th scope="row">{{loop.index}}</th>
-          <td><font color = "red">{{movie.film_name}}</font></td>
-          <td><font color = "red">10:00/ 14:00 / 20:00</font></td>
-          <td> <font color = "red">{{movie.film_blurb}}</font></td>
+          <th scope="col"><font color = "orange">Movie</font></th>
+          <th scope="col"><font color = "orange">Time</font></th>
+          <th scope="col"><font color = "orange">Date</font></th>
+          <th scope="col"><font color = "orange">Cinema Screen</font></th>
+
         </tr>
-      {%endfor%}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
 
-  <div class="container">
-    &nbsp
-    {%for movie in film %}
-      <div class="py-5 text-center text-danger" align="center">
-        <img src="/static/portraits/{{movie.film_name}}.jpg" alt="Film Image" class="image"></a>
-      </div>
-    {%endfor%}
+        <tr onclick="document.location.href='{{ url_for('film_details', passed='Inception')}}'">
+        <td><font color = "red">Inception</font></td>
+        <td><font color = "red">10:00</font></td>
+        <td> <font color = "red">Every Day</font></td>
+        <td> <font color = "red">1</font></td>
+
+        </tr>
+        <tr onclick="document.location.href='{{ url_for('film_details', passed='The Martian')}}'">
+        <td><font color = "red">The Martian</font></td>
+        <td><font color = "red">10:00</font></td>
+        <td> <font color = "red">Every Day</font></td>
+        <td> <font color = "red">2</font></td>
+        </tr>
+        <tr onclick="document.location.href='{{ url_for('film_details', passed='Interstellar')}}'">
+        <td><font color = "red">Interstellar</font></td>
+        <td><font color = "red">10:00</font></td>
+        <td> <font color = "red">Every Day</font></td>
+        <td> <font color = "red">3</font></td>
+        </tr>
+        <tr onclick="document.location.href='{{ url_for('film_details', passed='Paddington 2')}}'">
+        <td><font color = "red">Paddington 2</font></td>
+        <td><font color = "red">14:00</font></td>
+        <td> <font color = "red">Every Day</font></td>
+        <td> <font color = "red">1</font></td>
+        </tr>
+        <tr onclick="document.location.href='{{ url_for('film_details', passed='The Shape of Water')}}'">
+        <td><font color = "red">The Shape of Water</font></td>
+        <td><font color = "red">14:00</font></td>
+        <td> <font color = "red">Every Day</font></td>
+        <td> <font color = "red">2</font></td>
+        </tr>
+        <tr onclick="document.location.href='{{ url_for('film_details', passed='Black Panther')}}'">
+        <td><font color = "red">Black Panther</font></td>
+        <td><font color = "red">14:00</font></td>
+        <td> <font color = "red">Every Day</font></td>
+        <td> <font color = "red">3</font></td>
+        </tr>
+        <tr onclick="document.location.href='{{ url_for('film_details', passed='The Greatest Showman')}}'">
+        <td><font color = "red">The Greatest Showman</font></td>
+        <td><font color = "red">20:00</font></td>
+        <td> <font color = "red">Every Day</font></td>
+        <td> <font color = "red">1</font></td>
+        </tr>
+        <tr onclick="document.location.href='{{ url_for('film_details', passed='Jumanji: Welcome to the Jungle')}}'">
+        <td><font color = "red">Jumanji: Welcome to the Jungle</font></td>
+        <td><font color = "red">20:00</font></td>
+        <td> <font color = "red">Every Day</font></td>
+        <td> <font color = "red">2</font></td>
+        </tr>
+        <tr onclick="document.location.href='{{ url_for('film_details', passed='CoCo')}}'">
+        <td><font color = "red">CoCo</font></td>
+        <td><font color = "red">20:00</font></td>
+        <td> <font color = "red">Every Day</font></td>
+        <td> <font color = "red">3</font></td>
+        </tr>
+
+
+
+      </tbody>
+    </table>
   </div>
 </body>
 

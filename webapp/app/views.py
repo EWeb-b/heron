@@ -32,7 +32,6 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
-# Uses Knuth's Multiplicative Method to hash numbers
 def hashNumber(numberToBeHashed):
     string = str(numberToBeHashed)
     hashedNumber = print(hashlib.md5(string.encode('utf-8')).hexdigest())
@@ -40,8 +39,6 @@ def hashNumber(numberToBeHashed):
     return hashedNumber
 
 # creates a QR code from a string in /basket when a ticket is bought
-
-
 def qrStringEncoder(string):
     cwd = os.getcwd()
     qrcode = pyqrcode.create(string)
@@ -53,8 +50,6 @@ def load_user(user_id):
     return Account.query.filter(Account.id == int(user_id)).first()
 
 # flash fields of the form that is causing the invalid form validation
-
-
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
@@ -65,8 +60,6 @@ def flash_errors(form):
 
 # sends an email and qr code using the passed varaibles from the ticket
 # made from /basket
-
-
 @app.route('/send-mail')
 def email_ticket():
     cwd = os.getcwd()
@@ -126,8 +119,6 @@ def email_ticket():
         return str(e) + ' | email_ticket function error.'
 
 # redirect to home
-
-
 @app.route('/')
 @app.route('/index')
 def index():
@@ -140,8 +131,6 @@ def home():
         'home.html', title='Heron Home')
 
 # logs out the current_user that started a session when logging in
-
-
 @app.route('/logout')
 @login_required
 def logout():
@@ -156,8 +145,6 @@ def logout():
 
 # login for users that are stored in the database, creates a new current_user
 # session
-
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 
@@ -191,8 +178,6 @@ def login():
 
 # creates a new user and stores them into the database, also logs them in
 # and creates a new session for the user
-
-
 @app.route('/create_account', methods=['GET', 'POST'])
 def create_account():
 
@@ -240,8 +225,6 @@ def create_account():
             return redirect('/create_account')
 
 # changes the current_users password
-
-
 @app.route('/change_password', methods=['GET', 'POST'])
 @login_required
 def change_password():
@@ -282,8 +265,6 @@ def change_password():
             return redirect('/change_password')
 
 # function to add a debit card to the users account
-
-
 @app.route('/add_card', methods=['GET', 'POST'])
 @login_required
 def add_card():
@@ -323,8 +304,6 @@ def add_card():
 
 # creates a ticket that is used to generate an email and QR code, all
 # sessions point to here to be used to store entries in the database
-
-
 @app.route('/basket', methods=['GET', 'POST'])
 @login_required
 def basket():
@@ -456,22 +435,27 @@ def order_ticket():
 # page that shows the film information as well as the trailer for the film
 # the function queries the databse to check what screening times are available
 # the chosen film today
-
-
 @app.route('/film_info', methods=['GET', 'POST'])
 def film_details():
     form = ShowTimes()
     passed = request.args.get('passed', None)
     film = models.FilmDetails.query.filter_by(film_name=passed).first_or_404()
+
     # query to find the available screening times
-    film_times = FilmScreening.query.join(FilmDetails).filter(FilmScreening.film_screening_film_det == film.id, FilmScreening.film_screening_time.between(
-        datetime.date.today(), datetime.date.today() + datetime.timedelta(1))).all()
+    film_times = FilmScreening.query.join(FilmDetails).filter(
+        FilmScreening.film_screening_film_det == film.id,
+            FilmScreening.film_screening_time.between(datetime.date.today(),
+                datetime.date.today() + datetime.timedelta(1))).all()
+
     # query to find which theatre the film is showing in
     theatre = models.FilmScreening.query.with_entities(FilmScreening.theatre_id).filter(
         FilmScreening.film_screening_film_det == film.id).first()
+
     # find the screening id for the specific screening time and theatre
-    screening_id = FilmScreening.query.with_entities(FilmScreening.id).join(FilmDetails).filter(FilmScreening.film_screening_film_det == film.id, FilmScreening.film_screening_time.between(
-        datetime.date.today(), datetime.date.today() + datetime.timedelta(1))).all()
+    screening_id = FilmScreening.query.with_entities(FilmScreening.id).join(
+        FilmDetails).filter(FilmScreening.film_screening_film_det == film.id,
+            FilmScreening.film_screening_time.between(datetime.date.today(),
+                datetime.date.today() + datetime.timedelta(1))).all()
 
     times = []
     # convert the datetimes returned into the 24 hour clock to be used as an
@@ -504,8 +488,6 @@ def film_details():
                 'filmInfo.html', title='Film Details', film=film, passed=passed, form=form)
 
 # list all the films currently showing at the cinema
-
-
 @app.route('/film_details', methods=['GET', 'POST'])
 def list_films():
     # print list of films stored in FilmDetails databse
@@ -515,8 +497,6 @@ def list_films():
         'filmDetails.html', title='Film List', filmDetails=filmDetails)
 
 # shows the debit cards stored and the ticket history of the user
-
-
 @app.route('/profile', methods=['GET'])
 @login_required
 def profile():
@@ -532,7 +512,7 @@ def profile():
 @app.route('/screenings', methods=['GET'])
 def screenings():
 
-    films_of_the_day = FilmDetails.query.limit(3).all()
+    films_of_the_day = FilmDetails.query.all()
 
     return render_template(
         'screenings.html', title='Screenings', film=films_of_the_day)
