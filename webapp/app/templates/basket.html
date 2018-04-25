@@ -3,12 +3,12 @@
 {% block content %}
 
 
+<html lang="en">
+  <head>
 
-<head>
-  <link href = "../static/style.css"  type = "text/css" rel = "stylesheet">
-  <link href = "form-validation.css" rel = "stylesheet">
-</head>
-
+      <link href = "style.css" rel = "stylesheet">
+      <link href="form-validation.css" rel="stylesheet">
+  </head>
 
   <body class="bg-dark">
 
@@ -90,8 +90,6 @@
                 </p>
               </div>
             </div>
-
-            <h4 style="color: #ff7214" class="mb-3">Payment</h4>
               <fieldset>
           <label for="card_number" style="color: #FFFFFF">Select a Card:</label>
             <p>{{ form.card }}<br>
@@ -146,6 +144,6 @@
       })();
     </script>
   </body>
-
+</html>
 
 {% endblock %}

@@ -6,6 +6,7 @@ from datetime import datetime
 from calendar import monthrange
 from random import randint
 import json
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 ################################################################################
@@ -300,7 +301,7 @@ print("Creating admin Account")
 adminAccount = Account()
 adminAccount.id = 1
 adminAccount.email = 'movies.heron@gmail.com'
-adminAccount.password = 'admin'
+adminAccount.password = generate_password_hash('admin')
 adminAccount.staff = True
 db.session.add(adminAccount)
 db.session.commit()
