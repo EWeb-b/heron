@@ -9,6 +9,7 @@ import datetime
 import dayDates
 import requests
 import tickets2money
+import convert
 
 from matplotlib.backends.qt_compat import QtCore, QtWidgets, is_pyqt5
 
@@ -64,103 +65,25 @@ weekTakings = [INCtakings,TMtakings,INTtakings,P2takings,SWtakings,BPtakings,GSt
 
 takings = ['1320', '1222', '950','4378','1320', '1222', '950','4378','46'] # Used for pie
 movieBuffer = []
+
 timeSpan = 'daily'
 
 
 takingsDate = datetime.date.today() #used to keep track of the week in
 
 
-# filmData = requests.get("http://localhost:5000/api/films")
+filmData = requests.get("http://localhost:5000/api/films").json()
+filmData = filmData.get('films')
 
-filmData = [
-    {
-        "id": 1,
-        "film_certificate_id": 3,
-        "film_blurb": "Entering dreams.",
-        "film_director": "Christopher Nolan",
-        "film_name": "Inception",
-        "film_actor": "Leonardo DiCaprio"
-    },
-    {
-        "id": 2,
-        "film_certificate_id": 3,
-        "film_blurb": "Home alone, but on mars.",
-        "film_director": "Ridley Scott",
-        "film_name": "The Martian",
-        "film_actor": "Matt Damon"
-    },
-    {
-        "id": 3,
-        "film_certificate_id": 3,
-        "film_blurb": """A team of explorers travel through a wormhole in space
-                            in an attempt to ensure humanity's survival""",
-        "film_director": "Christopher Nolan",
-        "film_name": "Interstellar",
-        "film_actor": "Matthew McConaughey"
-    },
-    {
-        "id": 4,
-        "film_certificate_id": 2,
-        "film_blurb": "Peruvain Bear up to no good",
-        "film_director": "Paul King",
-        "film_name": "Paddington 2",
-        "film_actor": "Ben Wishaw"
-    },
-    {
-        "id": 5,
-        "film_certificate_id": 4,
-        "film_blurb": "Fishman seduces silent woman",
-        "film_director": "Guillermo del Toro",
-        "film_name": "The Shape of Water",
-        "film_actor": "Sally Hawkins"
-    },
-    {
-        "id": 6,
-        "film_certificate_id": 3,
-        "film_blurb": "superhero movie",
-        "film_director": "Ryan Coogler",
-        "film_name": "Black Panther",
-        "film_actor": "Chadwick Boseman"
-    },
-    {
-        "id": 7,
-        "film_certificate_id": 2,
-        "film_blurb": """P. T. Barnum is a man with little more than ambition to
-                        his name. When the company he works for goes bust, he
-                        decides to leave his mediocre life behind, and takes his
-                        family on a journey that would lead to establishing the
-                        foundations of showbusiness.""",
-        "film_director": "Michael Gracey",
-        "film_name": "The Greatest  Showman",
-        "film_actor": "Hugh Jackman"
-    },
-    {
-        "id": 8,
-        "film_certificate_id": 3,
-        "film_blurb": "Horrible remake",
-        "film_director": "Jake Kasden",
-        "film_name": "Jumanji: Welcome to the Jungle",
-        "film_actor": "Dwayne Johnson"
-    },
-    {
-        "id": 9,
-        "film_certificate_id": 1,
-        "film_blurb": "Undead reconcilliation",
-        "film_director": "Lee Unkrich",
-        "film_name": "CoCo",
-        "film_actor": "Anthony Gonzalez"
-    }
-]
+print('filmData',filmData)
 
-
-
-
-
-
-INCtakings = ['120','120','300','200','180','240','150']
+weekData = requests.get('http://localhost:5000/api/tickets/ticket_types/weekly/2018/10')
+print('weekData:',weekData.json())
 
 INCweekly = [[10,2,3,5,1],[0,0,0,0,0]]
 
+# x axis days of the week
+# y axis movies in order of IDs in the database
 week_data = [[[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[0,0,0,0,0]],
             [[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[0,0,0,0,0]],
             [[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[0,0,0,0,0]],
@@ -177,12 +100,16 @@ week_data = [[[10,2,3,5,1],[0,0,0,0,0],[2,1,3,5,0],[10,2,3,5,1],[0,0,0,0,0],[2,1
 
 
 listOfMovieNames = []
-for i in range(len(filmData)):
+# for i in range(9):
+#     listOfMovieNames.append(filmData.get('films')[i].get('film_name'))
+for i in range(9):
     listOfMovieNames.append(filmData[i]["film_name"])
-print(listOfMovieNames)
+
+print('penis',listOfMovieNames)
 def parse_json(film_data, film):
     # this function is designed to parse the json data so that Example.detailWindow can display the correct info
-
+    print(film)
+    print(filmData)
     raw_info = list(filter(lambda person: person["film_name"] == film, filmData)) #returns list of movie
     print('raw_info',raw_info)
     director = raw_info[0]['film_director']
@@ -403,7 +330,14 @@ class Takings(QScrollArea):
         #self.colum1 = self.tableWidget.horizontalHeaderItem(1)
         global dailyTOT
         dailyTOT = [0,0,0,0,0,0,0]
+        print('now:',str(now.isocalendar()[1]))
 
+        myresult = requests.get('http://localhost:5000/api/tickets/ticket_types/weekly/2018/'+str(now.isocalendar()[1])).json()
+        print(myresult.get('p'))
+
+        weekData = convert.convert(myresult.get('p'))
+        print('innit:', weekData)
+        print('big lad:',weekTakings)
         for i in range(num_of_row-1):
             for j in range(num_of_col-1):
                 self.tableWidget.setItem(i,j, QTableWidgetItem(weekTakings[i][j]))
@@ -521,14 +455,14 @@ class Compare(QScrollArea):
             day_of_the_week = len(list_of_lists)
     #print('weekly takings for inception, broken down by days',calc_takings_list(INCweekly))
 
-    def calc_weekly_takings(list_of_lists_of_lists):
+    def calc_weekly_takings(self,list_of_lists_of_lists):
         # list of legnth 9, then
         # list of length 7, then
         # list of legnth 5(ticket types)
         takings_buffer = []
         for i in range(9):
             #print(calc_takings_list(list_of_lists_of_lists[i]))
-            takings_buffer.append(calc_takings_list(list_of_lists_of_lists[i]))
+            takings_buffer.append(self.calc_takings_list(list_of_lists_of_lists[i]))
         weekly_buffer = [0,0,0,0,0,0,0]
         for i in range(7):
             for j in range(9):
@@ -568,16 +502,27 @@ class Compare(QScrollArea):
     def make_movie_button(self,button):
         return button.clicked.connect(lambda:self.movie2Buffer(button))
     def selectDaily(self):
+        global timeSpan
         timeSpan = 'daily'
         print (timeSpan+'\n')
     def selectWeeky(self):
+        global timeSpan
         timeSpan = 'weekly'
         print (timeSpan+'\n')
     def selectOverall(self):
+        global timeSpan
         timeSpan = 'overall'
         print (timeSpan+'\n')
     def compare(self):
 
+        if timeSpan == 'daily':
+            takings = takings
+
+        elif timeSpan == 'weekly':
+            print('WWWWWWWWWWWEEEEEEEEEEEEEEEEEKKKKKLLLLLLLLLYYYYY')
+            takings = self.calc_weekly_takings(week_data)
+        elif timeSpan == 'overall':
+            hi = 0
         print('plot',movieBuffer,'for',timeSpan)
         bufferTakings = []
         for i in range(len(movieBuffer)):
