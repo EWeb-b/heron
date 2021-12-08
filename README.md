@@ -22,15 +22,6 @@ To run server:
 	python webapp.py
 
 Admin Account:
-	email = movies.heron@gmail.com
-	password = admin
+	email = -----
+	password = ----
 
-
-## Members
-| Name          | email           | gitlab name |
-| ----          | -----	          | ----------- |
-| Graeme Cross  | <sc15gpc@leeds> | @sc15gpc    |
-| Ed Webb       | <sc16eahw@leeds>| @EWebb      |
-| Jack Boreham	| <sc16jeb@leeds> | @Boreham	|
-| Marya Khan    | <ll14m3k@leeds> | @ll14m3k    |
-| Jonah Lloyd   | <sc16jl@leeds>  | @l10ydy     |    
