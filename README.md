@@ -1,5 +1,7 @@
 # Team Heron Repository
 
+A webapp for booking seats at a cinema created using the Flask framework. Includes a separate application for analysing the ticket sales data.
+
 ## Running the flask application
 To setup the virtual environment and install the python requirements for the flask app run the flask_setup.sh file:
 
